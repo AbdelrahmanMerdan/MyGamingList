@@ -1,6 +1,12 @@
-February 2, 2024 (4:00 PM) - ITR1 (4 out of 6 group members present)
+February 2, 2024 (4:00 PM - 6:06 PM) - ITR1 (5 out of 6 group members present)
 
 - Went through and refine our big user stories.
 
-- 
+- Defined our 5 user stories for our 1st big story.
+
+- Defined 2 of our user stories for our 2nd big story.
+
+- Assigned each group member a user story.
+
+- Discussed on meeting at Feb 5, 2024 for GUI purposes.
 
