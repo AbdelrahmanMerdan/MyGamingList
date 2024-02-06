@@ -22,7 +22,7 @@ import javax.swing.SpringLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class homeMenu extends JFrame {
+public class Menus extends JFrame {
 
 	private JPanel contentPane;
 
@@ -33,7 +33,7 @@ public class homeMenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					homeMenu frame = new homeMenu();
+					Menus frame = new Menus();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +45,7 @@ public class homeMenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public homeMenu() {
+	public Menus() {
 		setTitle("MyGamingList");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
