@@ -87,7 +87,7 @@ public class homeMenu extends JFrame {
 		homePage.setLayout(null);
 		
 		JLabel title = new JLabel("Welcome to MyGamingList!");
-		title.setBounds(-161, 0, 1566, 49);
+		title.setBounds(-146, 0, 1566, 49);
 		title.setFont(new Font("Tahoma", Font.BOLD, 42));
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setForeground(new Color(255, 255, 255));
@@ -132,25 +132,25 @@ public class homeMenu extends JFrame {
 		JButton btnNewButton_2 = new JButton("Prev");
 		topSellerPage.add(btnNewButton_2, BorderLayout.WEST);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 0, 0));
-		topSellerPage.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 100));
+		JPanel topGames = new JPanel();
+		topGames.setBackground(new Color(0, 0, 0));
+		topSellerPage.add(topGames, BorderLayout.CENTER);
+		topGames.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 100));
 		
 		JLabel game1 = new JLabel("Final Fantasy VII Remake Intergrade");
 		game1.setForeground(new Color(255, 255, 255));
 		game1.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		panel.add(game1);
+		topGames.add(game1);
 		
 		JLabel game2 = new JLabel("Lethal Company");
 		game2.setForeground(new Color(255, 255, 255));
 		game2.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		panel.add(game2);
+		topGames.add(game2);
 		
 		JLabel game3 = new JLabel("War Thunder");
 		game3.setForeground(new Color(255, 255, 255));
 		game3.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		panel.add(game3);
+		topGames.add(game3);
 		
 		
 		
