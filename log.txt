@@ -1,4 +1,4 @@
-February 2, 2024 (4:00 PM - 6:06 PM) - ITR1 (5 out of 6 group members present) 
+February 2, 2024 (4:00 PM - 6:06 PM) - ITR1 (Rocco, Abdelrahman, Alex, Mustafa, Richard) 
 
 - Went through and refine our big user stories.
 
@@ -10,9 +10,20 @@ February 2, 2024 (4:00 PM - 6:06 PM) - ITR1 (5 out of 6 group members present)
 
 - Discussed on meeting at Feb 5, 2024 for GUI purposes.
 
-February 5, 2024 (7:30 PM - 8:00 PM) APIs (2 out of 6 group members present)
+February 5, 2024 (7:30 PM - 8:00 PM) APIs (Rocco, Abdelrahman)
 
 - Discussed how to apply the API in our program.
 
 - Ended with us concluding that we'll need to test and experiment with it.
+
+February 9, 2024 (4:30 PM - 5:45 PM) Structure & APIs (Rocco, Richard, Abdelrahman, Alex, Mustafa, Ivy)
+
+- Clarified and stated which feature will be implemented, and what feature each member is responsible with.
+
+- Talking about features will be grouped in one class file.
+
+- Discussed the results of using the API, and realistically talked how it would be implemented.
+
+- Discussed that a another API will be needed to grab the popular games.
+
 
