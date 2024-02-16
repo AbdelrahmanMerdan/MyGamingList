@@ -31,12 +31,11 @@ public class PopReleases {
 			
 			JSONArray newReleases = jSONResponse.getJSONObject("tabs").getJSONObject("topsellers").getJSONArray("items");
 
-			
-			//Storing top releases 2023 
 			for(int i = 0; i < newReleases.length(); i++) 
 			{
 				games.add(new Game(newReleases.getJSONObject(i).optString("id")));
 			}
+			
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 
