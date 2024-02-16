@@ -34,8 +34,8 @@ public class Game {
    
         setName(game);
         setID(game);
-        /*
         setDescription(game);
+        /*
         setCriticRev(game);
         setSysRequire(game);
         */
@@ -60,7 +60,7 @@ public class Game {
 
 
 	public void setDescription(JSONObject game) {
-		
+		description = game.getJSONObject("data").optString("detailed_description");
 	}
 
 	
@@ -75,7 +75,7 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return "Name: "+name+"\tID: "+id;
+		return "Name: " + name + "\tID: " + id + "\tDescription: " + description;
 	}
 	
 	
