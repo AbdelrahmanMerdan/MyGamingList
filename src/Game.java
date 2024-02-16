@@ -12,7 +12,7 @@ import org.json.*;
 public class Game {
 	
 	//Instance variables
-	private String name, id, description, sysRequire, criticRev, urlCriticRev;
+	private String name, id, description, sysRequire, criticScore, criticURL;
 	
 	
 	public Game(String id) {
