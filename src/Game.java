@@ -60,7 +60,7 @@ public class Game {
 
 
 	public void setDescription(JSONObject game) {
-		description = game.getJSONObject("data").optString("detailed_description");
+		description = game.getJSONObject("data").optString("about_the_game");
 	}
 
 	
