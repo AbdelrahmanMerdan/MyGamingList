@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import src;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -11,6 +10,7 @@ import java.net.http.HttpResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import src.Game;
 
 class TestGame {
 	
@@ -82,6 +82,28 @@ class TestGame {
 	}
 	
 	//Other test cases here
-	
+	//Tests cases for description
+	@Test
+	void setDescription1() {
+		Game firstGame = new Game(gameIds[0]);
+		assertTrue(firstGame.getDescription().startsWith("<img src=\"https://cdn.akamai.steamstatic.com/steam/apps/1086940/"));
+	}
+	@Test
+	void setDescription2() {
+		Game secondGame = new Game(gameIds[1]);
+		assertTrue(secondGame.getDescription().startsWith("When a young street hustler,"));
+	}
+	@Test
+	void setDescription3() {
+		Game thirdGame = new Game(gameIds[2]);
+		assertTrue(thirdGame.getDescription().startsWith("<img src=\"https://cdn.akamai.steamstatic.com/steam/apps/1049590/"));
+	}
+
+	@Test
+	void setDescription4() {
+		Game fourthGame = new Game(gameIds[3]);
+		assertTrue(fourthGame.getDescription().startsWith("Phasmophobia is a 4-player"));
+	}
+
 
 }
