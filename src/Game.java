@@ -66,30 +66,14 @@ public class Game {
 	
 	public void setCriticRev(JSONObject game) {
 		
-		criticRev = game.getJSONObject("data").optString("metacritic");
-		
-		//if there are no critic reviews
-		if(criticRev.equals("")) {
+		try {
+	            criticScore = game.getJSONObject("data").getJSONObject("metacritic").optString("score");
+	            criticURL = game.getJSONObject("data").getJSONObject("metacritic").optString("url");
 			
-			criticRev = "N/A";
-		}
-		
-		else {
-			
-			for(int i = 0; i < criticRev.length(); i++) {
-				
-				//the response body for metacritic can only contain a h after the url so we can isolate for it			
-				if(criticRev.charAt(i) == 'h') {
-					
-					//last 2 chars are '"}' so we need to get rid of them
-					urlCriticRev = criticRev.substring(i, criticRev.length()- 2);
-					
-					//there could be multiple 'h's in the sequence so we must break
-					break;
-				}
-			}
-			
-		}
+	        } catch(JSONException e) {
+	            criticScore = "N/A";
+	            criticURL = "N/A";
+	        }
 	
 	}
 
