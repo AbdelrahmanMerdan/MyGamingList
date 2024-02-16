@@ -37,9 +37,6 @@ public class PopReleases {
 			{
 				games.add(new Game(newReleases.getJSONObject(i).optString("id")));
 			}
-			
-		
-
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 
