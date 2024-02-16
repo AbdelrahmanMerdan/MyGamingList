@@ -36,9 +36,8 @@ public class Game {
         setName(game);
         setID(game);
         setDescription(game);
-        /*
         setCriticRev(game);
-        setSysRequire(game);
+        /*setSysRequire(game);
         */
 		} catch(InterruptedException e) {
 			e.printStackTrace();
@@ -66,6 +65,7 @@ public class Game {
 
 	
 	public void setCriticRev(JSONObject game) {
+		criticRev = game.getJSONObject("data").optString("reviews");
 		
 	}
 
@@ -76,7 +76,7 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return "Name: " + name + "\tID: " + id + "\tsrc.Description: " + description;
+		return "Name: " + name + "\tID: " + id + "\tsrc.Description: " + description + "Critic reviews: " + criticRev;
 	}
 	
 	
