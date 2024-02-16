@@ -1,3 +1,4 @@
+package src;
 
 import java.io.IOException;
 import java.util.*;
@@ -75,7 +76,7 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return "Name: " + name + "\tID: " + id + "\tDescription: " + description;
+		return "Name: " + name + "\tID: " + id + "\tsrc.Description: " + description;
 	}
 	
 	
