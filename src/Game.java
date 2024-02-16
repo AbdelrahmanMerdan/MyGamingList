@@ -16,35 +16,32 @@ public class Game {
 	
 	
 	public Game(String id) {
-		
 		try {
-		//Calling api
-		HttpRequest request = HttpRequest.newBuilder()
+			//Calling api
+			HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create("https://store.steampowered.com/api/appdetails?appids="+id+"&I=english"))
 				.method("GET", HttpRequest.BodyPublishers.noBody())
 				.build();
 		
-		//Grabbing json response
-		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			//Grabbing json response
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 		
-		String responseBody = response.body();
+			String responseBody = response.body();
 		
-		JSONObject jSONResponse = new JSONObject(responseBody);
-		JSONObject game = jSONResponse.getJSONObject(id);
+			JSONObject jSONResponse = new JSONObject(responseBody);
+			JSONObject game = jSONResponse.getJSONObject(id);
         
-   
-        setName(game);
-        setID(game);
-        setDescription(game);
-        setCriticRev(game);
-        setSysRequire(game);
+   			//Setting Attributes
+        		setName(game);
+        		setID(game);
+        		setDescription(game);
+        		setCriticRev(game);
+        		setSysRequire(game);
         
 		} catch(InterruptedException e) {
 			e.printStackTrace();
-			
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
-			
 		} 
 	}
 
@@ -65,7 +62,6 @@ public class Game {
 
 	
 	public void setCriticRev(JSONObject game) {
-		
 		try {
 	            criticScore = game.getJSONObject("data").getJSONObject("metacritic").optString("score");
 	            criticURL = game.getJSONObject("data").getJSONObject("metacritic").optString("url");
@@ -74,7 +70,6 @@ public class Game {
 	            criticScore = "N/A";
 	            criticURL = "N/A";
 	        }
-	
 	}
 
 	public void setSysRequire(JSONObject game) {
@@ -82,12 +77,68 @@ public class Game {
 
 	}
 
+	public String getCurrentPlayers() {
+		try {
+			//Calling API
+			HttpRequest request = HttpRequest.newBuilder()
+					.uri(URI.create("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid="+id))
+					.method("GET", HttpRequest.BodyPublishers.noBody())
+					.build();
+
+			//Grabbing JSON response
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+
+			String responseBody = response.body();
+
+			JSONObject jSONResponse = new JSONObject(responseBody);
+
+			//Returning player count
+			return jSONResponse.getJSONObject("response").optString("player_count");
+
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+
+		//If above operation was unsuccessful.
+		return "ERROR";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public String getSysRequire() {
+		return sysRequire;
+	}
+
+
+	public String getCriticScore() {
+		return criticScore;
+	}
+
+
+	public String getCriticURL() {
+		return criticURL;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Name: " + name + "\tID: " + id + "\tsrc.Description: " + description + "Critic reviews: " + criticRev + "System Requirements & Recommended: " + sysRequire;
+		return name;
 	}
 	
-	
-
 }
