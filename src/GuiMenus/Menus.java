@@ -1,3 +1,5 @@
+package src.GuiMenus;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
