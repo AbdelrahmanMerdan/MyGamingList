@@ -42,7 +42,6 @@ public class MostPlayed {
 
 		} catch(IOException e) {
 			e.printStackTrace();
-
 		}
 	}
 
