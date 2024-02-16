@@ -42,6 +42,9 @@ public class Game {
 			e.printStackTrace();
 		} catch(IOException e) {
 			e.printStackTrace();
+		} catch(JSONException e) {
+			//Here just in case steamappID turns out to be empty
+			name = "Not Available";
 		} 
 	}
 
