@@ -12,7 +12,7 @@ import org.json.*;
 public class Game {
 	
 	//Instance variables
-	private String name, id, description, sysRequire, criticRev;
+	private String name, id, description, sysRequire, criticRev, urlCriticRev;
 	
 	
 	public Game(String id) {
@@ -65,8 +65,32 @@ public class Game {
 
 	
 	public void setCriticRev(JSONObject game) {
-		criticRev = game.getJSONObject("data").optString("reviews");
 		
+		criticRev = game.getJSONObject("data").optString("metacritic");
+		
+		//if there are no critic reviews
+		if(criticRev.equals("")) {
+			
+			criticRev = "N/A";
+		}
+		
+		else {
+			
+			for(int i = 0; i < criticRev.length(); i++) {
+				
+				//the response body for metacritic can only contain a h after the url so we can isolate for it			
+				if(criticRev.charAt(i) == 'h') {
+					
+					//last 2 chars are '"}' so we need to get rid of them
+					urlCriticRev = criticRev.substring(i, criticRev.length()- 2);
+					
+					//there could be multiple 'h's in the sequence so we must break
+					break;
+				}
+			}
+			
+		}
+	
 	}
 
 	public void setSysRequire(JSONObject game) {
