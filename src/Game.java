@@ -37,8 +37,8 @@ public class Game {
         setID(game);
         setDescription(game);
         setCriticRev(game);
-        /*setSysRequire(game);
-        */
+        setSysRequire(game);
+        
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 			
@@ -78,13 +78,14 @@ public class Game {
 	}
 
 	public void setSysRequire(JSONObject game) {
-		
+		sysRequire = game.getJSONObject("data").optString("pc_requirements");
+
 	}
 
 
 	@Override
 	public String toString() {
-		return "Name: " + name + "\tID: " + id + "\tsrc.Description: " + description + "Critic reviews: " + criticRev;
+		return "Name: " + name + "\tID: " + id + "\tsrc.Description: " + description + "Critic reviews: " + criticRev + "System Requirements & Recommended: " + sysRequire;
 	}
 	
 	
