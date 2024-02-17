@@ -27,7 +27,7 @@ import javax.swing.border.MatteBorder;
 
 public class GUIMainMenu extends JFrame {
 	
-	public GUIMainMenu(JPanel cardPane) {
+	public GUIMainMenu(JPanel cardPane, MostPlayed mostPlayed, PopReleases popReleases) {
 		
 		JPanel mainMenuPane = new JPanel();
 		mainMenuPane.setForeground(Color.BLACK); // useless?
@@ -48,17 +48,17 @@ public class GUIMainMenu extends JFrame {
 		mostPlayedLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		mostPlayedBox.add(mostPlayedLabel);
 		
-		for (int i = 0; i < 250; i++) {
-			int test = i;
+		for (int i = 0; i < 100; i++) {
+			int game = i;
             mostPlayedBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
-            JLabel lbl = new JLabel("<html> &ensp;" + i + ": INSERT GAME" + "</html>");
+            JLabel lbl = new JLabel(mostPlayed.getGame(game).getName());
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
             lbl.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					GUIGame.loadGame(mostPlayed.getGame(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
-					System.out.println("Most Played " + test);
 				}
 				@Override public void mousePressed(MouseEvent e) {}
 				@Override public void mouseReleased(MouseEvent e) {}
@@ -86,23 +86,23 @@ public class GUIMainMenu extends JFrame {
 		
 		// populate pane
 		Box popularReleaseBox = new Box(1);
-		JLabel popularReleaseLabel = new JLabel("High Rated");
+		JLabel popularReleaseLabel = new JLabel("Popular Releases");
 		popularReleaseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		popularReleaseLabel.setForeground(Color.WHITE);
 		popularReleaseLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		popularReleaseBox.add(popularReleaseLabel);
 		
-		for (int i = 0; i < 250; i++) {
-			int test = i;
+		for (int i = 0; i < 30; i++) {
+			int game = i;
             popularReleaseBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
-            JLabel lbl = new JLabel("<html> &ensp;" + i + ": INSERT GAME" + "</html>");
+            JLabel lbl = new JLabel(popReleases.getGame(game).getName());
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
             lbl.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					GUIGame.loadGame(popReleases.getGame(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
-					System.out.println("Popular " + test);
 				}
 				@Override public void mousePressed(MouseEvent e) {}
 				@Override public void mouseReleased(MouseEvent e) {}

@@ -68,7 +68,10 @@ public class GUIMain extends JFrame{
 		mainPane.add(cardPane, BorderLayout.CENTER);
 		cardPane.setLayout(new CardLayout());
 		
-		GUIMainMenu mainMenu = new GUIMainMenu(cardPane);
+		MostPlayed mostPlayed = new MostPlayed();		
+		PopReleases popReleases = new PopReleases();
+		
+		GUIMainMenu mainMenu = new GUIMainMenu(cardPane, mostPlayed, popReleases);
 		GUIGame game = new GUIGame(cardPane);
 		
 	}

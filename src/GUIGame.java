@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -14,21 +15,25 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 public class GUIGame {
 	
-	private JLabel gameTitleLabel;
-	private JLabel gameImageLabel;
-	private JTextArea descriptionText;
-	private JTextArea bigDescriptionText;
-	private JButton reviewGameButton;
-	private JButton criticReviewButton;
+	private static JLabel gameTitleLabel;
+	private static JLabel gameImageLabel;
+	private static JTextPane bigDescriptionText;
+	private static JTextPane descriptionText;
+	private static JButton reviewGameButton;
+	
+	//private static JButton criticReviewButton;
+	private static JLabel criticReviewLabel;
 	
 	public GUIGame(JPanel cardPane) {
 		
@@ -53,25 +58,20 @@ public class GUIGame {
 		gamePane.add(gameFooterPane, BorderLayout.SOUTH);
 		gameFooterPane.setOpaque(false);
 		
-		//JTextArea descriptionText = new JTextArea();
-		descriptionText = new JTextArea();
-		descriptionText.setForeground(Color.WHITE);
-		descriptionText.setBackground(Color.BLACK);
-		descriptionText.setWrapStyleWord(true);
-		descriptionText.setText("\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"");
-		descriptionText.setTabSize(20);
-		descriptionText.setLineWrap(true);
-		descriptionText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		descriptionText.setEditable(false);
+		bigDescriptionText = new JTextPane();
+		bigDescriptionText.setForeground(Color.WHITE);
+		bigDescriptionText.setBackground(Color.BLACK);
+		bigDescriptionText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		bigDescriptionText.setEditable(false);
 		
-		JScrollPane descriptionScrollPane = new JScrollPane(descriptionText);
-		descriptionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		descriptionScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		descriptionScrollPane.getVerticalScrollBar().setPreferredSize( new Dimension(0,0) );
-		descriptionScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		JScrollPane bigDescriptionScrollPane = new JScrollPane(bigDescriptionText);
+		bigDescriptionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		bigDescriptionScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		bigDescriptionScrollPane.getVerticalScrollBar().setPreferredSize( new Dimension(0,0) );
+		bigDescriptionScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		gameFooterPane.setLayout(new GridLayout(0, 1, 0, 0));
-		gameFooterPane.add(descriptionScrollPane);
-		descriptionScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		gameFooterPane.add(bigDescriptionScrollPane);
+		bigDescriptionScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
 		JPanel gameImagePane = new JPanel();
 		gameImagePane.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -90,56 +90,63 @@ public class GUIGame {
 		gameOptionsPane.setOpaque(false);
 		
 		JPanel gameOptionsNorthPane = new JPanel();
+		gameOptionsNorthPane.setBackground(Color.BLACK);
 		gameOptionsPane.add(gameOptionsNorthPane);
 		gameOptionsNorthPane.setLayout(new BorderLayout(0, 0));
 		
 		//unfinished buttons
 		reviewGameButton = new JButton("Review Game");
 		reviewGameButton.setFocusable(false);
-		reviewGameButton.setForeground(Color.WHITE);
+		reviewGameButton.setForeground(Color.WHITE); // only here for temp critic review
 		reviewGameButton.setBackground(Color.BLACK);
 		gameOptionsNorthPane.add(reviewGameButton, BorderLayout.CENTER);
 		
 		JPanel gameOptionsSouthPane = new JPanel();
+		gameOptionsSouthPane.setBackground(Color.BLACK);
 		gameOptionsPane.add(gameOptionsSouthPane);
 		gameOptionsSouthPane.setLayout(new BorderLayout(0, 0));
 		
-		criticReviewButton = new JButton("Critic Reviews");
+		/*criticReviewButton = new JButton("Critic Reviews");
 		criticReviewButton.setFocusable(false);
 		criticReviewButton.setForeground(Color.WHITE);
 		criticReviewButton.setBackground(Color.BLACK);
-		gameOptionsSouthPane.add(criticReviewButton, BorderLayout.CENTER);
+		gameOptionsSouthPane.add(criticReviewButton, BorderLayout.CENTER);*/
+		
+		//temp
+		criticReviewLabel = new JLabel();
+		criticReviewLabel.setForeground(Color.WHITE);
+		criticReviewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		gameOptionsSouthPane.add(criticReviewLabel);
 		
 		JPanel gameDescriptionPane = new JPanel();
 		gameDescriptionPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-		gamePane.add(gameDescriptionPane, BorderLayout.CENTER);
 		gameDescriptionPane.setOpaque(false);
+		gamePane.add(gameDescriptionPane, BorderLayout.CENTER);
 		
-		bigDescriptionText = new JTextArea();
-		bigDescriptionText.setForeground(Color.WHITE);
-		bigDescriptionText.setBackground(Color.BLACK);
-		bigDescriptionText.setWrapStyleWord(true);
-		bigDescriptionText.setText("\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"");
-		bigDescriptionText.setTabSize(20);
-		bigDescriptionText.setLineWrap(true);
-		bigDescriptionText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		bigDescriptionText.setEditable(false);
+		descriptionText = new JTextPane();
+		descriptionText.setForeground(Color.WHITE);
+		descriptionText.setBackground(Color.BLACK);
+		descriptionText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		descriptionText.setEditable(false);
 		
-		JScrollPane bigDescriptionScrollPane = new JScrollPane(bigDescriptionText);
-		bigDescriptionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		bigDescriptionScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		bigDescriptionScrollPane.getVerticalScrollBar().setPreferredSize( new Dimension(0,0) );
-		bigDescriptionScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		JScrollPane descriptionScrollPane = new JScrollPane(descriptionText);
+		descriptionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		descriptionScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		descriptionScrollPane.getVerticalScrollBar().setPreferredSize( new Dimension(0,0) );
+		descriptionScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		gameDescriptionPane.setLayout(new GridLayout(0, 1, 0, 0));
-		gameDescriptionPane.add(bigDescriptionScrollPane);
-		bigDescriptionScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		gameDescriptionPane.add(descriptionScrollPane);
+		descriptionScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		
+		
 		
 	}
 	
-	public void loadGame(int appID) {
-		gameTitleLabel.setText("");
-		descriptionText.setText("");
+	public static void loadGame(Game game) {
+		gameTitleLabel.setText(game.getName());
+		bigDescriptionText.setText(game.getSysRequire());
 		//gameImageLabel.setIcon();
-		bigDescriptionText.setText("");
+		descriptionText.setText(game.getDescription());
+		criticReviewLabel.setText("Critic Score: " + game.getCriticScore());
 	}
 }
