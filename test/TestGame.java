@@ -129,5 +129,37 @@ class TestGame {
 		assertTrue(fourthGame.getDescription().startsWith("Phasmophobia is a 4-player"));
 	}
 
+	//Tests cases for System Requirements
+	@Test
+	void setSysReq1() {
+		Game firstGame = new Game(gameIds[0]);
+		assertTrue(firstGame.getSysRequire().startsWith("{\"minimum\":\"<strong>Minimum:<\\/strong><br><ul class=\\\"bb_ul\\\"><li>Requires a 64-bit processor and operating system<br>"));
+	}
+	@Test
+	void setSysReq2() {
+		Game secondGame = new Game(gameIds[1]);
+		assertTrue(secondGame.getSysRequire().endsWith("<li><strong>Sound Card:<\\/strong> 100% DirectX 10 compatible<\\/li><\\/ul>\"}"));
+	}
+	@Test
+	void setSysReq3() {
+		Game thirdGame = new Game(gameIds[2]);
+		String sysReqTest = "{\"minimum\":\"<strong>Minimum:<\\/strong><br><ul class=\\\"bb_ul\\\"><li><strong>OS:<\\/strong> WINDOWS® 10 (64Bit)<br><\\/li><"
+				+ "li><strong>Processor:<\\/strong> Intel Core i3-3225, AMD FX-4350<br><\\/li><li><strong>Memory:<\\/strong> 8 GB RAM<br>"
+				+ "<\\/li><li><strong>Graphics:<\\/strong> NVIDIA GeForce GTX 660, ATI Radeon HD 7850<br><\\/li><li><strong>DirectX:<\\/strong> Version 11<br><\\/li><li>"
+				+ "<strong>Network:<\\/strong> Broadband Internet connection<br><\\/li><li><strong>Storage:<\\/strong> 15 GB available space<\\/li>"
+				+ "<\\/ul>\",\"recommended\":\"<strong>Recommended:<\\/strong><br><ul class=\\\"bb_ul\\\"><li><strong>OS:<\\/strong> WINDOWS® 10 (64Bit)<br>"
+				+ "<\\/li><li><strong>Processor:<\\/strong> Intel Core i5-6600K , AMD Ryzen 5 1600<br><\\/li><li><strong>Memory:<\\/strong> 16 GB RAM<br>"
+				+ "<\\/li><li><strong>Graphics:<\\/strong> NVIDIA GeForce GTX 1060 , AMD Radeon RX 580<br><\\/li><li><strong>DirectX:<\\/strong> Version 11<br><\\/li>"
+				+ "<li><strong>Network:<\\/strong> Broadband Internet connection<br><\\/li><li><strong>Storage:<\\/strong> 20 GB available space<br><\\/li>"
+				+ "<li><strong>Additional Notes:<\\/strong> Installing the game on an SSD improves loading times.<\\/li><\\/ul>\"}";
+		assertEquals(sysReqTest, thirdGame.getSysRequire());
+	}
+
+	@Test
+	void setSysReq4() {
+		Game fourthGame = new Game(gameIds[3]);
+		assertTrue(fourthGame.getSysRequire().contains("minimum"));
+		assertTrue(fourthGame.getSysRequire().contains("recommended"));
+	}
 
 }
