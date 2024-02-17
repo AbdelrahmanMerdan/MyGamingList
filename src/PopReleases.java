@@ -29,26 +29,6 @@ public class PopReleases {
 
 			JSONObject jSONResponse = new JSONObject(responseBody);
 			
-			String status = jSONResponse.optString("status");
-			
-			//If api fails to respond
-			while(!status.equals("1"))
-			{
-				//Calling API
-				request = HttpRequest.newBuilder()
-						.uri(URI.create("https://store.steampowered.com/api/getappsincategory/?category=cat_newreleases&cc=us&l=english"))
-						.method("GET", HttpRequest.BodyPublishers.noBody())
-						.build();
-
-				//Grabbing JSON response
-				response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
-				responseBody = response.body();
-				
-				jSONResponse = new JSONObject(responseBody);
-				status = jSONResponse.optString("status");
-			}
-			
 			JSONArray newReleases = jSONResponse.getJSONObject("tabs").getJSONObject("topsellers").getJSONArray("items");
 
 			//Storing top releases
