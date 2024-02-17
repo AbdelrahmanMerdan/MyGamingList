@@ -50,6 +50,11 @@ public class PopReleases {
 	}
 
 	
+	public int getSize() {
+		return games.size();
+	}
+	
+	
 	@Override
 	public String toString() {
 		return games.toString();
