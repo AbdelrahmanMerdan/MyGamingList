@@ -50,6 +50,11 @@ public class MostPlayed {
 		return games.get(i);
 	}
 
+
+	public int getSize() {
+		return games.size();
+	}
+	
 	
 	@Override
 	public String toString() {
