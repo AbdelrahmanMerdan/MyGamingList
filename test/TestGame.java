@@ -15,8 +15,32 @@ import src.Game;
 class TestGame {
 	
 	//Example ids
-    String [] gameIds = new String[] {"1086940", "271590", "1049590", "739630"};
+    	String [] gameIds = new String[] {"1086940", "271590", "1049590", "739630"};
 
+	//Tests cases for initializing
+	@Test
+	void initGame() {
+		Game firstGame = new Game(gameIds[0]);
+		assertEquals("Baldur's Gate 3", firstGame.getName());
+	}
+	@Test
+	void initGame2() {
+		Game secondGame = new Game(gameIds[1]);
+		assertEquals("Grand Theft Auto V", secondGame.getName());
+	}
+	@Test
+	void initGame3() {
+		Game thirdGame = new Game(gameIds[2]);
+		assertEquals("Eternal Return", thirdGame.getName());
+	}
+
+	@Test
+	void initGame4() {
+		Game fourthGame = new Game(gameIds[3]);
+		assertEquals("Phasmophobia", fourthGame.getName());
+	}
+
+	//Test cases for critic score
 	@Test
 	void setCriticRev1Score() {
 		
