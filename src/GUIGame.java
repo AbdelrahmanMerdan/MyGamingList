@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,8 +30,8 @@ public class GUIGame {
 	
 	private static JLabel gameTitleLabel;
 	private static JLabel gameImageLabel;
-	private static JTextPane bigDescriptionText;
-	private static JTextPane descriptionText;
+	private static JEditorPane bigDescriptionText;
+	private static JEditorPane descriptionText;
 	private static JButton reviewGameButton;
 	
 	//private static JButton criticReviewButton;
@@ -58,9 +60,10 @@ public class GUIGame {
 		gamePane.add(gameFooterPane, BorderLayout.SOUTH);
 		gameFooterPane.setOpaque(false);
 		
-		bigDescriptionText = new JTextPane();
-		bigDescriptionText.setForeground(Color.WHITE);
-		bigDescriptionText.setBackground(Color.BLACK);
+		bigDescriptionText = new JEditorPane();
+		bigDescriptionText.setContentType("text/html");
+		bigDescriptionText.setForeground(Color.BLACK);
+		bigDescriptionText.setBackground(Color.WHITE);
 		bigDescriptionText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		bigDescriptionText.setEditable(false);
 		
@@ -123,9 +126,10 @@ public class GUIGame {
 		gameDescriptionPane.setOpaque(false);
 		gamePane.add(gameDescriptionPane, BorderLayout.CENTER);
 		
-		descriptionText = new JTextPane();
-		descriptionText.setForeground(Color.WHITE);
-		descriptionText.setBackground(Color.BLACK);
+		descriptionText = new JEditorPane();
+		descriptionText.setForeground(Color.BLACK);
+		descriptionText.setBackground(Color.WHITE);
+		descriptionText.setContentType("text/html");
 		descriptionText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		descriptionText.setEditable(false);
 		
@@ -144,9 +148,13 @@ public class GUIGame {
 	
 	public static void loadGame(Game game) {
 		gameTitleLabel.setText(game.getName());
-		bigDescriptionText.setText(game.getSysRequire());
+
+		String sysRequireHtml = "<html>" + game.getSysRequire() + "</html>";
+		String descriptionHtml = "<html>" + game.getDescription() + "</html>";
+
+		bigDescriptionText.setText(sysRequireHtml);
 		//gameImageLabel.setIcon();
-		descriptionText.setText(game.getDescription());
+		descriptionText.setText(descriptionHtml);
 		criticReviewLabel.setText("Critic Score: " + game.getCriticScore());
 	}
 }
