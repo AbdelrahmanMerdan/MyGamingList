@@ -13,6 +13,7 @@ public class Game {
 	
 	//Instance variables
 	private String name, id, description, sysRequire, criticScore, criticURL;
+	private int UserReviewTotal, numberofreviews = 0;
 	
 	
 	public Game(String id) {
@@ -137,7 +138,49 @@ public class Game {
 	public String getCriticURL() {
 		return criticURL;
 	}
+	
+	//REVIEWS
+	public int getUserReview() {
+		
+		if(this.numberofreviews == 0) {
+			return 0;
+		}
+		
+		else {
+			int review = this.UserReviewTotal/this.numberofreviews;
 
+			return review;
+			
+			
+		}
+	}
+	
+	public int getNumberofReviews() {
+		int n = this.numberofreviews;
+		return n;
+	}
+	
+	public int getTotalReviews() {
+		return this.UserReviewTotal;
+	}
+	
+	public void addReview(int review) {
+		
+		this.numberofreviews++;
+		this.UserReviewTotal += review;
+	}
+	
+
+	public void updateReview(int review, int prevreview) {
+			
+			this.UserReviewTotal -= prevreview;
+			this.numberofreviews--;
+			this.addReview(review);
+			
+		
+	}
+	
+	//END OF REVIEWS
 
 	@Override
 	public String toString() {
