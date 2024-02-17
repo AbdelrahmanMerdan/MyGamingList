@@ -75,6 +75,7 @@ public class GUIGame {
 		gameFooterPane.setLayout(new GridLayout(0, 1, 0, 0));
 		gameFooterPane.add(bigDescriptionScrollPane);
 		bigDescriptionScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		bigDescriptionScrollPane.setPreferredSize(new Dimension( 10, 200));
 		
 		JPanel gameImagePane = new JPanel();
 		gameImagePane.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -149,7 +150,12 @@ public class GUIGame {
 	public static void loadGame(Game game) {
 		gameTitleLabel.setText(game.getName());
 
-		String sysRequireHtml = "<html>" + game.getSysRequire() + "</html>";
+		String sysRequireHtml = "<html>" + game.getSysRequire()
+				.replace("\"", "")
+				.replace("\\", "")
+				.replace("{minimum:", "")
+				.replace("}", "")
+				.replace(",recommended:", "")+ "</html>";
 		String descriptionHtml = "<html>" + game.getDescription() + "</html>";
 
 		bigDescriptionText.setText(sysRequireHtml);
