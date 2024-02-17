@@ -50,7 +50,7 @@ public class GUIMainMenu extends JFrame {
 		mostPlayedLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		mostPlayedBox.add(mostPlayedLabel);
 		
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			int game = i;
             mostPlayedBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(mostPlayed.getGame(game).getName());
@@ -94,7 +94,7 @@ public class GUIMainMenu extends JFrame {
 		popularReleaseLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		popularReleaseBox.add(popularReleaseLabel);
 		
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 10; i++) {
 			int game = i;
             popularReleaseBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(popReleases.getGame(game).getName());
