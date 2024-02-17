@@ -18,7 +18,7 @@ public class MostPlayed {
 		try {
 			//Calling API
 			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create("https://store.steampowered.com/api/getappsincategory/?category=cat_newreleases&cc=us&l=english"))
+					.uri(URI.create("https://api.steampowered.com/ISteamChartsService/GetGamesByConcurrentPlayers/v1/?"))
 					.method("GET", HttpRequest.BodyPublishers.noBody())
 					.build();
 
