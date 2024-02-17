@@ -40,6 +40,14 @@ class TestGame {
 		assertEquals("Phasmophobia", fourthGame.getName());
 	}
 
+	//Test case for getting active player base
+	@Test
+	void getActivePlayers() {
+		Game firstGame = new Game(gameIds[0]);
+		assertEquals("103583", firstGame.getCurrentPlayers());
+	}
+
+
 	//Test cases for critic score
 	@Test
 	void setCriticRev1Score() {
