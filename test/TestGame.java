@@ -162,4 +162,88 @@ class TestGame {
 		assertTrue(fourthGame.getSysRequire().contains("recommended"));
 	}
 
+	// Test Reviewing
+
+	@Test
+    public void TestgetNumberofReviews() {
+		// write test checks Multiple Reviews
+    	Game game = new Game("271590");
+    	game.addReview(10);
+    	int review = game.getNumberofReviews();
+    	assertEquals(1,review);
+       
+    }
+	
+	@Test
+    public void TestgetTotalReviews() {
+		// write test checks Multiple Reviews
+    	Game game = new Game("271590");
+    	game.addReview(10);
+    	int review = game.getTotalReviews();
+    	assertEquals(10,review);
+       
+    }
+	
+	
+	@Test
+    public void testOneReview() {
+		// write test checks Multiple Reviews
+    	Game game = new Game("271590");
+    	game.addReview(10);
+    	int review = game.getUserReview();
+    	assertEquals(10,review);
+       
+    }
+	
+	@Test
+    public void testMultipleReview() {
+    	// write test checks Multiple Reviews
+    	Game game = new Game("271590");
+    	game.addReview(10);
+    	game.addReview(5);
+    	game.addReview(5);
+    	game.addReview(4);
+    	System.out.println(game.getTotalReviews());
+    	int review = game.getUserReview();
+    	assertEquals(6,review);
+       
+    }
+	
+	@Test
+    public void testUpdateReview() {
+    	// write test that the 2^3 is equal to 8
+    	Game game = new Game("271590");
+    	game.addReview(10);
+    	game.addReview(5);
+    	game.addReview(5);
+    	game.addReview(4);
+    	
+    	System.out.println(game.getTotalReviews());
+    	
+    	game.updateReview(8, 4);
+    	System.out.println(game.getTotalReviews());
+    	int review = game.getUserReview();
+    	assertEquals(7,review);
+       
+    }
+	
+	@Test
+    public void testUpdateReview2() {
+    	// write test that the 2^3 is equal to 8
+    	Game game = new Game("271590");
+    	game.addReview(10);
+    	game.addReview(5);
+    	game.addReview(5);
+    	game.addReview(4);
+    	
+    	game.updateReview(10, 10);
+    	game.updateReview(10, 5);
+    	game.updateReview(10, 5);
+    	game.updateReview(10, 4);
+    	System.out.println(game.getTotalReviews());
+    	int review = game.getUserReview();
+    	assertEquals(10,review);
+       
+    }
+
 }
