@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -30,7 +31,7 @@ public class GUIGame {
 	
 	private static JLabel gameTitleLabel;
 	private static JLabel gameImageLabel;
-	private static JEditorPane bigDescriptionText;
+	private static JEditorPane sysRequireText;
 	private static JEditorPane descriptionText;
 	private static JButton reviewGameButton;
 	
@@ -60,22 +61,21 @@ public class GUIGame {
 		gamePane.add(gameFooterPane, BorderLayout.SOUTH);
 		gameFooterPane.setOpaque(false);
 		
-		bigDescriptionText = new JEditorPane();
-		bigDescriptionText.setContentType("text/html");
-		bigDescriptionText.setForeground(Color.BLACK);
-		bigDescriptionText.setBackground(Color.WHITE);
-		bigDescriptionText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		bigDescriptionText.setEditable(false);
+		sysRequireText = new JEditorPane();
+		sysRequireText.setContentType("text/html");
+		sysRequireText.setBackground(Color.WHITE);
+		sysRequireText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		sysRequireText.setEditable(false);
 		
-		JScrollPane bigDescriptionScrollPane = new JScrollPane(bigDescriptionText);
-		bigDescriptionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		bigDescriptionScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		bigDescriptionScrollPane.getVerticalScrollBar().setPreferredSize( new Dimension(0,0) );
-		bigDescriptionScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		JScrollPane sysRequireScrollPane = new JScrollPane(sysRequireText);
+		sysRequireScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sysRequireScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		sysRequireScrollPane.getVerticalScrollBar().setPreferredSize( new Dimension(0,0) );
+		sysRequireScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		gameFooterPane.setLayout(new GridLayout(0, 1, 0, 0));
-		gameFooterPane.add(bigDescriptionScrollPane);
-		bigDescriptionScrollPane.setBorder(BorderFactory.createEmptyBorder());
-		bigDescriptionScrollPane.setPreferredSize(new Dimension( 10, 200));
+		gameFooterPane.add(sysRequireScrollPane);
+		sysRequireScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		sysRequireScrollPane.setPreferredSize(new Dimension( 10, 200));
 		
 		JPanel gameImagePane = new JPanel();
 		gameImagePane.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -128,7 +128,6 @@ public class GUIGame {
 		gamePane.add(gameDescriptionPane, BorderLayout.CENTER);
 		
 		descriptionText = new JEditorPane();
-		descriptionText.setForeground(Color.BLACK);
 		descriptionText.setBackground(Color.WHITE);
 		descriptionText.setContentType("text/html");
 		descriptionText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
@@ -157,10 +156,24 @@ public class GUIGame {
 				.replace("}", "")
 				.replace(",recommended:", "")+ "</html>";
 		String descriptionHtml = "<html>" + game.getDescription() + "</html>";
-
-		bigDescriptionText.setText(sysRequireHtml);
-		//gameImageLabel.setIcon();
+		
+		sysRequireText.setText(sysRequireHtml);
+		sysRequireText.setCaretPosition(0);
 		descriptionText.setText(descriptionHtml);
+		descriptionText.setCaretPosition(0);
+		
 		criticReviewLabel.setText("Critic Score: " + game.getCriticScore());
+		
+		//ToDo Get image from database and set
+		
+		URL url = null;
+	    try {
+	        url = new URL("https://cdn.cloudflare.steamstatic.com/steam/apps/1229490/header.jpg?t=1704406135");
+	        gameImageLabel.setIcon(new ImageIcon(ImageIO.read(url)));
+	    } catch (MalformedURLException ex) {
+	        System.out.println("Malformed URL");
+	    } catch (IOException iox) {
+	        System.out.println("Can not load file");
+	    }
 	}
 }
