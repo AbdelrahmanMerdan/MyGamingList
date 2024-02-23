@@ -1,3 +1,4 @@
+package src;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
