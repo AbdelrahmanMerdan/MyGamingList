@@ -36,15 +36,7 @@ public class MostPlayed {
 			for(JsonNode node : jsonArray) 
 			{
 				int id = node.get("appid").asInt();
-				
-				//When database doesn't have the app
-				if(Database.noAppExists(id))
-				{
-					Database.addApp(id);
-				}
-				
 				games.add(Database.getGame(id));
-				
 			}
 			
 		} catch(InterruptedException e) {
