@@ -149,12 +149,7 @@ public class GUIGame {
 	public static void loadGame(Game game) {
 		gameTitleLabel.setText(game.getName());
 
-		String sysRequireHtml = "<html>" + game.getSysRequire()
-				.replace("\"", "")
-				.replace("\\", "")
-				.replace("{minimum:", "")
-				.replace("}", "")
-				.replace(",recommended:", "")+ "</html>";
+		String sysRequireHtml = "<html>" + game.getSysRequire() + "</html>";
 		String descriptionHtml = "<html>" + game.getDescription() + "</html>";
 		
 		sysRequireText.setText(sysRequireHtml);
@@ -168,7 +163,7 @@ public class GUIGame {
 		
 		URL url = null;
 	    try {
-	        url = new URL("https://cdn.cloudflare.steamstatic.com/steam/apps/1229490/header.jpg?t=1704406135");
+	        url = new URL(game.getHeaderImageUrl());
 	        gameImageLabel.setIcon(new ImageIcon(ImageIO.read(url)));
 	    } catch (MalformedURLException ex) {
 	        System.out.println("Malformed URL");

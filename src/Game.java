@@ -12,7 +12,7 @@ import org.json.*;
 public class Game {
 	
 	//Instance variables
-	private String name, id, description, sysRequire, criticScore, criticURL;
+	private String name, id, description, sysRequire, criticScore, criticURL, headerImageUrl;
 	private int UserReviewTotal, numberofreviews = 0;
 	
 	
@@ -33,11 +33,12 @@ public class Game {
 			JSONObject game = jSONResponse.getJSONObject(id);
         
    			//Setting Attributes
-        		setName(game);
-        		setID(game);
-        		setDescription(game);
-        		setCriticRev(game);
-        		setSysRequire(game);
+			setName(game);
+			setID(game);
+			setDescription(game);
+			setCriticRev(game);
+			setSysRequire(game);
+			setHeaderImageUrl(game);
         
 		} catch(InterruptedException e) {
 			e.printStackTrace();
@@ -49,6 +50,14 @@ public class Game {
 		} 
 	}
 
+	public void setHeaderImageUrl(JSONObject game) {
+		headerImageUrl = game.getJSONObject("data").optString("header_image")
+				.replace("\\", "");
+	}
+
+	public String getHeaderImageUrl() {
+		return this.headerImageUrl;
+	}
 
 	public void setName(JSONObject game) {
 		name = game.getJSONObject("data").optString("name");
@@ -77,8 +86,12 @@ public class Game {
 	}
 
 	public void setSysRequire(JSONObject game) {
-		sysRequire = game.getJSONObject("data").optString("pc_requirements");
-
+		sysRequire = game.getJSONObject("data").optString("pc_requirements")
+				.replace("\"", "")
+				.replace("\\", "")
+				.replace("{minimum:", "")
+				.replace("}", "")
+				.replace(",recommended:", "");
 	}
 
 	public String getCurrentPlayers() {
