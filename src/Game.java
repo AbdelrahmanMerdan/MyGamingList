@@ -1,203 +1,113 @@
 package src;
 
-import java.io.IOException;
-import java.util.*;
-import java.net.*;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import org.json.*;
+import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Game {
-	
+
 	//Instance variables
-	private String name, id, description, sysRequire, criticScore, criticURL, headerImageUrl;
-	private int UserReviewTotal, numberofreviews = 0;
+	private int id;
+	private String name, shortDesc, desc, cover, sysRequire, metaScore, metaURL;
+
+	public Game(@JsonProperty("_id") int id, @JsonProperty("name") String name, @JsonProperty("short_description") String shortDesc, @JsonProperty("description") String desc, @JsonProperty("cover_art") String cover, @JsonProperty("pc_requirements") String sysRequire, @JsonProperty("meta_score") String metaScore, @JsonProperty("meta_link") String metaURL) {
+		this.id = id;
+		this.name = name;
+		this.shortDesc = shortDesc;
+		this.desc = desc;
+		this.cover = cover;
+		this.sysRequire = sysRequire;
+		this.metaScore = metaScore;
+		this.metaURL = metaURL;
+	}
+
+	public int getID() {
+		return id;
+	}
+
+	public void setID(int id) {
+		this.id = id;
+	}
 	
-	
-	public Game(String id) {
-		try {
-			//Calling api
-			HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("https://store.steampowered.com/api/appdetails?appids="+id+"&I=english"))
-				.method("GET", HttpRequest.BodyPublishers.noBody())
-				.build();
-		
-			//Grabbing json response
-			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-		
-			String responseBody = response.body();
-		
-			JSONObject jSONResponse = new JSONObject(responseBody);
-			JSONObject game = jSONResponse.getJSONObject(id);
-        
-   			//Setting Attributes
-			setName(game);
-			setID(game);
-			setDescription(game);
-			setCriticRev(game);
-			setSysRequire(game);
-			setHeaderImageUrl(game);
-        
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		} catch(IOException e) {
-			e.printStackTrace();
-		} catch(JSONException e) {
-			//Here just in case steamappID turns out to be empty
-			name = "Not Available";
-		} 
-	}
-
-	public void setHeaderImageUrl(JSONObject game) {
-		headerImageUrl = game.getJSONObject("data").optString("header_image")
-				.replace("\\", "");
-	}
-
-	public String getHeaderImageUrl() {
-		return this.headerImageUrl;
-	}
-
-	public void setName(JSONObject game) {
-		name = game.getJSONObject("data").optString("name");
-	}
-
-
-	public void setID(JSONObject game) {
-		id = game.getJSONObject("data").optString("steam_appid");
-	}
-
-
-	public void setDescription(JSONObject game) {
-		description = game.getJSONObject("data").optString("about_the_game");
-	}
-
-	
-	public void setCriticRev(JSONObject game) {
-		try {
-	            criticScore = game.getJSONObject("data").getJSONObject("metacritic").optString("score");
-	            criticURL = game.getJSONObject("data").getJSONObject("metacritic").optString("url");
-			
-	        } catch(JSONException e) {
-	            criticScore = "N/A";
-	            criticURL = "N/A";
-	        }
-	}
-
-	public void setSysRequire(JSONObject game) {
-		sysRequire = game.getJSONObject("data").optString("pc_requirements")
-				.replace("\"", "")
-				.replace("\\", "")
-				.replace("{minimum:", "")
-				.replace("}", "")
-				.replace(",recommended:", "");
-	}
-
-	public String getCurrentPlayers() {
-		try {
-			//Calling API
-			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid="+id))
-					.method("GET", HttpRequest.BodyPublishers.noBody())
-					.build();
-
-			//Grabbing JSON response
-			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
-			String responseBody = response.body();
-
-			JSONObject jSONResponse = new JSONObject(responseBody);
-
-			//Returning player count
-			return jSONResponse.getJSONObject("response").optString("player_count");
-
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-
-		//If above operation was unsuccessful.
-		return "ERROR";
-	}
-
 	public String getName() {
 		return name;
 	}
 
-
-	public String getId() {
-		return id;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-
-	public String getDescription() {
-		return description;
+	public String getShortDesc() {
+		return shortDesc;
 	}
 
+	public void setShortDesc(String shortDesc) {
+		this.shortDesc = shortDesc;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public String getCover() {
+		return cover;
+	}
+
+	public void setCover(String cover) {
+		this.cover = cover;
+	}
 
 	public String getSysRequire() {
 		return sysRequire;
 	}
 
-
-	public String getCriticScore() {
-		return criticScore;
+	public void setSysRequire(String sysRequire) {
+		this.sysRequire = sysRequire;
 	}
 
+	public String getMetaScore() {
+		return metaScore;
+	}
 
-	public String getCriticURL() {
-		return criticURL;
+	public void setMetaScore(String metaScore) {
+		this.metaScore = metaScore;
 	}
-	
-	//REVIEWS
-	public int getUserReview() {
-		
-		if(this.numberofreviews == 0) {
-			return 0;
-		}
-		
-		else {
-			int review = this.UserReviewTotal/this.numberofreviews;
 
-			return review;
-			
-			
-		}
+	public String getMetaURL() {
+		return metaURL;
 	}
-	
-	public int getNumberofReviews() {
-		int n = this.numberofreviews;
-		return n;
-	}
-	
-	public int getTotalReviews() {
-		return this.UserReviewTotal;
-	}
-	
-	public void addReview(int review) {
-		
-		this.numberofreviews++;
-		this.UserReviewTotal += review;
-	}
-	
 
-	public void updateReview(int review, int prevreview) {
-			
-			this.UserReviewTotal -= prevreview;
-			this.numberofreviews--;
-			this.addReview(review);
-			
-		
+	public void setMetaURL(String metaURL) {
+		this.metaURL = metaURL;
 	}
 	
-	//END OF REVIEWS
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Game other = (Game) obj;
+		return id == other.id;
+	}
 
 	@Override
 	public String toString() {
-		return name;
+		return " name=" + name + "\n id=" + id + "\n shortDesc=" + shortDesc + "\n desc=" + desc + "\n cover=" + cover
+				+ "\n sysRequire=" + sysRequire + "\n metaScore=" + metaScore + "\n metaURL=" + metaURL;
 	}
+	
 	
 }
