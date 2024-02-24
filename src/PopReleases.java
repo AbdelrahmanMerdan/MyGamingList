@@ -6,14 +6,16 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
-import org.json.*;
+import com.fasterxml.jackson.databind.*;
 
 public class PopReleases {
 
-	//Instance variable
-	ArrayList<Game> games = new ArrayList<>();
-
+	//ObjectMapper
+	final static ObjectMapper map = new ObjectMapper();
 	
+	//Instance variable
+	ArrayList<Game> games;
+
 	public PopReleases() {
 		try {
 			//Calling API
@@ -27,15 +29,29 @@ public class PopReleases {
 
 			String responseBody = response.body();
 
-			JSONObject jSONResponse = new JSONObject(responseBody);
-
-			JSONArray list = jSONResponse.getJSONObject("tabs").getJSONObject("topsellers").getJSONArray("items");
-
-			//Storing top releases
-			for(int i = 0; i < 10; i++) 
+			//Getting array from JSON
+			JsonNode jsonArray = map.readTree(responseBody);
+			jsonArray = jsonArray.get("tabs").get("topsellers").get("items");
+			
+			LinkedHashSet<Game> tmp = new LinkedHashSet<>();
+			
+			for(JsonNode node : jsonArray) 
 			{
-				games.add(new Game(list.getJSONObject(i).optString("id")));
+				if(node.get("type").asInt() == 0)
+				{
+					int id = node.get("id").asInt();
+					
+					//When database doesn't have the app
+					if(Database.noAppExists(id))
+					{
+						Database.addApp(id);
+					}
+					
+					tmp.add(Database.getGame(id));
+				}
 			}
+			
+			games = new ArrayList<>(tmp);
 
 		} catch(InterruptedException e) {
 			e.printStackTrace();
@@ -45,7 +61,7 @@ public class PopReleases {
 		} 
 
 	}
-
+	
 	public Game getGame(int i) {
 		return games.get(i);
 	}
