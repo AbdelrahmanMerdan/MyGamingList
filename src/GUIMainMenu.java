@@ -50,7 +50,7 @@ public class GUIMainMenu extends JFrame {
 		mostPlayedLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		mostPlayedBox.add(mostPlayedLabel);
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < mostPlayed.getSize(); i++) {
 			int game = i;
             mostPlayedBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(mostPlayed.getGame(game).getName());
@@ -59,7 +59,7 @@ public class GUIMainMenu extends JFrame {
             lbl.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					GUIGame.loadGame(mostPlayed.getGame(game));
+					GUIGame.loadGame(mostPlayed, popReleases, mostPlayed.getGame(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 				}
 				@Override public void mousePressed(MouseEvent e) {}
@@ -94,7 +94,7 @@ public class GUIMainMenu extends JFrame {
 		popularReleaseLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		popularReleaseBox.add(popularReleaseLabel);
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < popReleases.getSize(); i++) {
 			int game = i;
             popularReleaseBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(popReleases.getGame(game).getName());
@@ -103,7 +103,7 @@ public class GUIMainMenu extends JFrame {
             lbl.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					GUIGame.loadGame(popReleases.getGame(game));
+					GUIGame.loadGame(mostPlayed, popReleases, popReleases.getGame(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 				}
 				@Override public void mousePressed(MouseEvent e) {}
