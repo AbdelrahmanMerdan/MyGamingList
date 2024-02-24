@@ -102,11 +102,20 @@ public class Database {
     		jsonResponse = jsonResponse.get(appID).get("data");
     		
     		//Updating database
-    		updateShortDesc(jsonResponse, games, game);
-    		updateDesc(jsonResponse, games, game);
-    		updateCover(jsonResponse, games, game);
-    		updateSysRequire(jsonResponse, games, game);
-    		updateMetacritic(jsonResponse, games, game);
+    		Bson update = Updates.combine(updateShortDesc(jsonResponse, games, game),
+    		updateDesc(jsonResponse, games, game),
+    		updateCover(jsonResponse, games, game),
+    		updateSysRequire(jsonResponse, games, game),
+    		updateMetacritic(jsonResponse, games, game));
+    		
+    		//Updating
+			try {
+				UpdateResult updateResult = games.updateOne(game, update);
+				System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
+				
+			} catch(MongoException e) {
+				System.err.println("ERROR: "+e);
+			}
     		
     	} catch(InterruptedException e) {
 			e.printStackTrace();
@@ -157,11 +166,20 @@ public class Database {
         	Document game = result.first();
     		
     		//Updating database
-    		updateShortDesc(jsonResponse, games, game);
-    		updateDesc(jsonResponse, games, game);
-    		updateCover(jsonResponse, games, game);
-    		updateSysRequire(jsonResponse, games, game);
-    		updateMetacritic(jsonResponse, games, game);
+    		Bson update = Updates.combine(updateShortDesc(jsonResponse, games, game),
+    		updateDesc(jsonResponse, games, game),
+    		updateCover(jsonResponse, games, game),
+    		updateSysRequire(jsonResponse, games, game),
+    		updateMetacritic(jsonResponse, games, game));
+    		
+    		//Updating
+			try {
+				UpdateResult updateResult = games.updateOne(game, update);
+				System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
+				
+			} catch(MongoException e) {
+				System.err.println("ERROR: "+e);
+			}
     		
     	} catch(InterruptedException e) {
 			e.printStackTrace();
@@ -193,61 +211,41 @@ public class Database {
     	
     	return null;
     }
-	private static void updateShortDesc(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+    
+	private static Bson updateShortDesc(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
 		//Grabbing short description
 		String txt = jsonResponse.get("short_description").asText();
 		
 		//Setting update option
 		Bson update = Updates.set("short_description", txt);
 		
-		//Updating
-		try {
-			UpdateResult result = games.updateOne(game, update);
-			System.out.println("Acknowledged: "+result.wasAcknowledged());
-			
-		} catch(MongoException e) {
-			System.err.println("ERROR: "+e);
-		}
+		return update;
 	}
 
 
-	private static void updateDesc(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+	private static Bson updateDesc(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
 		//Grabbing description
 		String txt = jsonResponse.get("about_the_game").asText();
 
 		//Setting update option
 		Bson update = Updates.set("description", txt);
 
-		//Updating
-		try {
-			UpdateResult result = games.updateOne(game, update);
-			
-			System.out.println("Acknowledged: "+result.wasAcknowledged());
-		} catch(MongoException e) {
-			System.err.println("ERROR: "+e);
-		}	
+		return update;
 	}
 
 
-	private static void updateCover(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+	private static Bson updateCover(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
 		//Grabbing img link
 		String img = jsonResponse.get("header_image").asText();
 
 		//Setting update option
 		Bson update = Updates.set("cover_art", img);
 
-		//Updating
-		try {
-			UpdateResult result = games.updateOne(game, update);
-			System.out.println("Acknowledged: "+result.wasAcknowledged());
-			
-		} catch(MongoException e) {
-			System.err.println("ERROR: "+e);
-		}
+		return update;
 	}
 
 
-	private static void updateSysRequire(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+	private static Bson updateSysRequire(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
 		//Grabbing sys requirements
 		String txt = jsonResponse.get("pc_requirements").get("minimum").asText();
 		
@@ -257,24 +255,17 @@ public class Database {
 			
 		} catch(NullPointerException e) {
 			//Else, do nothing
-			
-		} finally {
-			//Setting update option
-			Bson update = Updates.set("pc_requirements", txt);
-
-			//Updating
-			try {
-				UpdateResult result = games.updateOne(game, update);
-				System.out.println("Acknowledged: "+result.wasAcknowledged());
-				
-			} catch(MongoException e) {
-				System.err.println("ERROR: "+e);
-			}
 		}
+		
+		//Setting update option
+		Bson update = Updates.set("pc_requirements", txt);
+
+		return update;
+		
 	}
 
 
-	private static void updateMetacritic(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+	private static Bson updateMetacritic(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
 		//Default values for score and link
 		String score = "N/A";
 		String link = "N/A";
@@ -286,21 +277,14 @@ public class Database {
 			
 		} catch(NullPointerException e) {
 			//Else, do nothing
-			
-		} finally {
-			//Setting update option
-			Bson update = Updates.set("meta_score", score);
-			Bson update2 = Updates.set("meta_link", link);
+		} 
+		
+		//Setting update option
+		Bson update = Updates.set("meta_score", score);
+		Bson update2 = Updates.set("meta_link", link);
+		Bson total = Updates.combine(update, update2);
 
-			//Updating
-			try {
-				UpdateResult result = games.updateOne(game, update);
-				result = games.updateOne(game, update2);
-				System.out.println("Acknowledged: "+result.wasAcknowledged());
-				
-			} catch(MongoException e) {
-				System.err.println("ERROR: "+e);
-			}
-		}
+		return total;
+		
 	}
 }
