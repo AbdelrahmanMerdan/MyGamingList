@@ -6,14 +6,16 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
-import org.json.*;
+import com.fasterxml.jackson.databind.*;
 
 public class MostPlayed {
 
-	//Instance variable
-	ArrayList<Game> games = new ArrayList<>();
-
+	//ObjectMapper
+	final static ObjectMapper map = new ObjectMapper();
 	
+	//Instance variable
+	public static ArrayList<Game> games = new ArrayList<>();
+
 	public MostPlayed() {
 		try {
 			//Calling API
@@ -27,26 +29,32 @@ public class MostPlayed {
 
 			String responseBody = response.body();
 
-			JSONObject jSONResponse = new JSONObject(responseBody);
-
-			JSONArray list = jSONResponse.getJSONObject("response").getJSONArray("ranks");
-
-			//Storing most played
-			for(int i = 0; i < 10; i++) 
+			//Getting array from JSON
+			JsonNode jsonArray = map.readTree(responseBody);
+			jsonArray = jsonArray.get("response").get("ranks");
+			
+			for(JsonNode node : jsonArray) 
 			{
-				games.add(new Game(list.getJSONObject(i).optString("appid")));
+				int id = node.get("appid").asInt();
+				
+				//When database doesn't have the app
+				if(Database.noAppExists(id))
+				{
+					Database.addApp(id);
+				}
+				
+				games.add(Database.getGame(id));
+				
 			}
-
+			
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 
 		} catch(IOException e) {
 			e.printStackTrace();
 		} 
-		
-		
 	}
-
+	
 	public Game getGame(int i) {
 		return games.get(i);
 	}
@@ -54,12 +62,6 @@ public class MostPlayed {
 	
 	public int getSize() {
 		return games.size();
-	}
-	
-	
-	@Override
-	public String toString() {
-		return games.toString();
 	}
 
 }
