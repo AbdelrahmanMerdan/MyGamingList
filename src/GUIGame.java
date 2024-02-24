@@ -146,24 +146,46 @@ public class GUIGame {
 		
 	}
 	
-	public static void loadGame(Game game) {
-		gameTitleLabel.setText(game.getName());
-
-		String sysRequireHtml = "<html>" + game.getSysRequire() + "</html>";
-		String descriptionHtml = "<html>" + game.getDescription() + "</html>";
+	public static void loadGame(MostPlayed mostPlayed, PopReleases popReleases, Game game) {
+		//When database don't have app details
+		if(Database.noAppDetails(game.getID()))
+		{
+			//Update database
+			Database.updateAppDetails(game.getID());
+			game = Database.getGame(game.getID());
+			
+		}
 		
+		//For games that didn't have their info in the database when the program boots
+		if(game.getSysRequire() == null)
+		{
+			game = Database.getGame(game.getID());
+		}
+		
+		//Setting game page
+		gameTitleLabel.setText(game.getName());
+		
+		//Formatting HTML
+		String sysRequireHtml = "<html>" + game.getSysRequire()
+				.replace("\"", "")
+				.replace("\\", "")
+				.replace("{minimum:", "")
+				.replace("}", "")
+				.replace(",recommended:", "")+ "</html>";
+		String descriptionHtml = "<html>" + game.getDesc() + "</html>";
+		
+		//Formatting text
 		sysRequireText.setText(sysRequireHtml);
 		sysRequireText.setCaretPosition(0);
 		descriptionText.setText(descriptionHtml);
 		descriptionText.setCaretPosition(0);
 		
-		criticReviewLabel.setText("Critic Score: " + game.getCriticScore());
+		criticReviewLabel.setText("Critic Score: " + game.getMetaScore());
 		
-		//ToDo Get image from database and set
-		
+		//Get image from database and set
 		URL url = null;
 	    try {
-	        url = new URL(game.getHeaderImageUrl());
+	        url = new URL(game.getCover());
 	        gameImageLabel.setIcon(new ImageIcon(ImageIO.read(url)));
 	    } catch (MalformedURLException ex) {
 	        System.out.println("Malformed URL");
