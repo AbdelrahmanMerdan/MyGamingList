@@ -35,10 +35,10 @@ public class Database {
 	final static MongoDatabase database = client.getDatabase("MyGamingList");
 
 	//Collections
-	final static MongoCollection<Document> games = database.getCollection("Games");
+	public final static MongoCollection<Document> games = database.getCollection("Games");
 	
 	//ObjectMapper
-	final static ObjectMapper map = new ObjectMapper();
+	public final static ObjectMapper map = new ObjectMapper();
 
 	
 	public static boolean noAppExists(int id) {
