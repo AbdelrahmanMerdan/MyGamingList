@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -56,18 +57,12 @@ public class GUIMainMenu extends JFrame {
             JLabel lbl = new JLabel(mostPlayed.getGame(game).getName());
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            lbl.addMouseListener(new MouseListener() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					GUIGame.loadGame(mostPlayed, popReleases, mostPlayed.getGame(game));
+            lbl.addMouseListener(new MouseAdapter() {
+    			public void mouseClicked(MouseEvent e) {
+    				GUIGame.loadGame(mostPlayed.getGame(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
-				}
-				@Override public void mousePressed(MouseEvent e) {}
-				@Override public void mouseReleased(MouseEvent e) {}
-				@Override public void mouseEntered(MouseEvent e) {}
-				@Override public void mouseExited(MouseEvent e) {}
-            	
-            });
+    			}
+    		});
             mostPlayedBox.add(lbl);
         }
 		
@@ -103,7 +98,7 @@ public class GUIMainMenu extends JFrame {
             lbl.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					GUIGame.loadGame(mostPlayed, popReleases, popReleases.getGame(game));
+					GUIGame.loadGame(popReleases.getGame(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 				}
 				@Override public void mousePressed(MouseEvent e) {}

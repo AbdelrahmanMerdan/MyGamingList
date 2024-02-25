@@ -32,15 +32,13 @@ public class Database {
 
 	//Database
 	static final MongoDatabase database = client.getDatabase("MyGamingList");
+	static final MongoCollection<Document> games = database.getCollection("Games");
 	
 	//ObjectMapper
 	final static ObjectMapper map = new ObjectMapper();
     
 	
 	public static boolean noAppExists(int id) {
-    	//Grabbing games
-    	MongoCollection<Document> games = database.getCollection("Games");
-    	
     	//Filtering
     	Bson filter = eq("_id", id);
     	FindIterable<Document> result = games.find(filter);
@@ -56,9 +54,6 @@ public class Database {
     
 	
 	public static boolean noAppDetails(int id) {
-    	//Grabbing games
-    	MongoCollection<Document> games = database.getCollection("Games");
-    	
     	//Filtering
     	Bson filter = and(eq("_id", id), exists("description"));
     	FindIterable<Document> result = games.find(filter);
@@ -77,9 +72,6 @@ public class Database {
     	//Declaring and initializing 
     	String appID = String.valueOf(id);
     	JsonNode jsonResponse;
-    	
-    	//Grabbing games
-    	MongoCollection<Document> games = database.getCollection("Games");
     	
     	//Grabbing specified game
     	Bson filter = eq("_id", id);
@@ -130,9 +122,6 @@ public class Database {
     	//Declaring and initializing 
     	String appID = String.valueOf(id);
     	JsonNode jsonResponse;
-    	
-    	//Grabbing games
-    	MongoCollection<Document> games = database.getCollection("Games");
     	
     	try {
     		//Calling API
@@ -191,9 +180,6 @@ public class Database {
     }
     
     public static Game getGame(int id) {
-    	//Grabbing games
-    	MongoCollection<Document> games = database.getCollection("Games");
-    	
     	//Grabbing specified game
     	Bson filter = eq("_id", id);
     	FindIterable<Document> result = games.find(filter);
