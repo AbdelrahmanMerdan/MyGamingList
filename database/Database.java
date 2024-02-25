@@ -1,4 +1,4 @@
-package src;
+package database;
 
 import com.mongodb.*;
 import static com.mongodb.client.model.Filters.*;
