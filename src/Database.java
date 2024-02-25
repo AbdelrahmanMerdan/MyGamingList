@@ -32,11 +32,13 @@ public class Database {
 
 	//Database
 	static final MongoDatabase database = client.getDatabase("MyGamingList");
+
+	//Collections
 	static final MongoCollection<Document> games = database.getCollection("Games");
 	
 	//ObjectMapper
 	final static ObjectMapper map = new ObjectMapper();
-    
+
 	
 	public static boolean noAppExists(int id) {
     	//Filtering
@@ -51,7 +53,7 @@ public class Database {
     	
     	return false;
     }
-    
+
 	
 	public static boolean noAppDetails(int id) {
     	//Filtering
@@ -117,7 +119,8 @@ public class Database {
 		}
     	 	
     }
-    
+
+	
     public static void addApp(int id) {
     	//Declaring and initializing 
     	String appID = String.valueOf(id);
@@ -178,7 +181,8 @@ public class Database {
 		}
     	 	
     }
-    
+
+	
     public static Game getGame(int id) {
     	//Grabbing specified game
     	Bson filter = eq("_id", id);
