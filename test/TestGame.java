@@ -104,23 +104,23 @@ class TestGame {
 	@Test
 	void setDescription1() {
 		Game firstGame = Database.getGame(gameIds[0]);
-		assertTrue(firstGame.getDescription().startsWith("<img src=\"https://cdn.akamai.steamstatic.com/steam/apps/1086940/"));
+		assertTrue(firstGame.getDesc().startsWith("<img src=\"https://cdn.akamai.steamstatic.com/steam/apps/1086940/"));
 	}
 	@Test
 	void setDescription2() {
 		Game secondGame = Database.getGame(gameIds[1]);
-		assertTrue(secondGame.getDescription().startsWith("When a young street hustler,"));
+		assertTrue(secondGame.getDesc().startsWith("When a young street hustler,"));
 	}
 	@Test
 	void setDescription3() {
 		Game thirdGame = Database.getGame(gameIds[2]);
-		assertTrue(thirdGame.getDescription().startsWith("<img src=\"https://cdn.akamai.steamstatic.com/steam/apps/1049590/"));
+		assertTrue(thirdGame.getDesc().startsWith("<img src=\"https://cdn.akamai.steamstatic.com/steam/apps/1049590/"));
 	}
 
 	@Test
 	void setDescription4() {
 		Game fourthGame = Database.getGame(gameIds[3]);
-		assertTrue(fourthGame.getDescription().startsWith("Phasmophobia is a 4-player"));
+		assertTrue(fourthGame.getDesc().startsWith("Phasmophobia is a 4-player"));
 	}
 
 
