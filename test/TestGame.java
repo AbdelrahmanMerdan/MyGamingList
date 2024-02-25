@@ -39,64 +39,64 @@ class TestGame {
 	@Test
 	void setCriticRev1Score() {
 
-		Game firstGame = new Game(gameIds[0]);
-		assertEquals("96", firstGame.getCriticScore());
+		Game firstGame = Database.getGame(gameIds[0]);
+		assertEquals("96", firstGame.getMetaScore());
 
 	}
 
 	@Test
 	void setCriticRev2Score() {
 
-		Game secondGame = new Game(gameIds[1]);
-		assertEquals("96", secondGame.getCriticScore());
+		Game secondGame = Database.getGame(gameIds[1]);
+		assertEquals("96", secondGame.getMetaScore());
 
 	}
 
 	@Test
 	void setCriticRev3Score() {
 
-		Game thirdGame = new Game(gameIds[2]);
-		assertEquals("N/A", thirdGame.getCriticScore());
+		Game thirdGame = Database.getGame(gameIds[2]);
+		assertEquals("N/A", thirdGame.getMetaScore());
 
 	}
 
 	@Test
 	void setCriticRev4Score() {
 
-		Game fourthGame = new Game(gameIds[3]);
-		assertEquals("N/A", fourthGame.getCriticScore());
+		Game fourthGame = Database.getGame(gameIds[3]);
+		assertEquals("N/A", fourthGame.getMetaScore());
 
 	}
 
 	@Test
 	void setCriticRev1url() {
 
-		Game firstGame = new Game(gameIds[0]);
-		assertEquals("https://www.metacritic.com/game/pc/baldurs-gate-3?ftag=MCD-06-10aaa1f", firstGame.getCriticURL());
+		Game firstGame = Database.getGame(gameIds[0]);
+		assertEquals("https://www.metacritic.com/game/pc/baldurs-gate-3?ftag=MCD-06-10aaa1f", firstGame.getMetaURL());
 
 	}
 
 	@Test
 	void setCriticRev2url() {
 
-		Game secondGame = new Game(gameIds[1]);
-		assertEquals("https://www.metacritic.com/game/pc/grand-theft-auto-v?ftag=MCD-06-10aaa1f", secondGame.getCriticURL());
+		Game secondGame = Database.getGame(gameIds[1]);
+		assertEquals("https://www.metacritic.com/game/pc/grand-theft-auto-v?ftag=MCD-06-10aaa1f", secondGame.getMetaURL());
 
 	}
 
 	@Test
 	void setCriticRev3url() {
 
-		Game thirdGame = new Game(gameIds[2]);
-		assertEquals("N/A", thirdGame.getCriticURL());
+		Game thirdGame = Database.getGame(gameIds[2]);
+		assertEquals("N/A", thirdGame.getMetaURL());
 
 	}
 
 	@Test
 	void setCriticRev4url() {
 
-		Game fourthGame = new Game(gameIds[3]);
-		assertEquals("N/A", fourthGame.getCriticURL());
+		Game fourthGame = Database.getGame(gameIds[3]);
+		assertEquals("N/A", fourthGame.getMetaURL());
 
 	}
 
