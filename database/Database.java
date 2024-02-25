@@ -3,6 +3,7 @@ package src;
 import com.mongodb.*;
 import static com.mongodb.client.model.Filters.*;
 import com.mongodb.client.*;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.*;
 import org.bson.*;
@@ -68,6 +69,20 @@ public class Database {
     	
     	return false;
     }
+	
+	public static boolean noAppReviews(int id) {
+    	//Filtering
+    	Bson filter = and(eq("_id", id), exists("user_reviews"));
+    	FindIterable<Document> result = games.find(filter);
+    	
+    	//Checking if details is unavailable for the game
+    	if(result.first() == null)
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
     
     
     public static void updateAppDetails(int id) {
@@ -96,11 +111,13 @@ public class Database {
     		jsonResponse = jsonResponse.get(appID).get("data");
     		
     		//Updating database
-    		Bson update = Updates.combine(updateShortDesc(jsonResponse, games, game),
-    		updateDesc(jsonResponse, games, game),
-    		updateCover(jsonResponse, games, game),
-    		updateSysRequire(jsonResponse, games, game),
-    		updateMetacritic(jsonResponse, games, game));
+    		Bson update = Updates.combine(updateShortDesc(jsonResponse),
+    		updateDesc(jsonResponse),
+    		updateCover(jsonResponse),
+    		updateSysRequire(jsonResponse),
+    		updateMetacritic(jsonResponse),
+    		updateReview()
+    				);
     		
     		//Updating
 			try {
@@ -158,11 +175,12 @@ public class Database {
         	Document game = result.first();
     		
     		//Updating database
-    		Bson update = Updates.combine(updateShortDesc(jsonResponse, games, game),
-    		updateDesc(jsonResponse, games, game),
-    		updateCover(jsonResponse, games, game),
-    		updateSysRequire(jsonResponse, games, game),
-    		updateMetacritic(jsonResponse, games, game));
+    		Bson update = Updates.combine(updateShortDesc(jsonResponse),
+    		updateDesc(jsonResponse),
+    		updateCover(jsonResponse),
+    		updateSysRequire(jsonResponse),
+    		updateMetacritic(jsonResponse),
+    		updateReview());
     		
     		//Updating
 			try {
@@ -202,7 +220,7 @@ public class Database {
     	return null;
     }
     
-	private static Bson updateShortDesc(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+	private static Bson updateShortDesc(JsonNode jsonResponse) {
 		//Grabbing short description
 		String txt = jsonResponse.get("short_description").asText();
 		
@@ -213,7 +231,7 @@ public class Database {
 	}
 
 
-	private static Bson updateDesc(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+	private static Bson updateDesc(JsonNode jsonResponse) {
 		//Grabbing description
 		String txt = jsonResponse.get("about_the_game").asText();
 
@@ -224,7 +242,7 @@ public class Database {
 	}
 
 
-	private static Bson updateCover(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+	private static Bson updateCover(JsonNode jsonResponse) {
 		//Grabbing img link
 		String img = jsonResponse.get("header_image").asText();
 
@@ -235,7 +253,7 @@ public class Database {
 	}
 
 
-	private static Bson updateSysRequire(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+	private static Bson updateSysRequire(JsonNode jsonResponse) {
 		//Grabbing sys requirements
 		String txt = jsonResponse.get("pc_requirements").get("minimum").asText();
 		
@@ -255,7 +273,7 @@ public class Database {
 	}
 
 
-	private static Bson updateMetacritic(JsonNode jsonResponse, MongoCollection<Document> games, Document game) {
+	private static Bson updateMetacritic(JsonNode jsonResponse) {
 		//Default values for score and link
 		String score = "N/A";
 		String link = "N/A";
@@ -275,6 +293,20 @@ public class Database {
 		Bson total = Updates.combine(update, update2);
 
 		return total;
+		
+	}
+	
+	private static Bson updateReview() {
+		
+		int UserReview = 0;
+		int NumberofReview = 0;
+		
+		Bson update = Updates.set("user_reviews", UserReview);
+		Bson update2 = Updates.set("number_of_reviews", NumberofReview);
+		Bson total = Updates.combine(update, update2);
+
+		return total;
+		
 		
 	}
 }
