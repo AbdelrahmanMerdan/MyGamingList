@@ -9,6 +9,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.bson.Document;
+import org.bson.conversions.Bson;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.mongodb.*;
+import static com.mongodb.client.model.Filters.*;
+import com.mongodb.client.*;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.*;
+
 public class GUIMain extends JFrame{
 	
 	private static JPanel mainPane = new JPanel();
@@ -19,12 +30,18 @@ public class GUIMain extends JFrame{
 		setTitle("MyGamingList");
 		setBackground(Color.BLACK);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 913, 790);
+		setBounds(100, 100, 1300, 800);
 		
 		mainPane.setBackground(Color.BLACK);
 		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(mainPane);
 		mainPane.setLayout(new BorderLayout(0, 0));
+		
+		mainPane.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				mainPane.requestFocus();
+			}
+		});
 		
 		JPanel headerPane = new JPanel();
 		headerPane.setBackground(Color.BLACK);
@@ -40,12 +57,10 @@ public class GUIMain extends JFrame{
 		headerOptionsPane.add(homeButton);
 		
 		homeButton.addActionListener(new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				((CardLayout) cardPane.getLayout()).show(cardPane, "mainMenu");
 			}
-			
 		});
 		
 		JButton myGamesButton = new JButton("My Games");
@@ -60,22 +75,61 @@ public class GUIMain extends JFrame{
 		headerSearchPane.setOpaque(false);
 		
 		JTextField headerSearchBox = new JTextField();
-		headerSearchBox.setText("Search");
+		String searchPrompt = "Search (Case Sensitive)";
+		headerSearchBox.setText(searchPrompt);
 		headerSearchPane.add(headerSearchBox);
 		headerSearchBox.setColumns(15);
+		
+		headerSearchBox.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(headerSearchBox.getText());
+
+				Bson filter = eq("name", headerSearchBox.getText());
+				FindIterable<Document> result = Database.games.find(filter);
+				System.out.println(result.first());
+				if (result.first() != null) {
+					Game gameResult = null;
+					try {
+						gameResult = Database.map.readValue(result.first().toJson(),Game.class);
+					} catch (JsonMappingException e1) {
+						System.out.println("JsonMappingException");
+					} catch (JsonProcessingException e1) {
+						System.out.println("JsonProcessingException");
+					}
+
+					GUIGame.loadGame(gameResult);
+					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
+				} else {
+					headerSearchBox.setText("Invalid Name");
+				}
+				headerSearchBox.getRootPane().requestFocus();
+			}
+		});
+		
+		headerSearchBox.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				headerSearchBox.setText("");
+			}
+			public void focusLost(FocusEvent e) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {}
+				headerSearchBox.setText(searchPrompt);
+			}
+		});
 		
 		//JPanel footerPane = new JPanel();
 		//mainPane.add(footerPane, BorderLayout.SOUTH);
 		
 		mainPane.add(cardPane, BorderLayout.CENTER);
 		cardPane.setLayout(new CardLayout());
-
+		
+		//order matters
 		PopReleases popReleases = new PopReleases();
 		MostPlayed mostPlayed = new MostPlayed();
 		
-		
 		GUIMainMenu mainMenu = new GUIMainMenu(cardPane, mostPlayed, popReleases);
 		GUIGame game = new GUIGame(cardPane);
-		
 	}
 }
