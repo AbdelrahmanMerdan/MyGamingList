@@ -148,7 +148,7 @@ public class GUIGame {
 	
 	public static void loadGame(Game game) {
 		//When database don't have app details
-		if(Database.noAppDetails(game.getID()))
+		if(Database.noAppDetails(game.getID()) || Database.noAppReviews(game.getID()))
 		{
 			//Update database
 			Database.updateAppDetails(game.getID());
