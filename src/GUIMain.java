@@ -1,5 +1,7 @@
 package src;
 
+import database.Database;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.regex.Pattern;
