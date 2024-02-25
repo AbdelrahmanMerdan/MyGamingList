@@ -116,8 +116,7 @@ public class Database {
     		updateCover(jsonResponse),
     		updateSysRequire(jsonResponse),
     		updateMetacritic(jsonResponse),
-    		updateReview()
-    				);
+    		updateReview());
     		
     		//Updating
 			try {
