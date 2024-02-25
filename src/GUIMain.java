@@ -2,6 +2,7 @@ package src;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -75,7 +76,7 @@ public class GUIMain extends JFrame{
 		headerSearchPane.setOpaque(false);
 		
 		JTextField headerSearchBox = new JTextField();
-		String searchPrompt = "Search (Case Sensitive)";
+		String searchPrompt = "Search";
 		headerSearchBox.setText(searchPrompt);
 		headerSearchPane.add(headerSearchBox);
 		headerSearchBox.setColumns(15);
@@ -83,11 +84,13 @@ public class GUIMain extends JFrame{
 		headerSearchBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Search function (case sensitive)
+				//Search function (case in-sensitive)
 				System.out.println(headerSearchBox.getText());
 				
 				//Filtering
-				Bson filter = eq("name", headerSearchBox.getText());
+				Pattern namePattern = Pattern.compile("^" + headerSearchBox.getText() + "$",
+						Pattern.CASE_INSENSITIVE);
+				Bson filter = regex("name", namePattern);
 				FindIterable<Document> result = Database.games.find(filter);
 				System.out.println(result.first());
 				
