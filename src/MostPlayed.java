@@ -10,9 +10,6 @@ import com.fasterxml.jackson.databind.*;
 
 public class MostPlayed {
 
-	//ObjectMapper
-	final static ObjectMapper map = new ObjectMapper();
-	
 	//Instance variable
 	public static ArrayList<Game> games = new ArrayList<>();
 
@@ -30,13 +27,14 @@ public class MostPlayed {
 			String responseBody = response.body();
 
 			//Getting array from JSON
-			JsonNode jsonArray = map.readTree(responseBody);
+			JsonNode jsonArray = Database.map.readTree(responseBody);
 			jsonArray = jsonArray.get("response").get("ranks");
 			
 			for(JsonNode node : jsonArray) 
 			{
 				int id = node.get("appid").asInt();
 				games.add(Database.getGame(id));
+				
 			}
 			
 		} catch(InterruptedException e) {
