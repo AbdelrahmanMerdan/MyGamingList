@@ -1,7 +1,7 @@
 package src;
 
 import java.util.Objects;
-
+import database.Database;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
