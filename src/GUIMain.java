@@ -83,23 +83,24 @@ public class GUIMain extends JFrame{
 		headerSearchBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//Search function (case sensitive)
 				System.out.println(headerSearchBox.getText());
-
+				
+				//Filtering
 				Bson filter = eq("name", headerSearchBox.getText());
 				FindIterable<Document> result = Database.games.find(filter);
 				System.out.println(result.first());
+				
 				if (result.first() != null) {
-					Game gameResult = null;
 					try {
-						gameResult = Database.map.readValue(result.first().toJson(),Game.class);
+						Game gameResult = Database.map.readValue(result.first().toJson(),Game.class);
+						GUIGame.loadGame(gameResult);
+						((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 					} catch (JsonMappingException e1) {
 						System.out.println("JsonMappingException");
 					} catch (JsonProcessingException e1) {
 						System.out.println("JsonProcessingException");
 					}
-
-					GUIGame.loadGame(gameResult);
-					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 				} else {
 					headerSearchBox.setText("Invalid Name");
 				}
