@@ -63,7 +63,7 @@ class TestDatabase {
 		@Test
 		@Order(3)
 		void updateGame() {
-			Database.updateAppDetails(1693980);
+			Database.updateAppDetails(TEST_GAME_ID);
 			assertEquals(false, Database.noAppDetails(TEST_GAME_ID));
 			assertEquals(false, Database.noAppReviews(TEST_GAME_ID));
 		}
