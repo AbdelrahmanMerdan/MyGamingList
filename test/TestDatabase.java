@@ -73,7 +73,7 @@ class TestDatabase {
 		FindIterable<Document> result = Database.games.find(filter);
 		Document game = result.first();
 
-		//Deleting description
+		//Deleting game in database
 		try {
 			DeleteResult deleteResult= Database.games.deleteOne(filter);
 			System.out.println("Acknowledged: " + deleteResult.wasAcknowledged());
