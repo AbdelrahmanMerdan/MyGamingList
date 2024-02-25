@@ -22,7 +22,7 @@ import src.Game;
 @TestMethodOrder(OrderAnnotation.class)
 class TestDatabase {
 	
-	private static final int TEST_GAME_ID = 1693980;
+	private static final int TEST_GAME_ID = 17470;
 	
 	@Nested
 	@TestMethodOrder(OrderAnnotation.class)
@@ -117,6 +117,6 @@ class TestDatabase {
 			assertNotNull(userReviews);
 			assertNotNull(desc);
 
-			assertEquals("Dead Space", name);
+			assertEquals("Dead Space (2008)", name);
 		}
 }
