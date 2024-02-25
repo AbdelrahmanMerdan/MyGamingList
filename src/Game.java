@@ -1,7 +1,5 @@
 package src;
 
-import java.util.Objects;
-import database.Database;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,10 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Game {
 
 	//Instance variables
-	private int id;
+	private int id, numOfReviews, userReviews;
 	private String name, shortDesc, desc, cover, sysRequire, metaScore, metaURL;
 
-	public Game(@JsonProperty("_id") int id, @JsonProperty("name") String name, @JsonProperty("short_description") String shortDesc, @JsonProperty("description") String desc, @JsonProperty("cover_art") String cover, @JsonProperty("pc_requirements") String sysRequire, @JsonProperty("meta_score") String metaScore, @JsonProperty("meta_link") String metaURL) {
+	public Game(@JsonProperty("_id") int id, @JsonProperty("name") String name, @JsonProperty("short_description") String shortDesc, @JsonProperty("description") String desc, @JsonProperty("cover_art") String cover, 
+			@JsonProperty("pc_requirements") String sysRequire, @JsonProperty("meta_score") String metaScore, @JsonProperty("meta_link") String metaURL, @JsonProperty("number_of_reviews") int numofReviews, @JsonProperty("user_reviews") int userReviews) {
 		this.id = id;
 		this.name = name;
 		this.shortDesc = shortDesc;
@@ -21,6 +20,8 @@ public class Game {
 		this.sysRequire = sysRequire;
 		this.metaScore = metaScore;
 		this.metaURL = metaURL;
+		this.numOfReviews = numofReviews;
+		this.userReviews = userReviews;
 	}
 
 	public int getID() {
@@ -87,21 +88,20 @@ public class Game {
 		this.metaURL = metaURL;
 	}
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
+	public int getNumOfReviews() {
+		return numOfReviews;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Game other = (Game) obj;
-		return id == other.id;
+	public void setNumOfReviews(int numOfReviews) {
+		this.numOfReviews = numOfReviews;
+	}
+
+	public int getUserReviews() {
+		return userReviews;
+	}
+
+	public void setUserReviews(int userReviews) {
+		this.userReviews = userReviews;
 	}
 
 	@Override
