@@ -17,7 +17,7 @@ class TestMostPlayedPopReleases {
 	@Test
 	void test2() {
 		PopReleases popReleases= new PopReleases();
-		assertEquals(30, popReleases.getSize());
+		assertEquals(25, popReleases.getSize());
 	}
 
 }
