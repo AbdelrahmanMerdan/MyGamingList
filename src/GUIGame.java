@@ -146,7 +146,7 @@ public class GUIGame {
 		
 	}
 	
-	public static void loadGame(MostPlayed mostPlayed, PopReleases popReleases, Game game) {
+	public static void loadGame(Game game) {
 		//When database don't have app details
 		if(Database.noAppDetails(game.getID()))
 		{
