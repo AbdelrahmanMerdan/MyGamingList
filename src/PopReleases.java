@@ -9,9 +9,6 @@ import java.util.*;
 import com.fasterxml.jackson.databind.*;
 
 public class PopReleases {
-
-	//ObjectMapper
-	final static ObjectMapper map = new ObjectMapper();
 	
 	//Instance variable
 	ArrayList<Game> games;
@@ -30,7 +27,7 @@ public class PopReleases {
 			String responseBody = response.body();
 
 			//Getting array from JSON
-			JsonNode jsonArray = map.readTree(responseBody);
+			JsonNode jsonArray = Database.map.readTree(responseBody);
 			jsonArray = jsonArray.get("tabs").get("topsellers").get("items");
 			
 			LinkedHashSet<Game> tmp = new LinkedHashSet<>();
