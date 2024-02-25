@@ -31,10 +31,10 @@ public class Database {
 	final static MongoClient client = MongoClients.create(settings);
 
 	//Database
-	static final MongoDatabase database = client.getDatabase("MyGamingList");
+	final static MongoDatabase database = client.getDatabase("MyGamingList");
 
 	//Collections
-	static final MongoCollection<Document> games = database.getCollection("Games");
+	final static MongoCollection<Document> games = database.getCollection("Games");
 	
 	//ObjectMapper
 	final static ObjectMapper map = new ObjectMapper();
