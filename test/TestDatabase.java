@@ -33,6 +33,8 @@ class TestDatabase {
 			Bson filter = eq("_id", TEST_GAME_ID);
 			FindIterable<Document> result = Database.games.find(filter);
 			Document game = result.first();
+
+			//Delete settings
 			Bson update = Updates.unset("description");
 			Bson update2 = Updates.unset("number_of_reviews");
 			Bson update3 = Updates.unset("user_reviews");
