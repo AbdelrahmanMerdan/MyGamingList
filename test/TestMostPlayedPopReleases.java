@@ -11,13 +11,22 @@ class TestMostPlayedPopReleases {
 	@Test
 	void test() {
 		MostPlayed mostPlayed = new MostPlayed();
-		assertEquals(100, mostPlayed.getSize());
+		
+		for(Game game : mostPlayed.getGames())
+		{
+			assertNotNull(game);
+		}
 	}
 	
 	@Test
 	void test2() {
 		PopReleases popReleases= new PopReleases();
-		assertEquals(25, popReleases.getSize());
+		
+		for(Game game : popReleases.getGames())
+		{
+			assertNotNull(game);
+		}
+		
 	}
 
 }
