@@ -45,6 +45,10 @@ public class MostPlayed {
 			e.printStackTrace();
 		} 
 	}
+
+	public ArrayList<Game> getGames() {
+		return games;
+	}
 	
 	public Game getGame(int i) {
 		return games.get(i);
