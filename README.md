@@ -4,4 +4,4 @@ An application that allows users to view popular games, rate/review, and communi
 
 Uses Steam Web API to gather game information.
 
-Uses MongoDB as our database.
+Uses MongoDB as our platform for database.
