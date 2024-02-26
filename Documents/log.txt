@@ -1,120 +1,108 @@
-﻿February 2, 2024 (4:00 PM - 6:06 PM) - Meeting: ITR0 (Rocco, Abdelrahman, Alex, Mustafa, Richard) 
+Team 5 Log
 
+Jan 27, 2024
+-Youwei - Interview with customer 1
+
+Jan 29, 2024 
+- Mustafa - Interview with customer 2
+
+February 2, 2024 (4:00 PM - 6:06 PM) - Meeting: ITR0 (Rocco, Abdelrahman, Alex, Mustafa, Richard) 
 
 - Went through and refined our big user stories.
 
-
 - Defined our 5 user stories for our 1st big story.
-
 
 - Defined 2 of our user stories for our 2nd big story.
 
-
 - Assigned each group member a user story to work on.
-
 
 - Took around an hour to complete itr0.
 
-
 - Discussed at a meeting on Feb 5, 2024 for GUI purposes.
-
-
-
 
 February 5, 2024 (7:30 PM - 8:00 PM) Meeting: APIs (Rocco, Abdelrahman)
 
-
 - Discussed how to apply the API in our program.
-
 
 - Ended with us concluding that we'll need to test and experiment with it.
 
-
 February 9, 2024 (4:30 PM - 5:45 PM) Meeting: Structure & APIs (Rocco, Richard, Abdelrahman, Alex, Mustafa, Youwei)
-
 
 - Clarified and stated which feature will be implemented, and what feature each member is responsible with.
 
-
 - Talking about features will be grouped in one class file.
-
 
 - Discussed the results of using the API, and realistically talked about how it would be implemented.
 
-
 - Discussed that another API will be needed to grab the popular games.
-
 
 - Discussed that implementing a GUI for our program will take a very long time due to our lack of experience. Overhauling the program to fit a better API will take some time as well. As a result, we delayed the search feature for games.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-February 10th, 2024 
-
+February 10, 2024 
 
 -Rocco - Switched the API to the official Steam’s Web API - Re-worked program by implementing Game.class - Created stub database for MostPlayed - Created stub database for PopReleases - Overall, implementing the above was to implement the user story “View Popular Games”, which took about 6 hours. Compared to the development time it was predicted to be 1 day.
 
-
 -Alex - User Story - Critic review - The development time for the user story was a day but I spent around 2 hours implementing it 
 
-
-February 11th, 2024
-
+February 11, 2024
 
 -Youwei - User Story - Description - It took me about 30 minutes to code the method out when the allotted time was 1 day.
 
-
-February 12th, 2024 
+February 12, 2024 
 -Mustafa - User Story - System requirements - The user story was around a day but it only took me about 45 minutes to get a working function.
-
 
 February 13, 2024
 -Rocco - TestGame - Testing initialization of object (30 mins - part of “View Popular Games” user story, which was expected to be completed in a day).
--Abdelrahman - User reviews - Working on the user reviews story which will be a part of iteration 2. 
-
+-Abdelrahman - User reviews - Working on the user reviews story which will be a part of itr 2. 
 
 February 14, 2024
 
-
 -Youwei - TestGame - Testing the setDescription method which was around 15 minutes.
 -Mustafa - TestGame - Testing the setRequirements method which was around 10 minutes.
--Richard - GUI. I worked on getting the GUI up and running to display hard-coded text. It wasn’t a user story exactly but it took me around 2 hours to get it up and running.
-
+-Richard - GUI. I worked on getting the GUI up and running to display hard-coded text. Wasn’t a user story exactly but it took me around 2 hours to get it up and running.
 
 February 15th, 2024
-
 
 -Alex - TestGame - Testing the setCriticReviews method which was around 30 minutes.
 -Abdelrahman - TestGame - Working on the tests for the user reviews.
 -Rocco - Dealt with json library performing inconsistently
 
-
-
-
-
-
 February 16, 2024 (4:00 PM - 6:00 PM) - Meeting: ITR1 (Rocco, Abdelrahman, Alex, Mustafa, Richard, Youwei) 
 
-
--Youwei - GUI - Worked on GUI for displaying html content which was around 30 minutes.
-
-
+-Youwei - GUI - Worked on displaying html content which was around 30 minutes.
 -Reviewed and made sure itr1 components as a group are completed (4 hours).
-
-
 -Richard - GUI - Worked on setting up the GUI for game page and getting all the pages working together (4 hours)
+-Abdelrahman - UserReview - Worked on Review functions that used a stub database (4 hours)
+-Mustafa - testing API and json library as a group (4 hours)
+
+February 20, 2024
+
+-Alex - UML Diagram- Worked on getting the basic classes done for the attributes and the operations (1 hour)
+
+February 21, 2024
+
+- Mustafa - follow up meeting with a customer on their request, adjustments made to some user stories priority and delivery time has been adjusted accordingly
+
+February 23, 2024
+
+-Rocco & Abdel - Database - Learned how to implement the database to our program for both users and games. (6 hours)
+-Richard - Worked on adding functionality to search database for specific games (1 hour)
+-Rocco - Jackson - Implemented a new and faster JSON library to help integrate database 
+       (2 hours)
+-  Database - Worked on implementing the database for the games component (2 hours)
+
+February 24, 2024
+
+-Youwei - GUI - improve search function to be case in-sensitive (30 minutes)
+-Alex - UML Diagram- Finished up with the dependencies and generalizations for the classes (30 minutes)
+-Rocco - Database - Implemented the database for the games component (6 hours) 
+
+February 25, 2024 (3:15 PM - 9:00 PM) - Meeting: Wrapping up deliverable 1 (Rocco, Abdelrahman, Alex, Mustafa, Richard, Youwei)
+
+-Rocco - TestGame & TestMostPlayedPopReleases - Quickly re-did testing for new ver. 
+(20 mins)
+-Alex - UML Diagram- Added some notes for better clarification of the classes and what was used (15 minutes).
+-Youwei - TestDatabase - test AddGames and GetGames (30 minutes)
+-Alex - TestGame - tested the meta score and meta url cases. (25 minutes)
+-Abdelrahman - ReviewDatabase- Wrote a UserReview class to review games that works with the updated Game class and MongoDB database (5 hours)
+-Mustafa - Documentation - created documentation and worked on deliverable 1 elements (20 minutes)
