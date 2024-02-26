@@ -59,6 +59,10 @@ public class PopReleases {
 		} 
 
 	}
+
+	public ArrayList<Game> getGames() {
+		return games;
+	}
 	
 	public Game getGame(int i) {
 		return games.get(i);
