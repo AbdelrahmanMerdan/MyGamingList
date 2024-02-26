@@ -1,5 +1,7 @@
 # MyGamingList
 
-An application that allows users to view popular games, rate and review, and communictate with the community.
+An application that allows users to view popular games, rate/review, and communictate with the community.
 
-Uses steam api to gather game information.
+Uses Steam Web API to gather game information.
+
+Uses MongoDB as our database.
