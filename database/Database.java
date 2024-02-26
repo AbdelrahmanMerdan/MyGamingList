@@ -10,6 +10,8 @@ import org.bson.*;
 import org.bson.conversions.Bson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
+import src.Game;
+
 import java.net.*;
 import java.net.http.*;
 import java.io.IOException;
