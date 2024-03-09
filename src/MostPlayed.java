@@ -1,6 +1,5 @@
 package src;
 
-import database.Database;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -8,6 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 import com.fasterxml.jackson.databind.*;
+import database.GamesImpl;
 
 public class MostPlayed {
 
@@ -28,13 +28,13 @@ public class MostPlayed {
 			String responseBody = response.body();
 
 			//Getting array from JSON
-			JsonNode jsonArray = Database.map.readTree(responseBody);
+			JsonNode jsonArray = GamesImpl.map.readTree(responseBody);
 			jsonArray = jsonArray.get("response").get("ranks");
 			
 			for(JsonNode node : jsonArray) 
 			{
 				int id = node.get("appid").asInt();
-				games.add(Database.getGame(id));
+				games.add(GamesImpl.getGame(id));
 				
 			}
 			
