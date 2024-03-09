@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 import com.fasterxml.jackson.databind.*;
-import database.GamesImpl;
+import database.GameData;
 
 public class MostPlayed {
 
@@ -28,13 +28,13 @@ public class MostPlayed {
 			String responseBody = response.body();
 
 			//Getting array from JSON
-			JsonNode jsonArray = GamesImpl.map.readTree(responseBody);
+			JsonNode jsonArray = GameData.map.readTree(responseBody);
 			jsonArray = jsonArray.get("response").get("ranks");
 			
 			for(JsonNode node : jsonArray) 
 			{
 				int id = node.get("appid").asInt();
-				games.add(GamesImpl.getGame(id));
+				games.add(GameData.getGame(id));
 				
 			}
 			

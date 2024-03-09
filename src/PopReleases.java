@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 import com.fasterxml.jackson.databind.*;
-import database.GamesImpl;
+import database.GameData;
 
 public class PopReleases {
 	
@@ -28,7 +28,7 @@ public class PopReleases {
 			String responseBody = response.body();
 
 			//Getting array from JSON
-			JsonNode jsonArray = GamesImpl.map.readTree(responseBody);
+			JsonNode jsonArray = GameData.map.readTree(responseBody);
 			jsonArray = jsonArray.get("tabs").get("topsellers").get("items");
 			
 			LinkedHashSet<Game> tmp = new LinkedHashSet<>();
@@ -40,12 +40,12 @@ public class PopReleases {
 					int id = node.get("id").asInt();
 					
 					//When database doesn't have the app
-					if(GamesImpl.noAppExists(id))
+					if(GameData.noAppExists(id))
 					{
-						GamesImpl.addApp(id);
+						GameData.addApp(id);
 					}
 					
-					tmp.add(GamesImpl.getGame(id));
+					tmp.add(GameData.getGame(id));
 				}
 			}
 			
