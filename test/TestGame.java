@@ -1,9 +1,10 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import database.GamesImpl;
 import org.junit.jupiter.api.Test;
 
-import database.Database;
 import src.Game;
 
 class TestGame {
@@ -14,23 +15,23 @@ class TestGame {
 	//Tests cases for initializing
 	@Test
 	void initGame() {
-		Game firstGame = Database.getGame(gameIds[0]);
+		Game firstGame = GamesImpl.getGame(gameIds[0]);
 		assertEquals("Baldur's Gate 3", firstGame.getName());
 	}
 	@Test
 	void initGame2() {
-		Game secondGame = Database.getGame(gameIds[1]);
+		Game secondGame = GamesImpl.getGame(gameIds[1]);
 		assertEquals("Grand Theft Auto V", secondGame.getName());
 	}
 	@Test
 	void initGame3() {
-		Game thirdGame = Database.getGame(gameIds[2]);
+		Game thirdGame = GamesImpl.getGame(gameIds[2]);
 		assertEquals("Eternal Return", thirdGame.getName());
 	}
 
 	@Test
 	void initGame4() {
-		Game fourthGame = Database.getGame(gameIds[3]);
+		Game fourthGame = GamesImpl.getGame(gameIds[3]);
 		assertEquals("Phasmophobia", fourthGame.getName());
 	}
 	
@@ -39,7 +40,7 @@ class TestGame {
 	@Test
 	void setCriticRev1Score() {
 
-		Game firstGame = Database.getGame(gameIds[0]);
+		Game firstGame = GamesImpl.getGame(gameIds[0]);
 		assertEquals("96", firstGame.getMetaScore());
 
 	}
@@ -47,7 +48,7 @@ class TestGame {
 	@Test
 	void setCriticRev2Score() {
 
-		Game secondGame = Database.getGame(gameIds[1]);
+		Game secondGame = GamesImpl.getGame(gameIds[1]);
 		assertEquals("96", secondGame.getMetaScore());
 
 	}
@@ -55,7 +56,7 @@ class TestGame {
 	@Test
 	void setCriticRev3Score() {
 
-		Game thirdGame = Database.getGame(gameIds[2]);
+		Game thirdGame = GamesImpl.getGame(gameIds[2]);
 		assertEquals("N/A", thirdGame.getMetaScore());
 
 	}
@@ -63,7 +64,7 @@ class TestGame {
 	@Test
 	void setCriticRev4Score() {
 
-		Game fourthGame = Database.getGame(gameIds[3]);
+		Game fourthGame = GamesImpl.getGame(gameIds[3]);
 		assertEquals("N/A", fourthGame.getMetaScore());
 
 	}
@@ -71,7 +72,7 @@ class TestGame {
 	@Test
 	void setCriticRev1url() {
 
-		Game firstGame = Database.getGame(gameIds[0]);
+		Game firstGame = GamesImpl.getGame(gameIds[0]);
 		assertEquals("https://www.metacritic.com/game/pc/baldurs-gate-3?ftag=MCD-06-10aaa1f", firstGame.getMetaURL());
 
 	}
@@ -79,7 +80,7 @@ class TestGame {
 	@Test
 	void setCriticRev2url() {
 
-		Game secondGame = Database.getGame(gameIds[1]);
+		Game secondGame = GamesImpl.getGame(gameIds[1]);
 		assertEquals("https://www.metacritic.com/game/pc/grand-theft-auto-v?ftag=MCD-06-10aaa1f", secondGame.getMetaURL());
 
 	}
@@ -87,7 +88,7 @@ class TestGame {
 	@Test
 	void setCriticRev3url() {
 
-		Game thirdGame = Database.getGame(gameIds[2]);
+		Game thirdGame = GamesImpl.getGame(gameIds[2]);
 		assertEquals("N/A", thirdGame.getMetaURL());
 
 	}
@@ -95,7 +96,7 @@ class TestGame {
 	@Test
 	void setCriticRev4url() {
 
-		Game fourthGame = Database.getGame(gameIds[3]);
+		Game fourthGame = GamesImpl.getGame(gameIds[3]);
 		assertEquals("N/A", fourthGame.getMetaURL());
 
 	}
@@ -103,23 +104,23 @@ class TestGame {
 	//Tests cases for description
 	@Test
 	void setDescription1() {
-		Game firstGame = Database.getGame(gameIds[0]);
+		Game firstGame = GamesImpl.getGame(gameIds[0]);
 		assertTrue(firstGame.getDesc().startsWith("<img src=\"https://cdn.akamai.steamstatic.com/steam/apps/1086940/"));
 	}
 	@Test
 	void setDescription2() {
-		Game secondGame = Database.getGame(gameIds[1]);
+		Game secondGame = GamesImpl.getGame(gameIds[1]);
 		assertTrue(secondGame.getDesc().startsWith("When a young street hustler,"));
 	}
 	@Test
 	void setDescription3() {
-		Game thirdGame = Database.getGame(gameIds[2]);
+		Game thirdGame = GamesImpl.getGame(gameIds[2]);
 		assertTrue(thirdGame.getDesc().startsWith("<img src=\"https://cdn.akamai.steamstatic.com/steam/apps/1049590/"));
 	}
 
 	@Test
 	void setDescription4() {
-		Game fourthGame = Database.getGame(gameIds[3]);
+		Game fourthGame = GamesImpl.getGame(gameIds[3]);
 		assertTrue(fourthGame.getDesc().startsWith("Phasmophobia is a 4-player"));
 	}
 

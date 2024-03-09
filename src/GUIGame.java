@@ -1,29 +1,24 @@
 package src;
 
-import database.Database;
+import database.GamesImpl;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -148,18 +143,18 @@ public class GUIGame {
 	
 	public static void loadGame(Game game) {
 		//When database don't have app details
-		if(Database.noAppDetails(game.getID()) || Database.noAppReviews(game.getID()))
+		if(GamesImpl.noAppDetails(game.getID()) || GamesImpl.noAppReviews(game.getID()))
 		{
 			//Update database
-			Database.updateAppDetails(game.getID());
-			game = Database.getGame(game.getID());
+			GamesImpl.updateAppDetails(game.getID());
+			game = GamesImpl.getGame(game.getID());
 			
 		}
 		
 		//For games that didn't have their info in the database when the program boots
 		if(game.getSysRequire() == null)
 		{
-			game = Database.getGame(game.getID());
+			game = GamesImpl.getGame(game.getID());
 		}
 		
 		//Setting game page

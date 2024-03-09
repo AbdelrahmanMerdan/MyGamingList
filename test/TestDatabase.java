@@ -2,6 +2,8 @@ package test;
 
 import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.*;
+
+import database.GamesImpl;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -16,7 +18,6 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
-import database.Database;
 import src.Game;
 
 @TestMethodOrder(OrderAnnotation.class)
@@ -31,7 +32,7 @@ class TestDatabase {
 		void deleteAppDetails() {
 			//Grabbing specified game
 			Bson filter = eq("_id", TEST_GAME_ID);
-			FindIterable<Document> result = Database.games.find(filter);
+			FindIterable<Document> result = GamesImpl.games.find(filter);
 			Document game = result.first();
 
 			//Delete settings
@@ -42,7 +43,7 @@ class TestDatabase {
 
 			//Deleting description
 			try {
-				UpdateResult updateResult = Database.games.updateOne(game, total);
+				UpdateResult updateResult = GamesImpl.games.updateOne(game, total);
 				System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
 
 			} catch(MongoException e) {
@@ -53,21 +54,21 @@ class TestDatabase {
 		@Test
 		@Order(1)
 		void noAppDetails() {
-			assertEquals(true, Database.noAppDetails(TEST_GAME_ID));
+			assertEquals(true, GamesImpl.noAppDetails(TEST_GAME_ID));
 		}
 
 		@Test
 		@Order(2)
 		void noAppReviews() {
-			assertEquals(true, Database.noAppReviews(TEST_GAME_ID));
+			assertEquals(true, GamesImpl.noAppReviews(TEST_GAME_ID));
 		}
 
 		@Test
 		@Order(3)
 		void updateGame() {
-			Database.updateAppDetails(TEST_GAME_ID);
-			assertEquals(false, Database.noAppDetails(TEST_GAME_ID));
-			assertEquals(false, Database.noAppReviews(TEST_GAME_ID));
+			GamesImpl.updateAppDetails(TEST_GAME_ID);
+			assertEquals(false, GamesImpl.noAppDetails(TEST_GAME_ID));
+			assertEquals(false, GamesImpl.noAppReviews(TEST_GAME_ID));
 		}
 	}
 	
@@ -78,26 +79,26 @@ class TestDatabase {
 		
 		//Deleting game in database
 		try {
-			DeleteResult deleteResult= Database.games.deleteOne(filter);
+			DeleteResult deleteResult= GamesImpl.games.deleteOne(filter);
 			System.out.println("Acknowledged: " + deleteResult.wasAcknowledged());
 
 		} catch(MongoException e) {
 			System.err.println("ERROR: "+e);
 		}
 		// confirm game doesn't exist first
-		assertTrue(Database.noAppExists(TEST_GAME_ID));
+		assertTrue(GamesImpl.noAppExists(TEST_GAME_ID));
 		// Call DB add game
-		Database.addApp(TEST_GAME_ID);
+		GamesImpl.addApp(TEST_GAME_ID);
 		// Confirm game exists in DB after adding operation
-		assertFalse(Database.noAppExists(TEST_GAME_ID));
-		assertFalse(Database.noAppDetails(TEST_GAME_ID));
-		assertFalse(Database.noAppReviews(TEST_GAME_ID));
+		assertFalse(GamesImpl.noAppExists(TEST_GAME_ID));
+		assertFalse(GamesImpl.noAppDetails(TEST_GAME_ID));
+		assertFalse(GamesImpl.noAppReviews(TEST_GAME_ID));
 	}
 	
 	@Test
 	@Order(2)
 	void getGame() {
-			Game game = Database.getGame(TEST_GAME_ID);
+			Game game = GamesImpl.getGame(TEST_GAME_ID);
 			assertNotNull(game);
 
 			String name = game.getName();

@@ -1,7 +1,5 @@
 package src;
 
-import database.Database;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.regex.Pattern;
@@ -12,16 +10,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import database.GamesImpl;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.mongodb.*;
+
 import static com.mongodb.client.model.Filters.*;
 import com.mongodb.client.*;
-import com.mongodb.client.model.Updates;
-import com.mongodb.client.result.*;
 
 public class GUIMain extends JFrame{
 	
@@ -93,12 +90,12 @@ public class GUIMain extends JFrame{
 				Pattern namePattern = Pattern.compile("^" + headerSearchBox.getText() + "$",
 						Pattern.CASE_INSENSITIVE);
 				Bson filter = regex("name", namePattern);
-				FindIterable<Document> result = Database.games.find(filter);
+				FindIterable<Document> result = GamesImpl.games.find(filter);
 				System.out.println(result.first());
 				
 				if (result.first() != null) {
 					try {
-						Game gameResult = Database.map.readValue(result.first().toJson(),Game.class);
+						Game gameResult = GamesImpl.map.readValue(result.first().toJson(),Game.class);
 						GUIGame.loadGame(gameResult);
 						((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 					} catch (JsonMappingException e1) {
