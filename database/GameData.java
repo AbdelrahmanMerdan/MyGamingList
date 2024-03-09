@@ -23,7 +23,7 @@ import java.net.http.HttpResponse;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Filters.eq;
 
-public class GamesImpl extends Database {
+public class GameData extends Database {
 
     //Collections
     public final static MongoCollection<Document> games = database.getCollection("Games");
