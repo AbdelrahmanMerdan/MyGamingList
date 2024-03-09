@@ -1,6 +1,6 @@
 package src;
 
-import database.GamesImpl;
+import database.GameData;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -143,18 +143,18 @@ public class GUIGame {
 	
 	public static void loadGame(Game game) {
 		//When database don't have app details
-		if(GamesImpl.noAppDetails(game.getID()) || GamesImpl.noAppReviews(game.getID()))
+		if(GameData.noAppDetails(game.getID()) || GameData.noAppReviews(game.getID()))
 		{
 			//Update database
-			GamesImpl.updateAppDetails(game.getID());
-			game = GamesImpl.getGame(game.getID());
+			GameData.updateAppDetails(game.getID());
+			game = GameData.getGame(game.getID());
 			
 		}
 		
 		//For games that didn't have their info in the database when the program boots
 		if(game.getSysRequire() == null)
 		{
-			game = GamesImpl.getGame(game.getID());
+			game = GameData.getGame(game.getID());
 		}
 		
 		//Setting game page

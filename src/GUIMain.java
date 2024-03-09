@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import database.GamesImpl;
+import database.GameData;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -90,12 +90,12 @@ public class GUIMain extends JFrame{
 				Pattern namePattern = Pattern.compile("^" + headerSearchBox.getText() + "$",
 						Pattern.CASE_INSENSITIVE);
 				Bson filter = regex("name", namePattern);
-				FindIterable<Document> result = GamesImpl.games.find(filter);
+				FindIterable<Document> result = GameData.games.find(filter);
 				System.out.println(result.first());
 				
 				if (result.first() != null) {
 					try {
-						Game gameResult = GamesImpl.map.readValue(result.first().toJson(),Game.class);
+						Game gameResult = GameData.map.readValue(result.first().toJson(),Game.class);
 						GUIGame.loadGame(gameResult);
 						((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 					} catch (JsonMappingException e1) {

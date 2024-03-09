@@ -3,7 +3,7 @@ package test;
 import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.*;
 
-import database.GamesImpl;
+import database.GameData;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -32,7 +32,7 @@ class TestDatabase {
 		void deleteAppDetails() {
 			//Grabbing specified game
 			Bson filter = eq("_id", TEST_GAME_ID);
-			FindIterable<Document> result = GamesImpl.games.find(filter);
+			FindIterable<Document> result = GameData.games.find(filter);
 			Document game = result.first();
 
 			//Delete settings
@@ -43,7 +43,7 @@ class TestDatabase {
 
 			//Deleting description
 			try {
-				UpdateResult updateResult = GamesImpl.games.updateOne(game, total);
+				UpdateResult updateResult = GameData.games.updateOne(game, total);
 				System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
 
 			} catch(MongoException e) {
@@ -54,21 +54,21 @@ class TestDatabase {
 		@Test
 		@Order(1)
 		void noAppDetails() {
-			assertEquals(true, GamesImpl.noAppDetails(TEST_GAME_ID));
+			assertEquals(true, GameData.noAppDetails(TEST_GAME_ID));
 		}
 
 		@Test
 		@Order(2)
 		void noAppReviews() {
-			assertEquals(true, GamesImpl.noAppReviews(TEST_GAME_ID));
+			assertEquals(true, GameData.noAppReviews(TEST_GAME_ID));
 		}
 
 		@Test
 		@Order(3)
 		void updateGame() {
-			GamesImpl.updateAppDetails(TEST_GAME_ID);
-			assertEquals(false, GamesImpl.noAppDetails(TEST_GAME_ID));
-			assertEquals(false, GamesImpl.noAppReviews(TEST_GAME_ID));
+			GameData.updateAppDetails(TEST_GAME_ID);
+			assertEquals(false, GameData.noAppDetails(TEST_GAME_ID));
+			assertEquals(false, GameData.noAppReviews(TEST_GAME_ID));
 		}
 	}
 	
@@ -79,26 +79,26 @@ class TestDatabase {
 		
 		//Deleting game in database
 		try {
-			DeleteResult deleteResult= GamesImpl.games.deleteOne(filter);
+			DeleteResult deleteResult= GameData.games.deleteOne(filter);
 			System.out.println("Acknowledged: " + deleteResult.wasAcknowledged());
 
 		} catch(MongoException e) {
 			System.err.println("ERROR: "+e);
 		}
 		// confirm game doesn't exist first
-		assertTrue(GamesImpl.noAppExists(TEST_GAME_ID));
+		assertTrue(GameData.noAppExists(TEST_GAME_ID));
 		// Call DB add game
-		GamesImpl.addApp(TEST_GAME_ID);
+		GameData.addApp(TEST_GAME_ID);
 		// Confirm game exists in DB after adding operation
-		assertFalse(GamesImpl.noAppExists(TEST_GAME_ID));
-		assertFalse(GamesImpl.noAppDetails(TEST_GAME_ID));
-		assertFalse(GamesImpl.noAppReviews(TEST_GAME_ID));
+		assertFalse(GameData.noAppExists(TEST_GAME_ID));
+		assertFalse(GameData.noAppDetails(TEST_GAME_ID));
+		assertFalse(GameData.noAppReviews(TEST_GAME_ID));
 	}
 	
 	@Test
 	@Order(2)
 	void getGame() {
-			Game game = GamesImpl.getGame(TEST_GAME_ID);
+			Game game = GameData.getGame(TEST_GAME_ID);
 			assertNotNull(game);
 
 			String name = game.getName();
