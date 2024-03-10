@@ -4,11 +4,14 @@ import database.GameData;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -21,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GUIGame {
 	
@@ -175,7 +180,43 @@ public class GUIGame {
 		descriptionText.setText(descriptionHtml);
 		descriptionText.setCaretPosition(0);
 		
-		criticReviewLabel.setText("Critic Score: " + game.getMetaScore());
+		//Setting critic review
+		String metaScore = game.getMetaScore();
+		String metaLink = game.getMetaURL();
+		
+		if(game.getMetaScore().equals("N/A")) 
+		{
+			System.out.println(game.getMetaScore());
+			criticReviewLabel.setText("Critic Score: " + game.getMetaScore());
+		}
+		else
+		{
+			criticReviewLabel.setText("<html>" + "Critic Score: " + metaScore + "<br/><br/>Read Critic Reviews" + "</html>");
+			
+			criticReviewLabel.addMouseListener(new MouseAdapter() {
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+	                    Desktop.getDesktop().browse(new URI(metaLink));
+	                } catch (IOException | URISyntaxException e1) {
+	                    e1.printStackTrace();
+	                }
+				}
+				
+				@Override
+	            public void mouseExited(MouseEvent e) {
+					criticReviewLabel.setText("<html>" + "Critic Score: " + metaScore + "<br/><br/>Read Critic Reviews" + "</html>");
+	            }
+	 
+	            @Override
+	            public void mouseEntered(MouseEvent e) {
+	            	criticReviewLabel.setText( "<html>" + "Critic Score: " + metaScore + "<br/><br/><a href=''>Read Critic Reviews</a>" + "</html>");
+	            }
+			});
+			
+		}
+		
 		
 		//Get image from database and set
 		URL url = null;
