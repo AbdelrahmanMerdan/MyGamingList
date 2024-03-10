@@ -117,6 +117,58 @@ public class Game {
 		this.comments.add(0, comment);
 	}
 
+	//The two methods below only change on the index so we can combine them into 1 if needed
+	public List<String> getAllReccomandationComments(){
+		
+		List<String> copy = new ArrayList<>();
+		
+		for(int i = 0; i < this.comments.size(); i++) {
+			
+			copy.add(this.comments.get(i).get(1));
+			
+		}
+		
+		return copy;
+	}
+	
+	public List<String> getAllReccomandationUser(){
+		
+		List<String> copy = new ArrayList<>();
+		
+		for(int i = 0; i < this.comments.size(); i++) {
+			
+			copy.add(this.comments.get(i).get(0));
+			
+		}
+		
+		return copy;
+	}
+	
+
+	public String getOneReccomandationComment(int index){
+		
+		return this.comments.get(index).get(1);
+	}
+	
+	public String getOneReccomandationUser(int index){
+		
+		return this.comments.get(index).get(0);
+	}
+	
+	public void addCommentToUserRecommandation(User user, String message, int reccomandationIndex) {
+		
+		//empty list
+		List<String> toAdd = new ArrayList<>();
+		
+		//the first index will have the username and the seccond will have the message of the comment
+		toAdd.add(user.getUsername());
+		toAdd.add(message);
+		
+		//adding the comment with all the info to the recommendation
+		this.comments.get(reccomandationIndex).addAll(toAdd);
+		
+	}
+
 	
 	
 	@Override
