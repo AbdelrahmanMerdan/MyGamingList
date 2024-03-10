@@ -8,6 +8,7 @@ import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
@@ -129,6 +130,19 @@ public static boolean noAppExists(int id) {
     	 	
     }
 
+    public static void removeApp(int id) {
+    	Bson filter = eq("_id", id);
+
+    	//Deleting game in database
+    	try {
+    		DeleteResult deleteResult= GameData.games.deleteOne(filter);
+    		System.out.println("Acknowledged: " + deleteResult.wasAcknowledged());
+
+    	} catch(MongoException e) {
+    		System.err.println("ERROR: "+e);
+    	}
+    	
+    }
 	
     public static void addApp(int id) {
     	//Declaring and initializing 
