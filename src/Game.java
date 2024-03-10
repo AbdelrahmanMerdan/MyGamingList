@@ -116,61 +116,86 @@ public class Game {
 		this.comments.add(0, comment);
 	}
 
-	/*
-
-	//The two methods below only change on the index so we can combine them into 1 if needed
-	public List<String> getAllReccomandationComments(){
+	@SuppressWarnings("unchecked")
+	public List<Object> getAllReccomandationComments(){
 		
-		List<String> copy = new ArrayList<>();
+		List<Object> copy = new ArrayList<>();
 		
 		for(int i = 0; i < this.comments.size(); i++) {
 			
-			copy.add(this.comments.get(i).get(1));
+			copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(1));
 			
 		}
 		
 		return copy;
 	}
 	
-	public List<String> getAllReccomandationUser(){
+	@SuppressWarnings("unchecked")
+	public List<Object> getAllReccomandationUser(){
 		
-		List<String> copy = new ArrayList<>();
+		List<Object> copy = new ArrayList<>();
 		
 		for(int i = 0; i < this.comments.size(); i++) {
 			
-			copy.add(this.comments.get(i).get(0));
+			copy.add(((List<Object>) ((List<Object>) this.comments.get(i)).get(4)).get(0));
 			
 		}
 		
 		return copy;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public int retrieveIndex(User user) {
+		
+		int index = -1;
+		
+		for(int i = 0; i < this.comments.size(); i++) {
+			
+			if(((List<Object>) this.comments.get(i)).get(0).equals(user.getUsername())) {
+				
+				index = i;
+				break;
+				
+			}
+		}
+		
+		return index;
+	}
+	
 
-	public String getOneReccomandationComment(int index){
+	@SuppressWarnings("unchecked")
+	public Object getOneReccomandationComment(User userWithReccomandation){
 		
-		return this.comments.get(index).get(1);
+		int index = retrieveIndex(userWithReccomandation);
+		
+		return ((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).get(1);
 	}
 	
-	public String getOneReccomandationUser(int index){
+	@SuppressWarnings("unchecked")
+	public Object getOneReccomandationUser(User userWithReccomandation){
 		
-		return this.comments.get(index).get(0);
+		int index = retrieveIndex(userWithReccomandation);
+		
+		return ((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).get(0);
 	}
 	
-	public void addCommentToUserRecommandation(User user, String message, int reccomandationIndex) {
+	@SuppressWarnings("unchecked")
+	public void addCommentToUserRecommandation(User user, String message, User userWithTheReview) {
 		
 		//empty list
-		List<String> toAdd = new ArrayList<>();
+		int reccomandationIndex = 0;
+		List<Object> toAdd = new ArrayList<>();
 		
 		//the first index will have the username and the seccond will have the message of the comment
 		toAdd.add(user.getUsername());
 		toAdd.add(message);
 		
+		reccomandationIndex = retrieveIndex(userWithTheReview);
+		
 		//adding the comment with all the info to the recommendation
-		this.comments.get(reccomandationIndex).addAll(toAdd);
+		(((List<List<Object>>) this.comments.get(reccomandationIndex)).get(4)).add(toAdd);
 		
 	}
-
-	*/
 	
 	@Override
 	public int hashCode() {
