@@ -13,13 +13,12 @@ import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import src.Game;
-
+import java.util.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Filters.eq;
 
@@ -306,7 +305,7 @@ public static boolean noAppExists(int id) {
 	
 	private static Bson updateComment() {
 		
-		List<Object> comments = new ArrayList<>();
+		List<Bson> comments = new ArrayList<>();
 		
 		Bson update = Updates.set("comments", comments);
 		
