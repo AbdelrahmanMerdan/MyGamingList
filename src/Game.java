@@ -1,7 +1,6 @@
 package src;
 
-import java.util.Objects;
-
+import java.util.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -117,7 +116,7 @@ public class Game {
 		this.comments.add(0, comment);
 	}
 
-	
+	/*
 
 	//The two methods below only change on the index so we can combine them into 1 if needed
 	public List<String> getAllReccomandationComments(){
@@ -171,7 +170,7 @@ public class Game {
 		
 	}
 
-	
+	*/
 	
 	@Override
 	public int hashCode() {
