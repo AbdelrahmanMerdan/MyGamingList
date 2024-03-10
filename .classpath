@@ -6,15 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path=""/>
-	<classpathentry kind="lib" path="C:/Users/rocco/eclipse-workspace/MyGamingListv3/lib/apiguardian-api-1.1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rocco/eclipse-workspace/MyGamingListv3/lib/bson-4.11.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rocco/eclipse-workspace/MyGamingListv3/lib/jackson-annotations-2.16.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rocco/eclipse-workspace/MyGamingListv3/lib/jackson-core-2.16.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rocco/eclipse-workspace/MyGamingListv3/lib/jackson-databind-2.16.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rocco/eclipse-workspace/MyGamingListv3/lib/mongodb-driver-core-4.11.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rocco/eclipse-workspace/MyGamingListv3/lib/mongodb-driver-sync-4.11.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rocco/eclipse-workspace/MyGamingListv3/lib/slf4j-api-2.0.12.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rocco/eclipse-workspace/MyGamingListv3/lib/slf4j-nop-2.0.12.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
