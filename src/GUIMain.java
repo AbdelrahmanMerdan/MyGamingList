@@ -43,12 +43,14 @@ public class GUIMain extends JFrame{
 		basePane.add(login.getMainPane(), "login");
 		((CardLayout) basePane.getLayout()).show(basePane, "login");
 		
+		//instantiate main pane
 		mainPane = new JPanel();
 		mainPane.setBackground(Color.BLACK);
 		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		mainPane.setLayout(new BorderLayout(0, 0));
 		basePane.add(mainPane, "main");
 		
+		//instantiate components for main pane
 		JPanel headerPane = new JPanel();
 		headerPane.setBackground(Color.BLACK);
 		headerPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,9 +71,17 @@ public class GUIMain extends JFrame{
 			}
 		});
 		
-		JButton myGamesButton = new JButton("My Games");
-		myGamesButton.setFocusable(false);
-		headerOptionsPane.add(myGamesButton);
+		
+		JButton myReviewsButton = new JButton("My Reviews");
+		myReviewsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout) cardPane.getLayout()).show(cardPane, "myReviewedGames");
+			}
+		});
+		
+		myReviewsButton.setFocusable(false);
+		headerOptionsPane.add(myReviewsButton);
 		JButton friendsButton = new JButton("Friends");
 		friendsButton.setFocusable(false);
 		headerOptionsPane.add(friendsButton);
@@ -131,19 +141,20 @@ public class GUIMain extends JFrame{
 				mainPane.requestFocus();
 			}
 		});
-
-		//JPanel footerPane = new JPanel();
-		//mainPane.add(footerPane, BorderLayout.SOUTH);
-		
-		cardPane = new JPanel();
-		mainPane.add(cardPane, BorderLayout.CENTER);
-		cardPane.setLayout(new CardLayout());
 		
 		//order matters
 		PopReleases popReleases = new PopReleases();
 		MostPlayed mostPlayed = new MostPlayed();
 		
+		//instantiate card pane
+		cardPane = new JPanel();
+		mainPane.add(cardPane, BorderLayout.CENTER);
+		cardPane.setLayout(new CardLayout());
+		
+		//instantiate all GUI elements
 		GUIMainMenu mainMenu = new GUIMainMenu(cardPane, mostPlayed, popReleases);
+		GUIMyReviewedGames myReviewedGames = new GUIMyReviewedGames(cardPane);
 		GUIGame game = new GUIGame(cardPane);
+		
 	}
 }
