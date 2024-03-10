@@ -19,6 +19,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Filters.eq;
 
@@ -305,7 +306,7 @@ public static boolean noAppExists(int id) {
 	
 	private static Bson updateComment() {
 		
-		List<Bson> comments = new ArrayList<>();
+		List<Object> comments = new ArrayList<>();
 		
 		Bson update = Updates.set("comments", comments);
 		
