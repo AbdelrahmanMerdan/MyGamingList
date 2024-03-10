@@ -24,6 +24,7 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
 import java.awt.Font;
+import javax.swing.border.MatteBorder;
 
 public class GUILogin extends JFrame {
 	private JPasswordField passwordField;
@@ -33,17 +34,18 @@ public class GUILogin extends JFrame {
 	private JTextField confirmPasswordField;
 	
 	private JPanel mainPane;
+	
+	//prompts
+	private String usernamePrompt = "Username";
+	private String passwordPrompt = "Password";
+	private String confirmPasswordPrompt = "Confirm Password";
 
 	public GUILogin() {
-		//prompts
-		String usernamePrompt = "Username";
-		String passwordPrompt = "Password";
-		String confirmPasswordPrompt = "Confirm Password";
-
 		UsersImpl users = new UsersImpl();
 		
 		//setup main panel
 		mainPane = new JPanel();
+		mainPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(65, 90, 108)));
 		mainPane.setBackground(new Color(65, 90, 108));
 		FlowLayout flowLayout = (FlowLayout) mainPane.getLayout();
 		flowLayout.setHgap(0);
@@ -77,11 +79,11 @@ public class GUILogin extends JFrame {
 		
 		JPanel loginButtonPane = new JPanel();
 		loginPane.add(loginButtonPane, BorderLayout.SOUTH);
-		loginButtonPane.setLayout(new GridLayout(0, 2, 100, 0));
 		
 		JButton loginButton = new JButton("  Login  ");
 		loginButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			loginButton.requestFocus();
+		loginButtonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		loginButtonPane.add(loginButton);
 		
 		//login
@@ -105,6 +107,16 @@ public class GUILogin extends JFrame {
 		signUpButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		signUpButton.setFocusable(false);
 		loginButtonPane.add(signUpButton);
+		
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				reset();
+				((CardLayout) mainPane.getParent().getLayout()).show(mainPane.getParent(), "main");
+			}
+		});
+		cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		loginButtonPane.add(cancelButton);
 		
 		//switch to signup page
 		signUpButton.addActionListener(new ActionListener(){
@@ -283,7 +295,19 @@ public class GUILogin extends JFrame {
 	}
 	
 	private void login() {
+		GUIMain.loginButton.setText("Log out");
 		((CardLayout) mainPane.getParent().getLayout()).show(mainPane.getParent(), "main");
+		reset();
+	}
+	
+	private void reset() {
+		usernameField.setText(usernamePrompt);
+		passwordField.setText(passwordPrompt);
+		passwordField.setEchoChar('\0');
+		newUsernameField.setText(usernamePrompt);
+		newPasswordField.setText(passwordPrompt);
+		confirmPasswordField.setText(confirmPasswordPrompt);
+		
 	}
 
 }
