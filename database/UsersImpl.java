@@ -53,12 +53,25 @@ public class UsersImpl implements Database {
         return documentToUser(result);
     }
 
+    // get only one user's username
+    public boolean get(User user) {
+        Bson filter = eq(USER_KEY, user.getUsername());
+        Document result = users.find(filter).first();
+        if (result == null) {
+            return false;
+        }
+
+        User returnedUser = documentToUser(result);
+        return returnedUser.getPassword().equals(user.getPassword());
+    }
+
     // delete record for user
     public boolean delete(String username) {
         Bson filter = eq(USER_KEY, username);
 
         try {
             users.deleteOne(filter);
+            System.out.println("User " + username + " was deleted");
             return true;
         } catch (Exception exp) {
             throw new RuntimeException("Error happened when deleting user account");

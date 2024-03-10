@@ -1,13 +1,12 @@
 package test;
 
 import database.UsersImpl;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import src.User;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestUsersImpl {
 
@@ -23,9 +22,15 @@ public class TestUsersImpl {
 
     @Test
     public void testInsertAndGet() {
-        users.insert(new User(TEST_USER, TEST_PASSWORD));
+        User user = new User(TEST_USER, TEST_PASSWORD);
 
-        User user = users.get(TEST_USER);
+        // insert an record
+        users.insert(user);
+
+        // get the record via user
+        assertTrue(users.get(user));
+        // get the record via username
+        User returnedUser = users.get(user.getUsername());
         assertEquals(TEST_USER, user.getUsername());
         assertEquals(TEST_PASSWORD, user.getPassword());
     }
