@@ -306,7 +306,7 @@ public static boolean noAppExists(int id) {
 	
 	private static Bson updateComment() {
 		
-		List<List<String>> comments = new ArrayList<>();
+		List<Object> comments = new ArrayList<>();
 		
 		Bson update = Updates.set("comments", comments);
 		
