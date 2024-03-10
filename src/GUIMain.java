@@ -78,7 +78,14 @@ public class GUIMain extends JFrame{
 		myReviewsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				((CardLayout) cardPane.getLayout()).show(cardPane, "myReviewedGames");
+				if(loginButton == null || loginButton.getText().equals("Log in"))
+				{
+					((CardLayout) basePane.getLayout()).show(basePane, "login");
+				}
+				else
+				{
+					((CardLayout) cardPane.getLayout()).show(cardPane, "myReviewedGames");	
+				}
 			}
 		});
 		
@@ -100,6 +107,7 @@ public class GUIMain extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(loginButton.getText() != null && loginButton.getText().equals("Log out"))
 				{
+					((CardLayout) cardPane.getLayout()).show(cardPane, "mainMenu");
 					loginButton.setText("Log in");
 				}
 				else
