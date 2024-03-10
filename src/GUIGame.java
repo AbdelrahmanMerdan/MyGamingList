@@ -184,10 +184,9 @@ public class GUIGame {
 		String metaScore = game.getMetaScore();
 		String metaLink = game.getMetaURL();
 		
-		if(game.getMetaScore().equals("N/A")) 
+		if(metaScore.equals("N/A")) 
 		{
-			System.out.println(game.getMetaScore());
-			criticReviewLabel.setText("Critic Score: " + game.getMetaScore());
+			criticReviewLabel.setText("Critic Score: " + metaScore);
 		}
 		else
 		{
