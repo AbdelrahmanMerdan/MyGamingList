@@ -67,10 +67,10 @@ public class GUIMyReviewedGames extends JFrame {
 		gamesScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		gamesScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
-		JLabel lblNewLabel = new JLabel("My Reviewed Games");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
-		myReviewedGamesPane.add(lblNewLabel, BorderLayout.NORTH);
+		JLabel reviewedGamesLabel = new JLabel("My Reviewed Games");
+		reviewedGamesLabel.setForeground(Color.WHITE);
+		reviewedGamesLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		myReviewedGamesPane.add(reviewedGamesLabel, BorderLayout.NORTH);
 		gamesScrollPane.getViewport().setBackground(Color.BLACK);
 		
 	}

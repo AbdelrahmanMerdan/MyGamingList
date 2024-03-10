@@ -25,6 +25,7 @@ public class GUIMain extends JFrame{
 	private static JPanel basePane;
 	private static JPanel mainPane;
 	private static JPanel cardPane;
+	public static JButton loginButton;
 	
 	public GUIMain() {
 		
@@ -41,7 +42,7 @@ public class GUIMain extends JFrame{
 		//load login page
 		GUILogin login = new GUILogin();
 		basePane.add(login.getMainPane(), "login");
-		((CardLayout) basePane.getLayout()).show(basePane, "login");
+		//((CardLayout) basePane.getLayout()).show(basePane, "login");
 		
 		//instantiate main pane
 		mainPane = new JPanel();
@@ -49,6 +50,7 @@ public class GUIMain extends JFrame{
 		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		mainPane.setLayout(new BorderLayout(0, 0));
 		basePane.add(mainPane, "main");
+		((CardLayout) basePane.getLayout()).show(basePane, "main");
 		
 		//instantiate components for main pane
 		JPanel headerPane = new JPanel();
@@ -92,6 +94,22 @@ public class GUIMain extends JFrame{
 		
 		JTextField headerSearchBox = new JTextField();
 		String searchPrompt = "Search";
+		
+		loginButton = new JButton("Log in");
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(loginButton.getText() != null && loginButton.getText().equals("Log out"))
+				{
+					loginButton.setText("Log in");
+				}
+				else
+				{
+					((CardLayout) basePane.getLayout()).show(basePane, "login");
+				}
+			}
+		});
+		
+		headerSearchPane.add(loginButton);
 		headerSearchBox.setText(searchPrompt);
 		headerSearchPane.add(headerSearchBox);
 		headerSearchBox.setColumns(15);
