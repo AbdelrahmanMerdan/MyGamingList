@@ -1,5 +1,7 @@
 package src;
 
+import database.UsersImpl;
+
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
 import java.awt.Color;
@@ -37,6 +39,8 @@ public class GUILogin extends JFrame {
 		String usernamePrompt = "Username";
 		String passwordPrompt = "Password";
 		String confirmPasswordPrompt = "Confirm Password";
+
+		UsersImpl users = new UsersImpl();
 		
 		//setup main panel
 		mainPane = new JPanel();
@@ -80,14 +84,19 @@ public class GUILogin extends JFrame {
 			loginButton.requestFocus();
 		loginButtonPane.add(loginButton);
 		
-		//login					(needs database implementation)
+		//login
 		loginButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				if (!usernameField.getText().equals("")) {
+				String username = usernameField.getText();
+				String password = passwordField.getText();
+				User user = new User(username, password);
+
+				if (users.get(user)) {
+					System.out.println("successful login");
 					login();
-					System.out.println("sucessful login");
 				} else {
-					newUsernameField.setText("invalid username/password");
+					System.out.println("login failed");
+					usernameField.setText("invalid username/password");
 				}
 			}
 		});
@@ -172,14 +181,21 @@ public class GUILogin extends JFrame {
 		createAccountButton.setFocusable(false);
 		newUserButtonPane.add(createAccountButton);
 		
-		//create account		(needs database implementation)
+		//create account
 		createAccountButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				if (!newUsernameField.getText().equals("") && newPasswordField.getText().equals(confirmPasswordField.getText())) {
-					login();
-					System.out.println("new account, we are indeed prospering");
-				} else {
+				String newUsername = newUsernameField.getText();
+				String newPassword = newPasswordField.getText();
+				if (newUsername.equals("")) {
 					newUsernameField.setText("invalid username/password");
+				} else if (!newPassword.equals(confirmPasswordField.getText())) {
+					newUsernameField.setText("Password doesn't match");
+				} else {
+					User newUser = new User(newUsername, newPassword);
+
+					users.insert(newUser);
+					System.out.println("Created new account for " + newUsername);
+					login();
 				}
 			}
 		});
