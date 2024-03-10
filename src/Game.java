@@ -196,8 +196,6 @@ public class Game {
 		(((List<List<Object>>) this.comments.get(reccomandationIndex)).get(4)).add(toAdd);
 		
 	}
-
-
 	
 	@Override
 	public int hashCode() {
