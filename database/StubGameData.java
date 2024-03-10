@@ -36,6 +36,12 @@ public class StubGameData extends GameData {
     }
 
 
+    public static void removeApp(int id) {
+    	changeConnection();
+    	
+    	GameData.removeApp(id);
+    }
+    
     public static void addApp(int id) {
     	changeConnection();
     	
