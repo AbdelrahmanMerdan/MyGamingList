@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Game {
 
 	//Instance variables
-	private int id, numOfReviews, userReviews;
+	private int id, sum_of_all_reviews, userReviews;
 	private String name, shortDesc, desc, cover, sysRequire, metaScore, metaURL;
+	private List<Object> comments;
 
 	public Game(@JsonProperty("_id") int id, @JsonProperty("name") String name, @JsonProperty("short_description") String shortDesc, @JsonProperty("description") String desc, @JsonProperty("cover_art") String cover, 
-			@JsonProperty("pc_requirements") String sysRequire, @JsonProperty("meta_score") String metaScore, @JsonProperty("meta_link") String metaURL, @JsonProperty("number_of_reviews") int numofReviews, @JsonProperty("user_reviews") int userReviews) {
+			@JsonProperty("pc_requirements") String sysRequire, @JsonProperty("meta_score") String metaScore, @JsonProperty("meta_link") String metaURL, @JsonProperty("sum_of_all_reviews") int sum_of_all_reviews, 
+			@JsonProperty("user_reviews") int userReviews, @JsonProperty("comments")List<Object> comments) {
 		this.id = id;
 		this.name = name;
 		this.shortDesc = shortDesc;
@@ -22,8 +24,9 @@ public class Game {
 		this.sysRequire = sysRequire;
 		this.metaScore = metaScore;
 		this.metaURL = metaURL;
-		this.numOfReviews = numofReviews;
+		this.sum_of_all_reviews = sum_of_all_reviews;
 		this.userReviews = userReviews;
+		this.comments = comments;
 	}
 
 	public int getID() {
@@ -91,11 +94,11 @@ public class Game {
 	}
 	
 	public int getNumOfReviews() {
-		return numOfReviews;
+		return sum_of_all_reviews;
 	}
 
 	public void setNumOfReviews(int numOfReviews) {
-		this.numOfReviews = numOfReviews;
+		this.sum_of_all_reviews = numOfReviews;
 	}
 
 	public int getUserReviews() {
@@ -105,6 +108,70 @@ public class Game {
 	public void setUserReviews(int userReviews) {
 		this.userReviews = userReviews;
 	}
+	
+	public List<Object> getComment() {
+		return this.comments;
+	}
+	
+	public void addFirstComment(List<Object> comment) {
+		this.comments.add(0, comment);
+	}
+
+	
+
+	//The two methods below only change on the index so we can combine them into 1 if needed
+	public List<String> getAllReccomandationComments(){
+		
+		List<String> copy = new ArrayList<>();
+		
+		for(int i = 0; i < this.comments.size(); i++) {
+			
+			copy.add(this.comments.get(i).get(1));
+			
+		}
+		
+		return copy;
+	}
+	
+	public List<String> getAllReccomandationUser(){
+		
+		List<String> copy = new ArrayList<>();
+		
+		for(int i = 0; i < this.comments.size(); i++) {
+			
+			copy.add(this.comments.get(i).get(0));
+			
+		}
+		
+		return copy;
+	}
+	
+
+	public String getOneReccomandationComment(int index){
+		
+		return this.comments.get(index).get(1);
+	}
+	
+	public String getOneReccomandationUser(int index){
+		
+		return this.comments.get(index).get(0);
+	}
+	
+	public void addCommentToUserRecommandation(User user, String message, int reccomandationIndex) {
+		
+		//empty list
+		List<String> toAdd = new ArrayList<>();
+		
+		//the first index will have the username and the seccond will have the message of the comment
+		toAdd.add(user.getUsername());
+		toAdd.add(message);
+		
+		//adding the comment with all the info to the recommendation
+		this.comments.get(reccomandationIndex).addAll(toAdd);
+		
+	}
+
+	
 	
 	@Override
 	public int hashCode() {
