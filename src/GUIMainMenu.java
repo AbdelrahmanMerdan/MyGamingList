@@ -95,17 +95,11 @@ public class GUIMainMenu extends JFrame {
             JLabel lbl = new JLabel(popReleases.getGame(game).getName());
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            lbl.addMouseListener(new MouseListener() {
-				@Override
+            lbl.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					GUIGame.loadGame(popReleases.getGame(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
-				}
-				@Override public void mousePressed(MouseEvent e) {}
-				@Override public void mouseReleased(MouseEvent e) {}
-				@Override public void mouseEntered(MouseEvent e) {}
-				@Override public void mouseExited(MouseEvent e) {}
-            	
+				}            	
             });
             popularReleaseBox.add(lbl);
         }

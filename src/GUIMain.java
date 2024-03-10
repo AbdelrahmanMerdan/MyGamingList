@@ -22,8 +22,9 @@ import com.mongodb.client.*;
 
 public class GUIMain extends JFrame{
 	
-	private static JPanel mainPane = new JPanel();
-	private static JPanel cardPane = new JPanel();
+	private static JPanel basePane;
+	private static JPanel mainPane;
+	private static JPanel cardPane;
 	
 	public GUIMain() {
 		
@@ -32,16 +33,21 @@ public class GUIMain extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 800);
 		
+		//instantiate base pane
+		basePane = new JPanel();
+		basePane.setLayout(new CardLayout());
+		setContentPane(basePane);
+		
+		//load login page
+		GUILogin login = new GUILogin();
+		basePane.add(login.getMainPane(), "login");
+		((CardLayout) basePane.getLayout()).show(basePane, "login");
+		
+		mainPane = new JPanel();
 		mainPane.setBackground(Color.BLACK);
 		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(mainPane);
 		mainPane.setLayout(new BorderLayout(0, 0));
-		
-		mainPane.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				mainPane.requestFocus();
-			}
-		});
+		basePane.add(mainPane, "main");
 		
 		JPanel headerPane = new JPanel();
 		headerPane.setBackground(Color.BLACK);
@@ -109,22 +115,27 @@ public class GUIMain extends JFrame{
 				headerSearchBox.getRootPane().requestFocus();
 			}
 		});
-		
+
+		//focus management
 		headerSearchBox.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				headerSearchBox.setText("");
 			}
 			public void focusLost(FocusEvent e) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {}
 				headerSearchBox.setText(searchPrompt);
 			}
 		});
-		
+
+		mainPane.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				mainPane.requestFocus();
+			}
+		});
+
 		//JPanel footerPane = new JPanel();
 		//mainPane.add(footerPane, BorderLayout.SOUTH);
 		
+		cardPane = new JPanel();
 		mainPane.add(cardPane, BorderLayout.CENTER);
 		cardPane.setLayout(new CardLayout());
 		
