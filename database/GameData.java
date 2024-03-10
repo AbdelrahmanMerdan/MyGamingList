@@ -23,10 +23,10 @@ import java.net.http.HttpResponse;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Filters.eq;
 
-public class GameData extends Database {
+public class GameData implements Database, StubDatabase {
 
-    //Collections
-    public final static MongoCollection<Document> games = database.getCollection("Games");
+    //Collection
+    public static MongoCollection<Document> games = database.getCollection("Games");
 
     //ObjectMapper
     public final static ObjectMapper map = new ObjectMapper();

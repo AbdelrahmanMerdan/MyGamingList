@@ -7,7 +7,7 @@ import src.User;
 
 import static com.mongodb.client.model.Filters.eq;
 
-public class UsersImpl extends Database {
+public class UsersImpl implements Database {
 
     private final MongoCollection<Document> users;
 
