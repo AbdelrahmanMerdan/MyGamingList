@@ -116,14 +116,14 @@ public class Game {
 		this.comments.add(0, comment);
 	}
 
-	@SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 	public List<Object> getAllReccomandationComments(){
 		
 		List<Object> copy = new ArrayList<>();
 		
 		for(int i = 0; i < this.comments.size(); i++) {
 			
-			copy.add(((List<List<Object>>) this.comments.get(i).get(4)).get(1));
+			copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(1));
 			
 		}
 		
@@ -137,20 +137,21 @@ public class Game {
 		
 		for(int i = 0; i < this.comments.size(); i++) {
 			
-			copy.add(((List<List<Object>>) this.comments.get(i).get(4)).get(0));
+			copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(0));
 			
 		}
 		
 		return copy;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public int retrieveIndex(User user) {
 		
 		int index = -1;
 		
 		for(int i = 0; i < this.comments.size(); i++) {
 			
-			if(this.comments.get(i).get(0).equals(user.getUsername())) {
+			if(((List<Object>) this.comments.get(i)).get(0).equals(user.getUsername())) {
 				
 				index = i;
 				break;
@@ -162,18 +163,20 @@ public class Game {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	public Object getOneReccomandationComment(User userWithReccomandation){
 		
 		int index = retrieveIndex(userWithReccomandation);
 		
-		return this.comments.get(index).get(4);
+		return ((List<Object>) this.comments.get(index)).get(4);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Object getOneReccomandationUser(User userWithReccomandation){
 		
 		int index = retrieveIndex(userWithReccomandation);
 		
-		return this.comments.get(index).get(0);
+		return ((List<Object>) this.comments.get(index)).get(0);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -190,9 +193,10 @@ public class Game {
 		reccomandationIndex = retrieveIndex(userWithTheReview);
 		
 		//adding the comment with all the info to the recommendation
-		((List<List<Object>>) this.comments.get(reccomandationIndex).get(4)).add(toAdd);
+		(((List<List<Object>>) this.comments.get(reccomandationIndex)).get(4)).add(toAdd);
 		
 	}
+
 
 	
 	@Override
