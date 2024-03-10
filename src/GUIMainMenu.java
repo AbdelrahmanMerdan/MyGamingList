@@ -40,7 +40,7 @@ public class GUIMainMenu extends JFrame {
 		JLabel mostPlayedLabel = new JLabel("Most Played");
 		mostPlayedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		mostPlayedLabel.setForeground(Color.WHITE);
-		mostPlayedLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		mostPlayedLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		mostPlayedBox.add(mostPlayedLabel);
 		
 		for (int i = 0; i < mostPlayed.getSize(); i++) {
@@ -78,7 +78,7 @@ public class GUIMainMenu extends JFrame {
 		JLabel popularReleaseLabel = new JLabel("Popular Releases");
 		popularReleaseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		popularReleaseLabel.setForeground(Color.WHITE);
-		popularReleaseLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		popularReleaseLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		popularReleaseBox.add(popularReleaseLabel);
 		
 		for (int i = 0; i < popReleases.getSize(); i++) {
