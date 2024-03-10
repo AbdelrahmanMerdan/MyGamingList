@@ -9,8 +9,8 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 
 public interface StubDatabase {
-	//Client settings for real database
-	static String connection = "mongodb+srv://2311team5:qn431J86d7xMEdpc@gaminglist.a2jzcoi.mongodb.net/?retryWrites=true&w=majority&appName=GamingList";
+	//Client settings for stub database
+	final static String connection = "mongodb+srv://2311team5:qn431J86d7xMEdpc@gaminglist.a2jzcoi.mongodb.net/?retryWrites=true&w=majority&appName=GamingList";
 
 	final static ServerApi serverApi = ServerApi.builder()
 			.version(ServerApiVersion.V1)
