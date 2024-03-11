@@ -110,7 +110,7 @@ public class GUIMyFriends extends JFrame {
 		friendsScrollPane.getViewport().setBackground(Color.BLACK);
 		
 		// This will change later, maybe to look better. Good enough for now
-		JLabel myFriendsLabel = new JLabel("[" + usernameLoggedIn + "] - My Friends");
+		JLabel myFriendsLabel = new JLabel(usernameLoggedIn + " - My Friends");
 		myFriendsLabel.setForeground(Color.WHITE);
 		myFriendsLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		myFriendsPane.add(myFriendsLabel, BorderLayout.NORTH);
