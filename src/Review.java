@@ -8,20 +8,12 @@ package src;
 import com.mongodb.*;
 import static com.mongodb.client.model.Filters.*;
 import com.mongodb.client.*;
-import com.mongodb.client.MongoClient;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.*;
-
-import database.Database;
 import database.GameData;
 import database.UsersImpl;
-
 import org.bson.*;
 import org.bson.conversions.Bson;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.*;
-import java.net.*;
-import java.net.http.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
@@ -33,34 +25,10 @@ import java.io.IOException;
 
 public class Review {
 	
-	//Client settings
-		final static String connection = "mongodb+srv://2311team5:qn431J86d7xMEdpc@mygaminglist.igshqok.mongodb.net/?retryWrites=true&w=majority&appName=MyGamingList";
-
-		final static ServerApi serverApi = ServerApi.builder()
-				.version(ServerApiVersion.V1)
-				.build();
-
-		final static MongoClientSettings settings = MongoClientSettings.builder()
-				.applyConnectionString(new ConnectionString(connection))
-				.serverApi(serverApi)
-				.build();
-
-		final static MongoClient client = MongoClients.create(settings);
-
-		//Database
-		final static MongoDatabase database = client.getDatabase("MyGamingList");
-
-		//Collections
-		public final static MongoCollection<Document> games = database.getCollection("Games");
-		
-		public final static MongoCollection<Document> users = database.getCollection("Users");
-		
-		
-		
 		public static boolean UserExists(String name) {
 	    	//Filtering
 	    	Bson filter = eq("username", name);
-	    	FindIterable<Document> result = users.find(filter);
+	    	FindIterable<Document> result = UsersImpl.users.find(filter);
 	    	
 	    	//Checking if app does not exist
 	    	if(result.first() == null)
@@ -74,7 +42,7 @@ public class Review {
 		public static boolean noAppReviews(int id) {
 	    	//Filtering
 	    	Bson filter = and(eq("_id", id), exists("num_of_reviews"));
-	    	FindIterable<Document> result = games.find(filter);
+	    	FindIterable<Document> result = GameData.games.find(filter);
 	    	
 	    	//Checking if details is unavailable for the game
 	    	if(result.first() == null)
@@ -89,7 +57,7 @@ public class Review {
 			
 			
 			Bson filter = and(eq("_id", id), exists("name"));
-	    	FindIterable<Document> result = games.find(filter);
+	    	FindIterable<Document> result = GameData.games.find(filter);
 	    	
 	    	//Checking if details is unavailable for the game
 	    	if(result.first() != null)
@@ -133,20 +101,20 @@ public class Review {
 		    	Bson userupdate = addUserReview(game,username,review,comment,reccomendation);
 		    	
 		    	try {
-					UpdateResult updateResult = games.updateOne(game_found, update);
-					System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
-					try {
-						
-						UpdateResult updateResultUser = users.updateOne(user_found, userupdate);
-					
-					}catch(MongoException e) {
-						System.err.println("ERROR: "+e);
-					}
-					
-					
-				} catch(MongoException e) {
-					System.err.println("ERROR: "+e);
-				}
+		    		UpdateResult updateResult = GameData.games.updateOne(game_found, update);
+		    		System.out.println("Review Game updated: "+updateResult.wasAcknowledged());
+		    		
+		    		try {
+		    			UpdateResult updateResultUser = UsersImpl.users.updateOne(user_found, userupdate);
+		    			System.out.println("Review User updated: "+updateResultUser.wasAcknowledged());
+		    			
+		    		}catch(MongoException e) {
+		    			System.err.println("ERROR: "+e);
+		    		}
+
+		    	} catch(MongoException e) {
+		    		System.err.println("ERROR: "+e);
+		    	}
 		    	
 			}
 			
@@ -173,6 +141,7 @@ public class Review {
 			
 			Bson Update = Updates.set("sum_of_all_reviews", prevreviews);
 			game.setSumOfAllReviews(prevreviews);
+			
 			return Update;
 			
 			
@@ -203,7 +172,7 @@ public class Review {
 		private static Document find_user(String username) {
 			
 			Bson filter_user = eq("username", username);
-	    	FindIterable<Document> result_user = users.find(filter_user);
+	    	FindIterable<Document> result_user = UsersImpl.users.find(filter_user);
 	    	Document user_found = result_user.first();
 	    	
 	    	return user_found;
@@ -214,7 +183,7 @@ public class Review {
 		private static Document find_game(Game game) {
 			
 			Bson filter_game = eq("_id", game.getID());
-	    	FindIterable<Document> result_game = games.find(filter_game);
+	    	FindIterable<Document> result_game = GameData.games.find(filter_game);
 	    	Document game_found = result_game.first();
 	    	
 	    	return game_found;
@@ -293,7 +262,7 @@ public class Review {
 		}
 		
 		@SuppressWarnings("unchecked")
-		public int retrieveIndex(User user, Game game) {
+		public static int retrieveIndex(User user, Game game) {
 			
 			int index = -1;
 			
@@ -348,22 +317,26 @@ public class Review {
 		}
 		
 		@SuppressWarnings("unchecked")
-		public void addCommentToUserReview(User user, String message, User userWithTheReview, Game game) {
+		public static void addCommentToUserReview(User user, String message, User userWithTheReview, Game game) {
 			
 			Document game_found = find_game(game);
+			List<Object> comments = game.getComment();
 			
 			int reccomandationIndex = retrieveIndex(userWithTheReview, game);
-			List<Object> toAdd = (List<Object>) ((List<Object>) game.getComment().get(reccomandationIndex)).get(4);
+		
+			List<Object> toAdd = (List<Object>) ((List<Object>) comments.get(reccomandationIndex)).get(4);
 			
 			//the first index will have the username and the seccond will have the message of the comment
-			toAdd.add(user);
+			toAdd.add(user.getUsername());
 			toAdd.add(message);
 			
-			Bson Update = Updates.set("comments", toAdd);
+			Bson Update = Updates.set("comments", comments);
+			
+			System.out.println(comments);
 			
 			try {
-			UpdateResult updateResult = games.updateOne(game_found, Update);
-			System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
+			UpdateResult updateResult = GameData.games.updateOne(game_found, Update);
+			System.out.println("Updated comment: "+updateResult.wasAcknowledged());
 			}catch(MongoException e) {
 			System.err.println("ERROR: "+e);
 		}
@@ -374,13 +347,20 @@ public class Review {
 		public static void main(String[] args) throws IOException {
 			
 //			CheckUpdateGame(1747800);
-			
+//
 //			Get the Game from the database using it's ID
 			Game game = GameData.getGame(105600);
 //			System.out.print(game);
 //			User 1 and User 2 review the game
-			review_game("User2", game, 9, "Game is bad", "No" );
-
+//			review_game("User2", game, 9, "Game is bad", "No" );
+//
+			User user = UsersImpl.getUser("User1");
+			User user2 = UsersImpl.getUser("User2");
+//
+			
+			addCommentToUserReview(user, "Great Review", user2, game );
+			addCommentToUserReview(user, "Great Review", user2, game );
+						
 
 		  }
 		
