@@ -176,10 +176,10 @@ public class GUIGameReviews extends JPanel {
 		reviewPane.add(reviewHeaderPane, BorderLayout.NORTH);
 		reviewHeaderPane.setLayout(new BorderLayout(0, 0));
 		
-		JLabel usernameLabel = new JLabel("USERNAME");						// set this to the username
-		usernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		usernameLabel.setForeground(Color.WHITE);
-		reviewHeaderPane.add(usernameLabel, BorderLayout.WEST);
+		JLabel nameLabel = new JLabel("USERNAME");							// set this to the username or game name
+		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		nameLabel.setForeground(Color.WHITE);
+		reviewHeaderPane.add(nameLabel, BorderLayout.WEST);
 		
 		JLabel reccomendLabel = new JLabel("RECCOMENDED");					// set this to the yes/no reccomended
 		reccomendLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
