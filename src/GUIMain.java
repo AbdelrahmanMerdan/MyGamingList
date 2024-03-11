@@ -63,6 +63,7 @@ public class GUIMain extends JFrame{
 		headerPane.add(headerOptionsPane, BorderLayout.WEST);
 		headerOptionsPane.setOpaque(false);
 		JButton homeButton = new JButton("Home");
+		homeButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		homeButton.setFocusable(false);
 		headerOptionsPane.add(homeButton);
 		
@@ -74,7 +75,9 @@ public class GUIMain extends JFrame{
 		});
 		
 		
+		//Set up My Reviews
 		JButton myReviewsButton = new JButton("My Reviews");
+		myReviewsButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		myReviewsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -91,7 +94,23 @@ public class GUIMain extends JFrame{
 		
 		myReviewsButton.setFocusable(false);
 		headerOptionsPane.add(myReviewsButton);
+		
+		//Set up My Friends
 		JButton friendsButton = new JButton("Friends");
+		friendsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(loginButton == null || loginButton.getText().equals("Log in"))
+				{
+					((CardLayout) basePane.getLayout()).show(basePane, "login");
+				}
+				else
+				{
+				((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
+				}
+			}
+		});
+		
+		friendsButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		friendsButton.setFocusable(false);
 		headerOptionsPane.add(friendsButton);
 		
@@ -100,9 +119,11 @@ public class GUIMain extends JFrame{
 		headerSearchPane.setOpaque(false);
 		
 		JTextField headerSearchBox = new JTextField();
+		headerSearchBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		String searchPrompt = "Search";
 		
 		loginButton = new JButton("Log in");
+		loginButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(loginButton.getText() != null && loginButton.getText().equals("Log out"))
@@ -180,6 +201,7 @@ public class GUIMain extends JFrame{
 		//instantiate all GUI elements
 		GUIMainMenu mainMenu = new GUIMainMenu(cardPane, mostPlayed, popReleases);
 		GUIMyReviewedGames myReviewedGames = new GUIMyReviewedGames(cardPane);
+		GUIMyFriends myFriends = new GUIMyFriends(cardPane);
 		GUIGame game = new GUIGame(cardPane);
 		
 	}
