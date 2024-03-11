@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.bson.Document;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,6 +19,7 @@ public class User {
 	private List<Object> games;
 	private List<Object> friends;
 
+	@JsonCreator
 	public User(@JsonProperty("_id") Object id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("Games") List<Object> games, @JsonProperty("Friends") List<Object> friends )
 			 {
 		this.id = id;
@@ -26,6 +28,15 @@ public class User {
 		this.games = games;
 		this.friends = friends;
 	}
+
+	public User(String username, String password)
+	 {
+		this.id = 0;
+		this.username = username;
+		this.password = password;
+		this.games = new ArrayList<>();
+	    this.friends = new ArrayList<>();
+		}
 	
 
 
