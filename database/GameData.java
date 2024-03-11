@@ -271,10 +271,9 @@ public static boolean noAppExists(int id) {
 
 
 	private static Bson updateSysRequire(JsonNode jsonResponse) {
-		//Grabbing sys requirements
-		String txt = jsonResponse.get("pc_requirements").get("minimum").asText();
-		
+		String txt = "Non Applicable";
 		try {
+			txt = jsonResponse.get("pc_requirements").get("minimum").asText();
 			//Adding recommended sys requirements if there is
 			txt = txt+jsonResponse.get("pc_requirements").get("recommended").asText();
 			
@@ -318,7 +317,7 @@ public static boolean noAppExists(int id) {
 		int UserReview = 0;
 		int NumberofReview = 0;
 		
-		Bson update = Updates.set("user_reviews", UserReview);
+		Bson update = Updates.set("num_of_reviews", UserReview);
 		Bson update2 = Updates.set("sum_of_all_reviews", NumberofReview);
 		Bson total = Updates.combine(update, update2);
 
