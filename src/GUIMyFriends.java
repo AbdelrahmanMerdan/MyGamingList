@@ -138,6 +138,8 @@ public class GUIMyFriends extends JFrame {
                         	System.out.println("Adding friend: " + friendUsername);
                             users.updateFriend(usernameLoggedIn, friendUsername, "add");
                             JOptionPane.showMessageDialog(null, "Friend added successfully!");
+			    GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
+            		    ((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");	
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "User does not exist!");
@@ -164,6 +166,8 @@ public class GUIMyFriends extends JFrame {
                             // Remove the friend and update the GUI
                             users.updateFriend(usernameLoggedIn, friendUsername, "remove");
                             JOptionPane.showMessageDialog(null, "Friend removed successfully!");
+			    GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
+            		    ((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");					
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "User is not in your friend list!");
