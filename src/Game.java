@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Game {
 
 	//Instance variables
-	private int id, sum_of_all_reviews, userReviews;
+	private int id, sum_of_all_reviews, num_of_reviews;
 	private String name, shortDesc, desc, cover, sysRequire, metaScore, metaURL;
 	private List<Object> comments;
 
 	public Game(@JsonProperty("_id") int id, @JsonProperty("name") String name, @JsonProperty("short_description") String shortDesc, @JsonProperty("description") String desc, @JsonProperty("cover_art") String cover, 
 			@JsonProperty("pc_requirements") String sysRequire, @JsonProperty("meta_score") String metaScore, @JsonProperty("meta_link") String metaURL, @JsonProperty("sum_of_all_reviews") int sum_of_all_reviews, 
-			@JsonProperty("user_reviews") int userReviews, @JsonProperty("comments")List<Object> comments) {
+			@JsonProperty("num_of_reviews") int num_of_reviews, @JsonProperty("comments")List<Object> comments) {
 		this.id = id;
 		this.name = name;
 		this.shortDesc = shortDesc;
@@ -24,7 +24,7 @@ public class Game {
 		this.metaScore = metaScore;
 		this.metaURL = metaURL;
 		this.sum_of_all_reviews = sum_of_all_reviews;
-		this.userReviews = userReviews;
+		this.num_of_reviews = num_of_reviews;
 		this.comments = comments;
 	}
 
@@ -92,28 +92,28 @@ public class Game {
 		this.metaURL = metaURL;
 	}
 	
-	public int getNumOfReviews() {
+	public int getSumOfAllReviews() {
 		return sum_of_all_reviews;
 	}
 
-	public void setNumOfReviews(int numOfReviews) {
-		this.sum_of_all_reviews = numOfReviews;
+	public void setSumOfAllReviews(int SumOfReviews) {
+		this.sum_of_all_reviews = SumOfReviews;
 	}
 
-	public int getUserReviews() {
-		return userReviews;
+	public int getNumOfReviews() {
+		return num_of_reviews;
 	}
 
-	public void setUserReviews(int userReviews) {
-		this.userReviews = userReviews;
+	public void setNumOfReviews(int numReviews) {
+		this.num_of_reviews = numReviews;
 	}
 	
 	public List<Object> getComment() {
 		return this.comments;
 	}
 	
-	public void addFirstComment(List<Object> comment) {
-		this.comments.add(0, comment);
+	public void addComment(List<Object> comment) {
+		this.comments.add(comment);
 	}
 
 		@SuppressWarnings("unchecked")
