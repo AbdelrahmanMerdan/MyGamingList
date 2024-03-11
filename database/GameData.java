@@ -271,12 +271,16 @@ public static boolean noAppExists(int id) {
 
 
 	private static Bson updateSysRequire(JsonNode jsonResponse) {
-		String txt = "Non Applicable";
+		String txt = "N/A";
+		
 		try {
 			txt = jsonResponse.get("pc_requirements").get("minimum").asText();
-			//Adding recommended sys requirements if there is
+		} catch(NullPointerException e) {
+			//Else, do nothing
+		}
+		
+		try {
 			txt = txt+jsonResponse.get("pc_requirements").get("recommended").asText();
-			
 		} catch(NullPointerException e) {
 			//Else, do nothing
 		}
