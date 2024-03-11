@@ -158,18 +158,11 @@ public class GUIMain extends JFrame{
 						Pattern.CASE_INSENSITIVE);
 				Bson filter = regex("name", namePattern);
 				FindIterable<Document> result = GameData.games.find(filter);
-				System.out.println(result.first());
 				
 				if (result.first() != null) {
-					try {
-						Game gameResult = GameData.map.readValue(result.first().toJson(),Game.class);
-						GUIGame.loadGame(gameResult);
-						((CardLayout) cardPane.getLayout()).show(cardPane, "game");
-					} catch (JsonMappingException e1) {
-						System.out.println("JsonMappingException");
-					} catch (JsonProcessingException e1) {
-						System.out.println("JsonProcessingException");
-					}
+					int id = result.first().getInteger("_id");
+					GUIGame.loadGame(id);
+					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 				} else {
 					headerSearchBox.setText("Invalid Name");
 				}
