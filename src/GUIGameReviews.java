@@ -4,17 +4,22 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -22,6 +27,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
 public class GUIGameReviews extends JPanel {
 
@@ -29,6 +35,8 @@ public class GUIGameReviews extends JPanel {
 	private static Box reviewBox;
 	private static JLabel reviewTitleLabel;
 	private static String backLocation;
+	//private static JButton newReviewButton;
+	private static JPanel buttonPanel;
 
 	/**
 	 * Create the panel.
@@ -59,8 +67,12 @@ public class GUIGameReviews extends JPanel {
 		reviewTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ReviewHeaderPane.add(reviewTitleLabel, BorderLayout.WEST);
 		
-		JButton backButton = new JButton("BACK");
-		ReviewHeaderPane.add(backButton, BorderLayout.EAST);
+		buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BorderLayout(0, 0));
+		ReviewHeaderPane.add(buttonPanel, BorderLayout.EAST);
+		
+		JButton backButton = new JButton("  BACK  ");
+		buttonPanel.add(backButton, BorderLayout.EAST);
 		backButton.setFocusable(false);
 		
 		//listener for back button, changes between targets
@@ -84,6 +96,28 @@ public class GUIGameReviews extends JPanel {
 		//setup misc.
 		reviewTitleLabel.setText(game.getName());
 		backLocation = "game";
+		//newReviewButton.setVisible(true);
+		
+		JButton newReviewButton = new JButton("REVIEW");
+		buttonPanel.add(newReviewButton, BorderLayout.WEST);
+		newReviewButton.setFocusable(false);
+		
+		//listener for new review button
+		newReviewButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							GUINewUserReview reviewFrame = new GUINewUserReview(game);
+							reviewFrame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				System.out.println(game.getName());
+			}
+		});
 	}
 	
 	public static void loadUserReviews(JPanel cardPane, String user) { //ideally this would be a User not a string but /shrug as long as it works (UsersImpl methods should be static i think)
@@ -99,6 +133,7 @@ public class GUIGameReviews extends JPanel {
 		//setup misc.
 		reviewTitleLabel.setText(user);
 		backLocation = "mainMenu";
+		//newReviewButton.setVisible(false);
 	}
 	
 	private JScrollPane generateScrollable(Box box) {
@@ -201,9 +236,21 @@ public class GUIGameReviews extends JPanel {
 			}
 		});
 		
-		newComentLabel.addMouseListener(new MouseAdapter() {
+		//comment prompt
+		newComentLabel.addMouseListener(new MouseAdapter() {					// needs to be implemented, comment needs to be saved to db alongside username
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("new comment");
+				if (GUIMain.usernameLoggedIn != null) {
+					String comment = JOptionPane.showInputDialog(reviewContentPane,
+							"Enter your Comment:",
+							"Add Comment",
+							JOptionPane.PLAIN_MESSAGE);
+					System.out.println("User: " + GUIMain.usernameLoggedIn + " has commented: " + comment); // proof of concept
+				} else {
+					JOptionPane.showMessageDialog(reviewContentPane,
+							"Please Login to Comment",
+							"Error",
+							JOptionPane.PLAIN_MESSAGE);
+				}
 			}
 		});
 		
@@ -230,5 +277,4 @@ public class GUIGameReviews extends JPanel {
 		
 		commentBox.add(commentPane);
 	}
-
 }
