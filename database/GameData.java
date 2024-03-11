@@ -31,7 +31,7 @@ public class GameData implements Database, StubDatabase {
 
     //ObjectMapper
     public final static ObjectMapper map = new ObjectMapper();
-
+    
 
 public static boolean noAppExists(int id) {
     	//Filtering
