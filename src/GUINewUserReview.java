@@ -16,16 +16,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
-public class GUINewUserReview extends JFrame{
+public class GUINewUserReview extends JDialog{
 	
 	public GUINewUserReview(Game game) {
 		setTitle("New Review");
 		setBounds(100, 100, 600, 300);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JPanel mainPane = new JPanel();
 		mainPane.setBorder(new EmptyBorder(0, 20, 0, 20));

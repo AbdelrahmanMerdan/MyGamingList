@@ -3,6 +3,7 @@ package database;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
@@ -17,6 +18,8 @@ import static com.mongodb.client.model.Filters.eq;
 public class UsersImpl implements Database {
 
     private final MongoCollection<Document> users;
+    
+    final static MongoCollection<Document> user= database.getCollection("Users");
 
     private static final String TABLE_NAME = "Users";
 
@@ -28,7 +31,7 @@ public class UsersImpl implements Database {
     public UsersImpl() {
         users = database.getCollection(TABLE_NAME);
         
-        
+    	
     }
 
     // username -> String
@@ -139,5 +142,26 @@ public class UsersImpl implements Database {
                 .append(PWD_KEY, user.getPassword())
                 .append(GAMES_KEY, user.getGames())
                 .append(FRIENDS_KEY, user.getFriends());
+    }
+    
+    
+    
+    public static User getUser(String string) {
+    	//Grabbing specified game
+    	Bson filter = eq("username", string);
+    	FindIterable<Document> result = user.find(filter);
+    	Document user = result.first();
+    	String jsonResponse = user.toJson();
+    	
+    	try {
+    		//Returning game object from jsonResponse
+			return GameData.map.readValue(jsonResponse, User.class);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+    	
+    	return null;
     }
 }
