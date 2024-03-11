@@ -4,46 +4,77 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.bson.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
-    private final String username;
-    private final String password;
+	//Instance variables
+	private Object id;
+	private String username, password;
+	private List<Object> games;
+	private List<Object> friends;
 
-    private final List<String> games;
-    private final List<String> friends;
+	public User(@JsonProperty("_id") Object id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("Games") List<Object> games, @JsonProperty("Friends") List<Object> friends )
+			 {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.games = games;
+		this.friends = friends;
+	}
+	
 
-    public User (final String username, final String password) {
-        this.username = username;
-        this.password = password;
-        this.games = new ArrayList<>();
-        this.friends = new ArrayList<>();
-    }
 
-    public User (final String username,
-                 final String password,
-                 final List<String> games,
-                 final List<String> friends) {
-        this.username = username;
-        this.password = password;
-        this.games = games;
-        this.friends = friends;
-    }
+	public Object getId() {
+		return id;
+	}
 
-    public String getUsername() {
-        return this.username;
-    }
 
-    public String getPassword() {
-        return this.password;
-    }
 
-    public List<String> getGames() {
-        return this.games;
-    }
+	public void setId(Object id) {
+		this.id = id;
+	}
 
-    public List<String> getFriends() {
-        return this.friends;
-    }
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+
+	public void setName(String name) {
+		this.username = name;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	
+	public void setPassword(String password2) {
+		this.password = password2;
+		
+	}
+	
+	public List<Object> getFriends() {
+		return friends;
+	}
+	
+	public List<Object> getGames() {
+		return games;
+	}
+	
+
+	@Override
+	public String toString() {
+		return " userame=" + username + "\n id=" + id + "\n password=" + password + "\n Games=" + games + "\n friends=" + friends;
+				
+	}
 
 	@Override
 	public int hashCode() {
