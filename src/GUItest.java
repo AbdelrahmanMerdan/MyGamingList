@@ -22,6 +22,7 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
@@ -63,10 +64,20 @@ public class GUItest extends JFrame {
 		Box reviewBox = new Box(1);
 		
 		//fill container with reviews (ideally we fill an array with reviews and iterate through it, this would allow the code to work for both users and games)
-		review(reviewBox);
-		review(reviewBox);
-		review(reviewBox);
-		review(reviewBox);
+		
+		List<Object> reviews = GUIGame.game.getComment();
+		
+		for( int i = 0; i < reviews.size(); i++) {
+			
+			@SuppressWarnings("unchecked")
+			String review = (String) ((List<Object>) reviews.get(i)).get(3);
+			
+			review(reviewBox, review);
+			
+		}
+		
+		
+		
 		
 		JScrollPane reviewScrollPane = generateScrollable(reviewBox);
 		mainPane.add(reviewScrollPane);
@@ -93,7 +104,7 @@ public class GUItest extends JFrame {
 		return reviewScrollPane;
 	}
 	
-	private void review(Box reviewBox) {
+	private void review(Box reviewBox, String Review) {
 		reviewBox.add(Box.createRigidArea(new Dimension(0, 20)));
 		
 		JPanel reviewPane = new JPanel();
@@ -127,11 +138,24 @@ public class GUItest extends JFrame {
 		//create container
 		Box commentBox = new Box(1);
 		
+		
+//		List<Object> reviews = GUIGame.game.getComment();
+		
+		
+//		for( int i = 0; i < reviews.size(); i++) {
+//			
+//			@SuppressWarnings("unchecked")
+//			String review = (String) ((List<Object>) reviews.get(i)).get(3);
+//			
+//			review(reviewBox, review);
+//			
+//		}
+		
 		//fill comtainer (this should be filled using the comment data from the database in a similar manner as written above)
-		comment(commentBox);
-		comment(commentBox);
-		comment(commentBox);
-		comment(commentBox);
+//		comment(commentBox);
+//		comment(commentBox);
+//		comment(commentBox);
+//		comment(commentBox);
 		
 		JScrollPane commentScrollPane = new JScrollPane(commentBox);
 		forumPane.add(commentScrollPane);
@@ -149,7 +173,7 @@ public class GUItest extends JFrame {
 		JTextPane reviewContentPane = new JTextPane();
 		reviewContentPane.setEditable(false);
 		
-		reviewContentPane.setText("My name is Steve and I endorse this game");
+		reviewContentPane.setText(Review);
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
 		commentLabel.addMouseListener(new MouseAdapter() {
@@ -171,7 +195,7 @@ public class GUItest extends JFrame {
 		reviewBox.add(reviewPane);
 	}
 	
-	private void comment(Box commentBox) {
+	private void comment(Box commentBox, String Comment) {
 		JPanel commentPane = new JPanel();
 		commentPane.setLayout(new BorderLayout(0, 0));
 		
@@ -184,7 +208,7 @@ public class GUItest extends JFrame {
 		
 		JTextPane commentContentPane = new JTextPane();
 		commentContentPane.setEditable(false);
-		commentContentPane.setText("Fuck you Steve");
+		commentContentPane.setText(Comment);
 		commentPane.add(commentContentPane, BorderLayout.CENTER);
 		
 		commentBox.add(commentPane);

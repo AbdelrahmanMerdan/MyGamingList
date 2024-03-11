@@ -24,6 +24,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -87,11 +89,20 @@ public class GUIGameReviews extends JPanel {
 		//reset everything
 		new GUIGameReviews(cardPane);
 		
+		
+		List<Object> reviews = GUIGame.game.getComment();
+		System.out.println(reviews.size());
+		System.out.println(GUIGame.game);
+		for( int i = 0; i < reviews.size(); i++) {
+			
+			review(reviews.get(i));
+		}
+		
 		//fill the box
-		review(); // needs to pass information to review, (username, rating, recommendation, review, and comment info)
-		review(); // I recommend putting a loop that goes through all reviews and calls this with the relevant data
-		review();
-		review();
+//		review(); // needs to pass information to review, (username, rating, recommendation, review, and comment info)
+//		review(); // I recommend putting a loop that goes through all reviews and calls this with the relevant data
+//		review();
+//		review();
 		
 		//setup misc.
 		reviewTitleLabel.setText(game.getName());
@@ -130,11 +141,11 @@ public class GUIGameReviews extends JPanel {
 		//reset everything
 		new GUIGameReviews(cardPane);
 		
-		//fill the box
-		review(); // same as above
-		review();
-		review();
-		review();
+//		//fill the box
+//		review(); // same as above
+//		review();
+//		review();
+//		review();
 		
 		//setup misc.
 		reviewTitleLabel.setText(user);
@@ -163,8 +174,11 @@ public class GUIGameReviews extends JPanel {
 		return reviewScrollPane;
 	}
 	
-	private static void review() {
+	private static void review(Object reviews) {
 		//reviewBox.add(Box.createRigidArea(new Dimension(0, 20)));
+		
+		@SuppressWarnings("unchecked")
+		List<Object> review = (List<Object>) reviews;
 		
 		JPanel reviewPane = new JPanel();
 		reviewPane.setBackground(Color.BLACK);
@@ -176,18 +190,21 @@ public class GUIGameReviews extends JPanel {
 		reviewPane.add(reviewHeaderPane, BorderLayout.NORTH);
 		reviewHeaderPane.setLayout(new BorderLayout(0, 0));
 		
-		JLabel nameLabel = new JLabel("USERNAME");							// set this to the username or game name
+		String Username = (String) review.get(0);
+		JLabel nameLabel = new JLabel(Username);							// set this to the username or game name
 		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		nameLabel.setForeground(Color.WHITE);
 		reviewHeaderPane.add(nameLabel, BorderLayout.WEST);
 		
-		JLabel reccomendLabel = new JLabel("RECCOMENDED");					// set this to the yes/no reccomended
+		String Reccommended = (String) review.get(2);
+		JLabel reccomendLabel = new JLabel("RECCOMENDED: "+ Reccommended);					// set this to the yes/no reccomended
 		reccomendLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		reccomendLabel.setForeground(Color.WHITE);
 		reccomendLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		reviewHeaderPane.add(reccomendLabel, BorderLayout.CENTER);
 		
-		JLabel scoreLabel = new JLabel("SCORE");							// set this to the score
+		String Score = String.valueOf(review.get(1));
+		JLabel scoreLabel = new JLabel("SCORE: " + Score);							// set this to the score
 		scoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		scoreLabel.setForeground(Color.WHITE);
 		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -229,7 +246,8 @@ public class GUIGameReviews extends JPanel {
 		JTextPane reviewContentPane = new JTextPane();
 		reviewContentPane.setEditable(false);
 		
-		reviewContentPane.setText("My name is Steve and I endorse this game");	// set this to the review text
+		String ReviewText = String.valueOf(review.get(3));
+		reviewContentPane.setText(ReviewText);	// set this to the review text
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
 		commentLabel.addMouseListener(new MouseAdapter() {

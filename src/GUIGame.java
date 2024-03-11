@@ -35,7 +35,7 @@ public class GUIGame {
 	private static JEditorPane sysRequireText;
 	private static JEditorPane descriptionText;
 	private static JButton reviewGameButton;
-	private static Game game;
+	public static Game game;
 	
 	//private static JButton criticReviewButton;
 	private static JLabel criticReviewLabel;

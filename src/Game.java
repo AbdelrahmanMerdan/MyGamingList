@@ -135,9 +135,17 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return " name=" + name + "\n id=" + id + "\n shortDesc=" + shortDesc + "\n desc=" + desc + "\n cover=" + cover
-				+ "\n sysRequire=" + sysRequire + "\n metaScore=" + metaScore + "\n metaURL=" + metaURL;
+		return "Game [id=" + id + ", sum_of_all_reviews=" + sum_of_all_reviews + ", num_of_reviews=" + num_of_reviews
+				+ ", name=" + name + ", shortDesc=" + shortDesc + ", desc=" + desc + ", cover=" + cover
+				+ ", sysRequire=" + sysRequire + ", metaScore=" + metaScore + ", metaURL=" + metaURL + ", comments="
+				+ comments + "]";
 	}
+
+//	@Override
+//	public String toString() {
+//		return " name=" + name + "\n id=" + id + "\n shortDesc=" + shortDesc + "\n desc=" + desc + "\n cover=" + cover
+//				+ "\n sysRequire=" + sysRequire + "\n metaScore=" + metaScore + "\n metaURL=" + metaURL;
+//	}
 	
 	
 }
