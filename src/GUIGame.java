@@ -156,23 +156,22 @@ public class GUIGame {
 		
 	}
 	
-	public static void loadGame(Game newGame) {
-		game = newGame;
+	public static void loadGame(int id) {
+		//When database don't have app or all details
+		if(GameData.noAppExists(id))
+		{
+			//Add entry
+			GameData.addApp(id);
+		}
 		
-		//When database don't have app details
-		if(GameData.noAppDetails(game.getID()) || GameData.noAppReviews(game.getID()))
+		if(GameData.noAppDetails(id) || GameData.noAppReviews(id))
 		{
 			//Update database
-			GameData.updateAppDetails(game.getID());
-			game = GameData.getGame(game.getID());
+			GameData.updateAppDetails(id);
 			
 		}
 		
-		//For games that didn't have their info in the database when the program boots
-		if(game.getSysRequire() == null)
-		{
-			game = GameData.getGame(game.getID());
-		}
+		game = GameData.getGame(id);
 		
 		//Setting game page
 		gameTitleLabel.setText(game.getName());

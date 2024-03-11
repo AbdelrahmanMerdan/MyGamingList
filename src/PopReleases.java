@@ -12,7 +12,7 @@ import database.GameData;
 public class PopReleases {
 	
 	//Instance variable
-	ArrayList<Game> games;
+	ArrayList<Integer> ids;
 
 	public PopReleases() {
 		try {
@@ -30,26 +30,19 @@ public class PopReleases {
 			//Getting array from JSON
 			JsonNode jsonArray = GameData.map.readTree(responseBody);
 			jsonArray = jsonArray.get("tabs").get("topsellers").get("items");
-			
-			LinkedHashSet<Game> tmp = new LinkedHashSet<>();
+
+			LinkedHashSet<Integer> tmp = new LinkedHashSet<>();
 			
 			for(JsonNode node : jsonArray) 
 			{
 				if(node.get("type").asInt() == 0)
 				{
 					int id = node.get("id").asInt();
-					
-					//When database doesn't have the app
-					if(GameData.noAppExists(id))
-					{
-						GameData.addApp(id);
-					}
-					
-					tmp.add(GameData.getGame(id));
+					tmp.add(id);
 				}
 			}
 			
-			games = new ArrayList<>(tmp);
+			ids = new ArrayList<>(tmp);
 
 		} catch(InterruptedException e) {
 			e.printStackTrace();
@@ -60,23 +53,23 @@ public class PopReleases {
 
 	}
 
-	public ArrayList<Game> getGames() {
-		return games;
+	public ArrayList<Integer> getIDs() {
+		return ids;
 	}
 	
-	public Game getGame(int i) {
-		return games.get(i);
+	public int getID(int i) {
+		return ids.get(i);
 	}
 
 	
 	public int getSize() {
-		return games.size();
+		return ids.size();
 	}
 	
 	
 	@Override
 	public String toString() {
-		return games.toString();
+		return ids.toString();
 	}
 
 }

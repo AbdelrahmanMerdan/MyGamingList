@@ -1,7 +1,7 @@
 package test;
 
 import src.*;
-
+import database.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -12,9 +12,9 @@ class TestMostPlayedPopReleases {
 	void test() {
 		MostPlayed mostPlayed = new MostPlayed();
 		
-		for(Game game : mostPlayed.getGames())
+		for(int id : mostPlayed.getIDs())
 		{
-			assertNotNull(game);
+			assertNotNull(GameData.getName(id));
 		}
 	}
 	
@@ -22,9 +22,9 @@ class TestMostPlayedPopReleases {
 	void test2() {
 		PopReleases popReleases= new PopReleases();
 		
-		for(Game game : popReleases.getGames())
+		for(int id : popReleases.getIDs())
 		{
-			assertNotNull(game);
+			assertNotNull(GameData.getName(id));
 		}
 		
 	}

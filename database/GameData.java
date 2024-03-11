@@ -207,6 +207,15 @@ public static boolean noAppExists(int id) {
 		}
     	 	
     }
+    
+    public static String getName(int id) {
+    	//Grabbing specified game
+    	Bson filter = eq("_id", id);
+    	FindIterable<Document> result = games.find(filter);
+    	Document game = result.first();
+    	
+    	return game.getString("name");
+    }
 
 	
     public static Game getGame(int id) {
