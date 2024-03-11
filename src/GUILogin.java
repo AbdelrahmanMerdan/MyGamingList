@@ -202,10 +202,12 @@ public class GUILogin extends JFrame {
 					newUsernameField.setText("invalid username/password");
 				} else if (!newPassword.equals(confirmPasswordField.getText())) {
 					newUsernameField.setText("Password doesn't match");
+				} else if (newPassword.length() < 4 || newPassword.length() > 16) {
+					newUsernameField.setText("Password length must be between 4-16");
 				} else {
 					User newUser = new User(newUsername, newPassword);
 
-					users.insert(newUser);
+					users.createAccount(newUser);
 					System.out.println("Created new account for " + newUsername);
 					login();
 				}
