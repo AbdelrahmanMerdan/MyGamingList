@@ -105,17 +105,23 @@ public class GUIGameReviews extends JPanel {
 		//listener for new review button
 		newReviewButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							GUINewUserReview reviewFrame = new GUINewUserReview(game);
-							reviewFrame.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
+				if (GUIMain.usernameLoggedIn != null) {
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								GUINewUserReview reviewFrame = new GUINewUserReview(game);
+								reviewFrame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
-					}
-				});
-				System.out.println(game.getName());
+					});
+					System.out.println(game.getName());
+				}
+				else {
+					JOptionPane.showMessageDialog(buttonPanel,
+							"Error, Not Logged In");
+				}
 			}
 		});
 	}
