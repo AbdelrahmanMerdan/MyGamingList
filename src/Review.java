@@ -348,7 +348,7 @@ public class Review {
 		}
 		
 		@SuppressWarnings("unchecked")
-		public void addCommentToUserRecommandation(User user, String message, User userWithTheReview, Game game) {
+		public void addCommentToUserReview(User user, String message, User userWithTheReview, Game game) {
 			
 			int reccomandationIndex = retrieveIndex(userWithTheReview, game);
 			List<Object> toAdd = (List<Object>) ((List<Object>) game.getComment().get(reccomandationIndex)).get(4);
