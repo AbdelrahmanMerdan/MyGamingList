@@ -248,7 +248,7 @@ public class Review {
 		@SuppressWarnings("unchecked")
 		public List<Object> getAllReccomandationUser(Game game){
 			
-			List<Object> copy = new ArrayList<>();
+			List<Object> copy = game.getComment();
 	
 			for(int i = 0; i < game.getComment().size(); i++) {
 				
