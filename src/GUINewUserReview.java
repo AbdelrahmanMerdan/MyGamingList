@@ -14,12 +14,15 @@ import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GUINewUserReview extends JDialog{
 	
@@ -60,6 +63,8 @@ public class GUINewUserReview extends JDialog{
 		mainPane.add(footerPane, BorderLayout.SOUTH);
 		
 		JButton finalizeReviewButton = new JButton("Finalize Review");
+		
+		
 		footerPane.add(finalizeReviewButton);
 		
 		JTextPane reviewTextPane = new JTextPane();
@@ -68,8 +73,31 @@ public class GUINewUserReview extends JDialog{
 		//finalize button listener									// needs database implementation, should prolly also refresh the page (don't worry much about that if you can't)
 		finalizeReviewButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				
+				String recommended = "No";
+				
+				if(recommendCheckBox.isSelected()) {
+					recommended ="Yes";
+				}
+				
+				int Score = (Integer)ratingSpinner.getValue();
+				
+				String comment = reviewTextPane.getText();
+				
+				
+				try {
+					Review.review_game(GUIMain.usernameLoggedIn, game, Score, comment , recommended);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
 				System.out.println(GUIMain.usernameLoggedIn + " " + game.getName() + " " + recommendCheckBox.isSelected() + " " + ratingSpinner.getValue() + " " + reviewTextPane.getText());
 				dispose();
+			
+			
 			}
 		});
 	}
