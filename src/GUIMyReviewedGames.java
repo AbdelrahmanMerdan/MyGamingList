@@ -24,6 +24,8 @@ import java.awt.SystemColor;
 
 public class GUIMyReviewedGames extends JFrame {
 	
+	private JLabel reviewedGamesLabel;
+	
 	public GUIMyReviewedGames(JPanel cardPane) {
 		
 		//Set up base pane
@@ -67,7 +69,7 @@ public class GUIMyReviewedGames extends JFrame {
 		gamesScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		gamesScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
-		JLabel reviewedGamesLabel = new JLabel("My Reviewed Games");
+		reviewedGamesLabel = new JLabel("My Reviewed Games");
 		reviewedGamesLabel.setForeground(Color.WHITE);
 		reviewedGamesLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		myReviewedGamesPane.add(reviewedGamesLabel, BorderLayout.NORTH);
@@ -75,6 +77,10 @@ public class GUIMyReviewedGames extends JFrame {
 		
 	}
 	
+	public void setReviewedGamesLabel(String txt)
+	{
+		reviewedGamesLabel.setText(txt);
+	}
 	
 
 }
