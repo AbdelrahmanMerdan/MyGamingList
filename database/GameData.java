@@ -64,7 +64,7 @@ public static boolean noAppExists(int id) {
 	
 	public static boolean noAppReviews(int id) {
     	//Filtering
-    	Bson filter = and(eq("_id", id), exists("user_reviews"));
+    	Bson filter = and(eq("_id", id), exists("num_of_reviews"));
     	FindIterable<Document> result = games.find(filter);
     	
     	//Checking if details is unavailable for the game
