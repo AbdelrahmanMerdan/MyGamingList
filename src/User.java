@@ -16,11 +16,11 @@ public class User {
 	//Instance variables
 	private Object id;
 	private String username, password;
-	private List<String> games;
+	private List<Object> games;
 	private List<String> friends;
 
 	@JsonCreator
-	public User(@JsonProperty("_id") Object id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("Games") List<Object> games, @JsonProperty("Friends") List<Object> friends )
+	public User(@JsonProperty("_id") Object id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("Games") List<Object> games, @JsonProperty("Friends") List<String> friends )
 			 {
 		this.id = id;
 		this.username = username;
@@ -72,7 +72,7 @@ public class User {
 		
 	}
 	
-	public List<Object> getFriends() {
+	public List<String> getFriends() {
 		return friends;
 	}
 	

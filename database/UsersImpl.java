@@ -1,5 +1,8 @@
 package database;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
@@ -24,6 +27,8 @@ public class UsersImpl implements Database {
 
     public UsersImpl() {
         users = database.getCollection(TABLE_NAME);
+        
+        
     }
 
     // username -> String
@@ -118,7 +123,7 @@ public class UsersImpl implements Database {
     	
     	try {
     		//Returning game object from jsonResponse
-			return map.readValue(jsonResponse, User.class);
+			return GameData.map.readValue(jsonResponse, User.class);
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
