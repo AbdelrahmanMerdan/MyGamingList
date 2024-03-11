@@ -108,6 +108,7 @@ public class GUIMain extends JFrame{
 				}
 				else
 				{
+					GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
 				}
 			}
@@ -204,7 +205,7 @@ public class GUIMain extends JFrame{
 		//instantiate all GUI elements
 		GUIMainMenu mainMenu = new GUIMainMenu(cardPane, mostPlayed, popReleases);
 		GUIReviewedGames myReviewedGames = new GUIReviewedGames(cardPane);
-		GUIMyFriends myFriends = new GUIMyFriends(cardPane);
+		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
 		
 	}
