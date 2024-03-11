@@ -189,7 +189,41 @@ public class GUIGame {
 		descriptionText.setText(descriptionHtml);
 		descriptionText.setCaretPosition(0);
 		
-		criticReviewLabel.setText("Critic Score: " + game.getMetaScore());
+		//Setting critic review
+		String metaScore = game.getMetaScore();
+		String metaLink = game.getMetaURL();
+		
+		if(metaScore.equals("N/A")) 
+		{
+			criticReviewLabel.setText("Critic Score: " + metaScore);
+		}
+		else
+		{
+			criticReviewLabel.setText("<html>" + "Critic Score: " + metaScore + "<br/><br/>Read Critic Reviews" + "</html>");
+			
+			criticReviewLabel.addMouseListener(new MouseAdapter() {
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+	                    Desktop.getDesktop().browse(new URI(metaLink));
+	                } catch (IOException | URISyntaxException e1) {
+	                    e1.printStackTrace();
+	                }
+				}
+				
+				@Override
+	            public void mouseExited(MouseEvent e) {
+					criticReviewLabel.setText("<html>" + "Critic Score: " + metaScore + "<br/><br/>Read Critic Reviews" + "</html>");
+	            }
+	 
+	            @Override
+	            public void mouseEntered(MouseEvent e) {
+	            	criticReviewLabel.setText( "<html>" + "Critic Score: " + metaScore + "<br/><br/><a href=''>Read Critic Reviews</a>" + "</html>");
+	            }
+			});
+			
+		}
 		
 		//Get image from database and set
 		URL url = null;
