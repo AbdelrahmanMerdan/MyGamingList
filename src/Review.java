@@ -325,12 +325,24 @@ public class Review {
 		@SuppressWarnings("unchecked")
 		public void addCommentToUserRecommandation(User user, String message, User userWithTheReview, Game game) {
 			
+			Document game_found = find_game(game);
+			
 			int reccomandationIndex = retrieveIndex(userWithTheReview, game);
 			List<Object> toAdd = (List<Object>) ((List<Object>) game.getComment().get(reccomandationIndex)).get(4);
 			
 			//the first index will have the username and the seccond will have the message of the comment
 			toAdd.add(user);
 			toAdd.add(message);
+			
+			Bson Update = Updates.set("comments", toAdd);
+			
+			try {
+			UpdateResult updateResult = games.updateOne(game_found, Update);
+			System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
+			}catch(MongoException e) {
+			System.err.println("ERROR: "+e);
+		}
+			
 			
 		}
 		
