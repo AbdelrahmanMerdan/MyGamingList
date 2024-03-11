@@ -114,12 +114,18 @@ public class UsersImpl implements Database {
     }
 
     private User documentToUser(Document doc) {
-        String username = doc.getString(USER_KEY);
-        String password = doc.getString(PWD_KEY);
-        List<String> games = doc.getList(GAMES_KEY, String.class);
-        List<String> friends = doc.getList(FRIENDS_KEY, String.class);
-
-        return new User(username, password, games, friends);
+        String jsonResponse = doc.toJson();
+    	
+    	try {
+    		//Returning game object from jsonResponse
+			return map.readValue(jsonResponse, User.class);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+    	
+    	return null;
     }
 
     private Document userToDocument(User user) {
