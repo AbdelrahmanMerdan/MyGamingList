@@ -245,20 +245,20 @@ public class Review {
 			
 		}
 
-				@SuppressWarnings("unchecked")
-		public List<Object> getAllReccomandationUser(){
+		@SuppressWarnings("unchecked")
+		public List<Object> getAllReccomandationUser(Game game){
 			
 			List<Object> copy = new ArrayList<>();
 	
-			for(int i = 0; i < this.comments.size(); i++) {
+			for(int i = 0; i < game.getComment().size(); i++) {
 				
 				int j = 0;
 	
-				for(j = 0; j < ((List<Object>) ((List<Object>) this.comments.get(i)).get(4)).size(); j++) {
+				for(j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).size(); j++) {
 					
 					if(j % 2 == 0) {
 						
-						copy.add(((List<Object>) ((List<Object>) this.comments.get(i)).get(4)).get(j));
+						copy.add(((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).get(j));
 						
 					}
 				}
@@ -268,13 +268,13 @@ public class Review {
 		}
 		
 		@SuppressWarnings("unchecked")
-		public int retrieveIndex(User user) {
+		public int retrieveIndex(User user, Game game) {
 			
 			int index = -1;
 			
-			for(int i = 0; i < this.comments.size(); i++) {
+			for(int i = 0; i < game.getComment().size(); i++) {
 				
-				if(((List<Object>) this.comments.get(i)).get(0).equals(user.getUsername())) {
+				if(((List<Object>) game.getComment().get(i)).get(0).equals(user.getUsername())) {
 					
 					index = i;
 					break;
@@ -287,16 +287,16 @@ public class Review {
 		
 	
 		@SuppressWarnings("unchecked")
-		public Object getOneReccomandationComment(User userWithReccomandation){
+		public Object getOneReccomandationComment(User userWithReccomandation, Game game){
 			
-			int index = retrieveIndex(userWithReccomandation);
+			int index = retrieveIndex(userWithReccomandation, game);
 			List<Object> copy = new ArrayList<>();
 			
-			for(int j = 0; j < ((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).size(); j++) {
+			for(int j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).size(); j++) {
 				
 				if(j % 2 == 1) {
 					
-					copy.add(((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).get(j));
+					copy.add(((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).get(j));
 					
 				}
 			}
@@ -305,16 +305,16 @@ public class Review {
 		}
 		
 		@SuppressWarnings("unchecked")
-		public Object getOneReccomandationUser(User userWithReccomandation){
+		public Object getOneReccomandationUser(User userWithReccomandation, Game game){
 			
-			int index = retrieveIndex(userWithReccomandation);
+			int index = retrieveIndex(userWithReccomandation,game);
 			List<Object> copy = new ArrayList<>();
 			
-			for(int j = 0; j < ((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).size(); j++) {
+			for(int j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).size(); j++) {
 				
 				if(j % 2 == 0) {
 					
-					copy.add(((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).get(j));
+					copy.add(((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).get(j));
 					
 				}
 			}
@@ -323,10 +323,10 @@ public class Review {
 		}
 		
 		@SuppressWarnings("unchecked")
-		public void addCommentToUserRecommandation(User user, String message, User userWithTheReview) {
+		public void addCommentToUserRecommandation(User user, String message, User userWithTheReview, Game game) {
 			
-			int reccomandationIndex = retrieveIndex(userWithTheReview);
-			List<Object> toAdd = (List<Object>) ((List<Object>) this.comments.get(reccomandationIndex)).get(4);
+			int reccomandationIndex = retrieveIndex(userWithTheReview, game);
+			List<Object> toAdd = (List<Object>) ((List<Object>) game.getComment().get(reccomandationIndex)).get(4);
 			
 			//the first index will have the username and the seccond will have the message of the comment
 			toAdd.add(user);
