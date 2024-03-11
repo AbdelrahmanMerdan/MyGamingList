@@ -99,7 +99,7 @@ class TestGameData {
 			String cover = game.getCover();
 			String shortDesc = game.getShortDesc();
 			Integer numOfReviews = game.getNumOfReviews();
-			Integer userReviews = game.getUserReviews();
+			Integer userReviews = game.getSumOfAllReviews();
 			assertNotNull(name);
 			assertNotNull(sysReq);
 			assertNotNull(metaScore);
