@@ -245,10 +245,35 @@ public class Review {
 			
 		}
 
-		@SuppressWarnings("unchecked")
-		public List<Object> getAllReccomandationUser(Game game){
+				@SuppressWarnings("unchecked")
+		public static List<Object> getAllComments(Game game){
 			
-			List<Object> copy = game.getComment();
+			List<Object> copy = new ArrayList<>();
+			
+			for(int i = 0; i < game.getComment().size(); i++) {
+				
+				int j = 0;
+	
+				for(j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).size(); j++) {
+					
+					if(j % 2 == 1) {
+						
+						copy.add(((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).get(j));
+						
+					}
+					
+				}
+				
+				
+			}
+			
+			return copy;
+		}
+
+		@SuppressWarnings("unchecked")
+		public List<Object> getAllUsersForComments(Game game){
+			
+			List<Object> copy = new ArrayList<>();
 	
 			for(int i = 0; i < game.getComment().size(); i++) {
 				
@@ -287,7 +312,7 @@ public class Review {
 		
 	
 		@SuppressWarnings("unchecked")
-		public Object getOneReccomandationComment(User userWithReccomandation, Game game){
+		public Object getComment(User userWithReccomandation, Game game){
 			
 			int index = retrieveIndex(userWithReccomandation, game);
 			List<Object> copy = new ArrayList<>();
@@ -305,7 +330,7 @@ public class Review {
 		}
 		
 		@SuppressWarnings("unchecked")
-		public Object getOneReccomandationUser(User userWithReccomandation, Game game){
+		public Object getUserForComment(User userWithReccomandation, Game game){
 			
 			int index = retrieveIndex(userWithReccomandation,game);
 			List<Object> copy = new ArrayList<>();
