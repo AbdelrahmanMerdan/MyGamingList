@@ -17,9 +17,9 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class UsersImpl implements Database {
 
-    private final MongoCollection<Document> users;
+//    private final MongoCollection<Document> users;
     
-    final static MongoCollection<Document> user= database.getCollection("Users");
+    public final static MongoCollection<Document> users= database.getCollection("Users");
 
     private static final String TABLE_NAME = "Users";
 
@@ -28,11 +28,11 @@ public class UsersImpl implements Database {
     private static final String GAMES_KEY = "games";
     private static final String FRIENDS_KEY = "Friends";
 
-    public UsersImpl() {
-        users = database.getCollection(TABLE_NAME);
-        
-    	
-    }
+//    public UsersImpl() {
+//        users = database.getCollection(TABLE_NAME);
+//        
+//    	
+//    }
 
     // username -> String
     // password -> String
@@ -149,7 +149,7 @@ public class UsersImpl implements Database {
     public static User getUser(String string) {
     	//Grabbing specified game
     	Bson filter = eq("username", string);
-    	FindIterable<Document> result = user.find(filter);
+    	FindIterable<Document> result = users.find(filter);
     	Document user = result.first();
     	String jsonResponse = user.toJson();
     	
