@@ -3,12 +3,19 @@
 //import org.json.simple.parser.ParseException;
 //import org.json.simple.JSONArray;
 
+package src;
+
 import com.mongodb.*;
 import static com.mongodb.client.model.Filters.*;
 import com.mongodb.client.*;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.*;
+
+import database.Database;
+import database.GameData;
+import database.UsersImpl;
+
 import org.bson.*;
 import org.bson.conversions.Bson;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -88,7 +95,7 @@ public class Review {
 	    	if(result.first() != null)
 	    	{
 	    		if(noAppReviews(id) == false) {
-	    			Database.updateAppDetails(id);
+	    			GameData.updateAppDetails(id);
 	    			return true;
 	    		}
 	    		return false;
@@ -103,7 +110,7 @@ public class Review {
 			
 			if( CheckUpdateGame(game.getID()) ) {
 				
-				game = Database.getGame(game.getID());
+				game = GameData.getGame(game.getID());
 				
 				
 			};
@@ -218,7 +225,7 @@ public class Review {
 		private static Bson addUserReview(Game game, String username, int review, String comment, String reccomendation) {
 			
 			
-			User user = Database.getUser(username);
+			User user = UsersImpl.getUser(username);
 			List<Object> newreview= new ArrayList<>();
 			newreview.add(game.getID());
 			newreview.add(game.getName());
@@ -243,7 +250,7 @@ public class Review {
 //			CheckUpdateGame(1747800);
 			
 //			Get the Game from the database using it's ID
-			Game game = Database.getGame(105600);
+			Game game = GameData.getGame(105600);
 //			System.out.print(game);
 //			User 1 and User 2 review the game
 			review_game("User2", game, 9, "Game is bad", "No" );
