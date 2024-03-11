@@ -20,7 +20,7 @@ public class UsersImpl implements Database {
     private static final String USER_KEY = "username";
     private static final String PWD_KEY = "password";
     private static final String GAMES_KEY = "games";
-    private static final String FRIENDS_KEY = "friends";
+    private static final String FRIENDS_KEY = "Friends";
 
     public UsersImpl() {
         users = database.getCollection(TABLE_NAME);
