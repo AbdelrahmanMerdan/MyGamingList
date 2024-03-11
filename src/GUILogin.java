@@ -95,8 +95,9 @@ public class GUILogin extends JFrame {
 
 				try {
 					users.login(user);
-					System.out.println("successful login");
+					GUIMain.usernameLoggedIn = username;
 					login();
+					System.out.println("successful login");
 				} catch (IllegalArgumentException exp) {
 					System.out.println("login failed");
 					usernameField.setText(exp.getMessage());

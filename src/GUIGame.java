@@ -3,10 +3,13 @@ package src;
 import database.GameData;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,6 +32,7 @@ public class GUIGame {
 	private static JEditorPane sysRequireText;
 	private static JEditorPane descriptionText;
 	private static JButton reviewGameButton;
+	private static Game game;
 	
 	//private static JButton criticReviewButton;
 	private static JLabel criticReviewLabel;
@@ -94,11 +98,19 @@ public class GUIGame {
 		gameOptionsNorthPane.setLayout(new BorderLayout(0, 0));
 		
 		//unfinished buttons
-		reviewGameButton = new JButton("Review Game");
+		reviewGameButton = new JButton("Reviews");
 		reviewGameButton.setFocusable(false);
 		reviewGameButton.setForeground(Color.WHITE); // only here for temp critic review
 		reviewGameButton.setBackground(Color.BLACK);
 		gameOptionsNorthPane.add(reviewGameButton, BorderLayout.CENTER);
+		
+		reviewGameButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				//GUIGameReviews reviews = new GUIGameReviews(cardPane);
+				GUIGameReviews.loadGameReviews(cardPane, game);
+				((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
+			}
+		});
 		
 		JPanel gameOptionsSouthPane = new JPanel();
 		gameOptionsSouthPane.setBackground(Color.BLACK);
@@ -141,7 +153,9 @@ public class GUIGame {
 		
 	}
 	
-	public static void loadGame(Game game) {
+	public static void loadGame(Game newGame) {
+		game = newGame;
+		
 		//When database don't have app details
 		if(GameData.noAppDetails(game.getID()) || GameData.noAppReviews(game.getID()))
 		{
