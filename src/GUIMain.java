@@ -26,6 +26,7 @@ public class GUIMain extends JFrame{
 	private static JPanel mainPane;
 	private static JPanel cardPane;
 	public static JButton loginButton;
+	public static String usernameLoggedIn = null;
 	
 	public GUIMain() {
 		
@@ -87,7 +88,9 @@ public class GUIMain extends JFrame{
 				}
 				else
 				{
-					((CardLayout) cardPane.getLayout()).show(cardPane, "myReviewedGames");	
+					//((CardLayout) cardPane.getLayout()).show(cardPane, "myReviewedGames");
+					GUIGameReviews.loadUserReviews(cardPane, usernameLoggedIn);
+					((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 				}
 			}
 		});
@@ -105,7 +108,7 @@ public class GUIMain extends JFrame{
 				}
 				else
 				{
-				((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
+					((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
 				}
 			}
 		});
