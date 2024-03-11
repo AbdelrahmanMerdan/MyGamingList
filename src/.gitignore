@@ -58,4 +58,8 @@
 /GUINewUserReview.class
 /GUIGameReviews$2$1.class
 /GUIGame$2.class
+<<<<<<< HEAD
+=======
+/GUIReviewDialog.class
+>>>>>>> branch 'LoginReview_Test' of https://github.com/AbdelrahmanMerdan/MyGamingList.git
 /Review.class
