@@ -1,13 +1,29 @@
 package src;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
+
+    private List<String> games = new ArrayList<>();
+    private List<String> friends = new ArrayList<>();
 
     public User (final String username, final String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User (final String username,
+                 final String password,
+                 final List<String> games,
+                 final List<String> friends) {
+        this.username = username;
+        this.password = password;
+        this.games = games;
+        this.friends = friends;
     }
 
     public String getUsername() {
@@ -16,5 +32,13 @@ public class User {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public List<String> getGames() {
+        return this.games;
+    }
+
+    public List<String> getFriends() {
+        return this.friends;
     }
 }
