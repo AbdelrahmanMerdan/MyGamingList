@@ -200,7 +200,7 @@ public class GUIMain extends JFrame{
 		
 		//instantiate all GUI elements
 		GUIMainMenu mainMenu = new GUIMainMenu(cardPane, mostPlayed, popReleases);
-		GUIMyReviewedGames myReviewedGames = new GUIMyReviewedGames(cardPane);
+		GUIReviewedGames myReviewedGames = new GUIReviewedGames(cardPane);
 		GUIMyFriends myFriends = new GUIMyFriends(cardPane);
 		GUIGame game = new GUIGame(cardPane);
 		

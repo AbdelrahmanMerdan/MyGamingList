@@ -22,11 +22,11 @@ import javax.swing.border.MatteBorder;
 import java.awt.BorderLayout;
 import java.awt.SystemColor;
 
-public class GUIMyReviewedGames extends JFrame {
+public class GUIReviewedGames extends JFrame {
 	
 	private JLabel reviewedGamesLabel;
 	
-	public GUIMyReviewedGames(JPanel cardPane) {
+	public GUIReviewedGames(JPanel cardPane) {
 		
 		//Set up base pane
 		JPanel myReviewedGamesPane = new JPanel();
