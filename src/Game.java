@@ -116,15 +116,23 @@ public class Game {
 		this.comments.add(0, comment);
 	}
 
-	@SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 	public List<Object> getAllReccomandationComments(){
 		
 		List<Object> copy = new ArrayList<>();
-		
+
 		for(int i = 0; i < this.comments.size(); i++) {
 			
-			copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(1));
-			
+			int j = 0;
+
+			for(j = 0; j < (((List<List<Object>>) this.comments.get(i)).get(4)).size(); j++) {
+				
+				if(j % 2 == 1) {
+					
+					copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(j));
+					
+				}
+			}
 		}
 		
 		return copy;
@@ -134,11 +142,19 @@ public class Game {
 	public List<Object> getAllReccomandationUser(){
 		
 		List<Object> copy = new ArrayList<>();
-		
+
 		for(int i = 0; i < this.comments.size(); i++) {
 			
-			copy.add(((List<Object>) ((List<Object>) this.comments.get(i)).get(4)).get(0));
-			
+			int j = 0;
+
+			for(j = 0; j < (((List<List<Object>>) this.comments.get(i)).get(4)).size(); j++) {
+				
+				if(j % 2 == 0) {
+					
+					copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(j));
+					
+				}
+			}
 		}
 		
 		return copy;
@@ -167,33 +183,47 @@ public class Game {
 	public Object getOneReccomandationComment(User userWithReccomandation){
 		
 		int index = retrieveIndex(userWithReccomandation);
+		List<Object> copy = new ArrayList<>();
 		
-		return ((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).get(1);
+		for(int j = 0; j < (((List<List<Object>>) this.comments.get(index)).get(4)).size(); j++) {
+			
+			if(j % 2 == 1) {
+				
+				copy.add((((List<List<Object>>) this.comments.get(index)).get(4)).get(j));
+				
+			}
+		}
+		
+		return copy;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Object getOneReccomandationUser(User userWithReccomandation){
 		
 		int index = retrieveIndex(userWithReccomandation);
+		List<Object> copy = new ArrayList<>();
 		
-		return ((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).get(0);
+		for(int j = 0; j < (((List<List<Object>>) this.comments.get(index)).get(4)).size(); j++) {
+			
+			if(j % 2 == 0) {
+				
+				copy.add((((List<List<Object>>) this.comments.get(index)).get(4)).get(j));
+				
+			}
+		}
+		
+		return copy;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void addCommentToUserRecommandation(User user, String message, User userWithTheReview) {
 		
-		//empty list
-		int reccomandationIndex = 0;
-		List<Object> toAdd = new ArrayList<>();
+		int reccomandationIndex = retrieveIndex(userWithTheReview);
+		List<Object> toAdd = (List<Object>) ((List<Object>) this.comments.get(reccomandationIndex)).get(4);
 		
 		//the first index will have the username and the seccond will have the message of the comment
-		toAdd.add(user.getUsername());
+		toAdd.add(user);
 		toAdd.add(message);
-		
-		reccomandationIndex = retrieveIndex(userWithTheReview);
-		
-		//adding the comment with all the info to the recommendation
-		(((List<List<Object>>) this.comments.get(reccomandationIndex)).get(4)).add(toAdd);
 		
 	}
 	
