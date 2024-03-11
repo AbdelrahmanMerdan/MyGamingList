@@ -125,11 +125,11 @@ public class Game {
 			
 			int j = 0;
 
-			for(j = 0; j < (((List<List<Object>>) this.comments.get(i)).get(4)).size(); j++) {
+			for(j = 0; j < ((List<Object>) ((List<Object>) this.comments.get(i)).get(4)).size(); j++) {
 				
 				if(j % 2 == 1) {
 					
-					copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(j));
+					copy.add(((List<Object>) ((List<Object>) this.comments.get(i)).get(4)).get(j));
 					
 				}
 			}
@@ -147,11 +147,11 @@ public class Game {
 			
 			int j = 0;
 
-			for(j = 0; j < (((List<List<Object>>) this.comments.get(i)).get(4)).size(); j++) {
+			for(j = 0; j < ((List<Object>) ((List<Object>) this.comments.get(i)).get(4)).size(); j++) {
 				
 				if(j % 2 == 0) {
 					
-					copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(j));
+					copy.add(((List<Object>) ((List<Object>) this.comments.get(i)).get(4)).get(j));
 					
 				}
 			}
@@ -185,11 +185,11 @@ public class Game {
 		int index = retrieveIndex(userWithReccomandation);
 		List<Object> copy = new ArrayList<>();
 		
-		for(int j = 0; j < (((List<List<Object>>) this.comments.get(index)).get(4)).size(); j++) {
+		for(int j = 0; j < ((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).size(); j++) {
 			
 			if(j % 2 == 1) {
 				
-				copy.add((((List<List<Object>>) this.comments.get(index)).get(4)).get(j));
+				copy.add(((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).get(j));
 				
 			}
 		}
@@ -203,11 +203,11 @@ public class Game {
 		int index = retrieveIndex(userWithReccomandation);
 		List<Object> copy = new ArrayList<>();
 		
-		for(int j = 0; j < (((List<List<Object>>) this.comments.get(index)).get(4)).size(); j++) {
+		for(int j = 0; j < ((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).size(); j++) {
 			
 			if(j % 2 == 0) {
 				
-				copy.add((((List<List<Object>>) this.comments.get(index)).get(4)).get(j));
+				copy.add(((List<Object>) ((List<Object>) this.comments.get(index)).get(4)).get(j));
 				
 			}
 		}
