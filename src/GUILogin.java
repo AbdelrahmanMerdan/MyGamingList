@@ -93,12 +93,12 @@ public class GUILogin extends JFrame {
 				String password = passwordField.getText();
 				User user = new User(username, password);
 
-				if (users.get(user)) {
+				try {
+					users.login(user);
 					System.out.println("successful login");
-					login();
-				} else {
+				} catch (IllegalArgumentException exp) {
 					System.out.println("login failed");
-					usernameField.setText("invalid username/password");
+					usernameField.setText(exp.getMessage());
 				}
 			}
 		});
@@ -199,7 +199,7 @@ public class GUILogin extends JFrame {
 				String newUsername = newUsernameField.getText();
 				String newPassword = newPasswordField.getText();
 				if (newUsername.equals("")) {
-					newUsernameField.setText("invalid username/password");
+					newUsernameField.setText("Username cannot be empty");
 				} else if (!newPassword.equals(confirmPasswordField.getText())) {
 					newUsernameField.setText("Password doesn't match");
 				} else if (newPassword.length() < 4 || newPassword.length() > 16) {
@@ -207,9 +207,13 @@ public class GUILogin extends JFrame {
 				} else {
 					User newUser = new User(newUsername, newPassword);
 
-					users.createAccount(newUser);
-					System.out.println("Created new account for " + newUsername);
-					login();
+					try {
+						users.createAccount(newUser);
+						System.out.println("Created new account for " + newUsername);
+						login();
+					} catch (IllegalArgumentException exp) {
+						newUsernameField.setText(exp.getMessage().split(",")[0]);
+					}
 				}
 			}
 		});

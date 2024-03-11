@@ -24,7 +24,7 @@ public class TestUsersImpl {
     @BeforeEach
     public void setup() {
         user = new User(TEST_USER, TEST_PASSWORD);
-        // insert an record
+        // insert a record
         users.createAccount(user);
     }
 
@@ -34,9 +34,9 @@ public class TestUsersImpl {
     }
 
     @Test
-    public void testInsertAndGet() {
+    public void testLogin() {
         // get the record via user
-        assertTrue(users.get(user));
+        users.login(user);
         // get the record via username
         User returnedUser = users.get(user.getUsername());
         assertEquals(TEST_USER, user.getUsername());
@@ -44,7 +44,7 @@ public class TestUsersImpl {
     }
 
     @Test
-    public void testAddRemoveFriends() {
+    public void testUpdateFriends() {
         // validate friends is empty
         List<String> friends = users.listFriend(TEST_USER);
         assertTrue(friends.isEmpty());

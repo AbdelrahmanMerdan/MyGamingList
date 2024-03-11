@@ -17,7 +17,6 @@ public class UsersImpl implements Database {
 
     private static final String TABLE_NAME = "Users";
 
-    private static final String ID_KEY = "_id";
     private static final String USER_KEY = "username";
     private static final String PWD_KEY = "password";
     private static final String GAMES_KEY = "games";
@@ -48,6 +47,20 @@ public class UsersImpl implements Database {
             System.err.println("Error happened when adding new user " + exp.getMessage());
             return false;
         }
+    }
+
+    // get only one user's username
+    public String login(User user) {
+        User returnedUser = this.get(user.getUsername());
+        if (returnedUser == null) {
+            throw new IllegalArgumentException("Username doesn't exist");
+        }
+
+        if (!returnedUser.getPassword().equals(user.getPassword())) {
+            throw new IllegalArgumentException("Password incorrect");
+        }
+
+        return user.getUsername();
     }
 
     public void updateFriend(String username, String friendName, String operation) {
@@ -85,18 +98,6 @@ public class UsersImpl implements Database {
         }
 
         return documentToUser(result);
-    }
-
-    // get only one user's username
-    public boolean get(User user) {
-        Bson filter = eq(USER_KEY, user.getUsername());
-        Document result = users.find(filter).first();
-        if (result == null) {
-            return false;
-        }
-
-        User returnedUser = documentToUser(result);
-        return returnedUser.getPassword().equals(user.getPassword());
     }
 
     // delete record for user
