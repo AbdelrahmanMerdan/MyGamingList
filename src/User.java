@@ -16,8 +16,8 @@ public class User {
 	//Instance variables
 	private Object id;
 	private String username, password;
-	private List<Object> games;
-	private List<Object> friends;
+	private List<String> games;
+	private List<String> friends;
 
 	@JsonCreator
 	public User(@JsonProperty("_id") Object id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("Games") List<Object> games, @JsonProperty("Friends") List<Object> friends )
