@@ -1,8 +1,3 @@
-//import org.json.simple.JSONObject;
-//import org.json.simple.parser.JSONParser;
-//import org.json.simple.parser.ParseException;
-//import org.json.simple.JSONArray;
-
 package src;
 
 import com.mongodb.*;
@@ -17,11 +12,6 @@ import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
-
-
-
-// Use https://www.javatpoint.com/java-json-example for help with JSON
-// How to parse the String given: https://www.javatpoint.com/how-to-convert-string-to-json-object-in-java
 
 public class Review {
 	
@@ -214,7 +204,7 @@ public class Review {
 			
 		}
 
-				@SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 		public static List<Object> getAllComments(Game game){
 			
 			List<Object> copy = new ArrayList<>();
@@ -318,52 +308,49 @@ public class Review {
 		
 		@SuppressWarnings("unchecked")
 		public static void addCommentToUserReview(User user, String message, User userWithTheReview, Game game) {
-			
+
 			Document game_found = find_game(game);
 			List<Object> comments = game.getComment();
-			
+
 			int reccomandationIndex = retrieveIndex(userWithTheReview, game);
-		
+
 			List<Object> toAdd = (List<Object>) ((List<Object>) comments.get(reccomandationIndex)).get(4);
-			
+
 			//the first index will have the username and the seccond will have the message of the comment
 			toAdd.add(user.getUsername());
 			toAdd.add(message);
-			
+
 			Bson Update = Updates.set("comments", comments);
-			
+
 			System.out.println(comments);
-			
+
 			try {
-			UpdateResult updateResult = GameData.games.updateOne(game_found, Update);
-			System.out.println("Updated comment: "+updateResult.wasAcknowledged());
+				UpdateResult updateResult = GameData.games.updateOne(game_found, Update);
+				System.out.println("Updated comment: "+updateResult.wasAcknowledged());
 			}catch(MongoException e) {
-			System.err.println("ERROR: "+e);
-		}
-			
-			
+				System.err.println("ERROR: "+e);
+			}
+
+
 		}
 		
 		public static void main(String[] args) throws IOException {
 			
-//			CheckUpdateGame(1747800);
-//
-//			Get the Game from the database using it's ID
-			Game game = GameData.getGame(105600);
-//			System.out.print(game);
-//			User 1 and User 2 review the game
-//			review_game("User2", game, 9, "Game is bad", "No" );
-//
-			User user = UsersImpl.getUser("User1");
-			User user2 = UsersImpl.getUser("User2");
-//
-			
-			addCommentToUserReview(user, "Great Review", user2, game );
-			addCommentToUserReview(user, "Great Review", user2, game );
+////			CheckUpdateGame(1747800);
+////
+////			Get the Game from the database using it's ID
+//			Game game = GameData.getGame(105600);
+////			System.out.print(game);
+////			User 1 and User 2 review the game
+////			review_game("User2", game, 9, "Game is bad", "No" );
+////
+//			User user = UsersImpl.getUser("User1");
+//			User user2 = UsersImpl.getUser("User2");
+////
+//			
+//			addCommentToUserReview(user, "Great Review", user2, game );
+//			addCommentToUserReview(user, "Great Review", user2, game );
 						
 
 		  }
-		
-		
-
 }
