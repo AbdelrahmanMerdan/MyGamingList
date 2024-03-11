@@ -322,8 +322,6 @@ public class Review {
 
 			Bson Update = Updates.set("comments", comments);
 
-			System.out.println(comments);
-
 			try {
 				UpdateResult updateResult = GameData.games.updateOne(game_found, Update);
 				System.out.println("Updated comment: "+updateResult.wasAcknowledged());
@@ -339,17 +337,21 @@ public class Review {
 ////			CheckUpdateGame(1747800);
 ////
 ////			Get the Game from the database using it's ID
-//			Game game = GameData.getGame(105600);
+				Game game = GameData.getGame(271590);
 ////			System.out.print(game);
 ////			User 1 and User 2 review the game
 ////			review_game("User2", game, 9, "Game is bad", "No" );
 ////
-//			User user = UsersImpl.getUser("User1");
-//			User user2 = UsersImpl.getUser("User2");
+			User user = UsersImpl.getUser("User1");
+			User user2 = UsersImpl.getUser("User2");
+			User user3 = UsersImpl.getUser("User3");
 ////
 //			
-//			addCommentToUserReview(user, "Great Review", user2, game );
-//			addCommentToUserReview(user, "Great Review", user2, game );
+			addCommentToUserReview(user, "Great Review", user2, game );
+			addCommentToUserReview(user2, "I agree", user, game );
+			addCommentToUserReview(user3, "Nice job", user2, game);
+			addCommentToUserReview(user3, "Good job", user, game);
+			addCommentToUserReview(user, "Nice Review", user3, game);
 						
 
 		  }
