@@ -9,12 +9,14 @@ public class User {
     private final String username;
     private final String password;
 
-    private List<String> games = new ArrayList<>();
-    private List<String> friends = new ArrayList<>();
+    private final List<String> games;
+    private final List<String> friends;
 
     public User (final String username, final String password) {
         this.username = username;
         this.password = password;
+        this.games = new ArrayList<>();
+        this.friends = new ArrayList<>();
     }
 
     public User (final String username,
