@@ -132,6 +132,25 @@ public class GUIGameReviews extends JPanel {
 		//reset everything
 		new GUIGameReviews(cardPane);
 		
+		User current = UsersImpl.getUser(user);
+		
+		List<Object> myReviews = current.getGames();
+		
+		for(int i = 0; i < myReviews.size(); i++)
+		{
+			//Gets the reviews
+			@SuppressWarnings("unchecked")
+			List<Object> myReview = (List<Object>) myReviews.get(i);
+			
+			int id = (int) myReview.get(0);
+			Game game = GameData.getGame(id);
+			
+			//Get user reviews
+			List<Object> myComments = Review.getAllCommentsForReview(current, game);
+			
+			userReview(myReview, myComments, user);
+		}
+			
 //		//fill the box
 //		review(); // same as above
 //		review();
@@ -163,6 +182,134 @@ public class GUIGameReviews extends JPanel {
 		});
 
 		return reviewScrollPane;
+	}
+	
+	private static void userReview(Object reviews, List<Object> comments, String user) {
+		//reviewBox.add(Box.createRigidArea(new Dimension(0, 20)));
+		
+		@SuppressWarnings("unchecked")
+		List<Object> review = (List<Object>) reviews;
+		
+		JPanel reviewPane = new JPanel();
+		reviewPane.setBackground(Color.BLACK);
+		reviewPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel reviewHeaderPane = new JPanel();
+		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(0, 0, 0)));
+		reviewHeaderPane.setBackground(Color.BLACK);
+		reviewPane.add(reviewHeaderPane, BorderLayout.NORTH);
+		reviewHeaderPane.setLayout(new BorderLayout(0, 0));
+		
+		String gameName = (String) review.get(1);
+		JLabel nameLabel = new JLabel(gameName);							// set this to the username or game name
+		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		nameLabel.setForeground(Color.WHITE);
+		reviewHeaderPane.add(nameLabel, BorderLayout.WEST);
+		
+		String Reccommended = (String) review.get(3);
+		JLabel reccomendLabel = new JLabel("RECCOMENDED: "+ Reccommended);					// set this to the yes/no reccomended
+		reccomendLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		reccomendLabel.setForeground(Color.WHITE);
+		reccomendLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		reviewHeaderPane.add(reccomendLabel, BorderLayout.CENTER);
+		
+		String Score = String.valueOf(review.get(2));
+		JLabel scoreLabel = new JLabel("SCORE: " + Score);							// set this to the score
+		scoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		scoreLabel.setForeground(Color.WHITE);
+		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		reviewHeaderPane.add(scoreLabel, BorderLayout.EAST);
+		
+		JPanel commentPane = new JPanel();
+		reviewPane.add(commentPane, BorderLayout.SOUTH);
+		commentPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel forumPane = new JPanel();
+		commentPane.add(forumPane);
+		forumPane.setLayout(new BorderLayout(0, 0));
+		
+		forumPane.setVisible(false);
+
+		//create container
+		Box commentBox = new Box(1);
+		
+		//Fill comment box
+		for(int i = 0; i < comments.size(); i +=2)
+		{
+			comment(commentBox, comments, i);
+		}
+		
+		JScrollPane commentScrollPane = new JScrollPane(commentBox);
+		forumPane.add(commentScrollPane);
+		
+		JPanel comentHeaderPane = new JPanel();
+		comentHeaderPane.setBackground(Color.LIGHT_GRAY);
+		commentPane.add(comentHeaderPane, BorderLayout.NORTH);
+		comentHeaderPane.setLayout(new BorderLayout(0, 0));
+		
+		JLabel commentLabel = new JLabel("SHOW / HIDE COMMENTS");
+		comentHeaderPane.add(commentLabel, BorderLayout.WEST);
+		
+		JLabel newComentLabel = new JLabel("Add a Comment");
+		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
+		
+		JTextPane reviewContentPane = new JTextPane();
+		reviewContentPane.setEditable(false);
+		
+		String ReviewText = String.valueOf(review.get(4));
+		reviewContentPane.setText(ReviewText);	// set this to the review text
+		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
+		
+		commentLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (forumPane.isVisible()){
+					forumPane.setVisible(false);
+				} else {
+					forumPane.setVisible(true);
+				}
+			}
+		});
+		
+		//comment prompt
+		newComentLabel.addMouseListener(new MouseAdapter() {					// needs to be implemented, comment needs to be saved to db alongside username
+			public void mouseClicked(MouseEvent e) {
+				if (GUIMain.usernameLoggedIn != null) {
+					String comment;
+					
+					//Prompt user for comment
+					comment = JOptionPane.showInputDialog(reviewContentPane,
+							"Enter your Comment:",
+							"Add Comment",
+							JOptionPane.PLAIN_MESSAGE);
+	
+					//Keep prompting till user puts a thing
+					while(comment != null && comment.equals(""))
+					{
+						JOptionPane.showMessageDialog(reviewContentPane,
+								"Please enter a comment",
+								"Error",
+								JOptionPane.PLAIN_MESSAGE);
+						
+						comment = JOptionPane.showInputDialog(reviewContentPane,
+								"Enter your Comment:",
+								"Add Comment",
+								JOptionPane.PLAIN_MESSAGE);
+					}
+					
+					if(comment != null)
+					{
+						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(user), GUIGame.game);
+					}
+				} else {
+					JOptionPane.showMessageDialog(reviewContentPane,
+							"Please Login to Comment",
+							"Error",
+							JOptionPane.PLAIN_MESSAGE);
+				}
+			}
+		});
+		
+		reviewBox.add(reviewPane);
 	}
 	
 	private static void review(Object reviews) {
@@ -223,12 +370,6 @@ public class GUIGameReviews extends JPanel {
 		{
 			comment(commentBox, comments, i);
 		}
-		
-//		//fill comtainer (this should be filled using the comment data from the database in a similar manner as written above)
-//		comment(commentBox); // needs to pass comment information to comment(usernames and comments)
-//		comment(commentBox);
-//		comment(commentBox);
-//		comment(commentBox);
 		
 		JScrollPane commentScrollPane = new JScrollPane(commentBox);
 		forumPane.add(commentScrollPane);
