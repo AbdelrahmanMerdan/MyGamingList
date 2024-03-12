@@ -5,3 +5,7 @@ An application that allows users to view popular games, rate/review, and communi
 Uses Steam Web API to gather game information.
 
 Uses MongoDB as our platform for database.
+
+Takes around 10 seconds to boot up.
+
+Buttons will be white if on mac for now.
