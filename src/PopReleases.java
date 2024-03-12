@@ -38,6 +38,12 @@ public class PopReleases {
 				if(node.get("type").asInt() == 0)
 				{
 					int id = node.get("id").asInt();
+					
+					if(GameData.noAppExists(id))
+					{
+						GameData.addApp(id);
+					}
+					
 					tmp.add(id);
 				}
 			}
