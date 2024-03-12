@@ -59,7 +59,7 @@ public class Review {
 	    		return false;
 	    	}
 	    	return false;
-
+		}
 	    	
 	    	
 		public static boolean AlreadyReviewed(Game game, String username){
