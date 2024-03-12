@@ -62,6 +62,28 @@ public class Review {
 	    	
 		}
 		
+		public static boolean AlreadyReviewed(Game game, String username){
+			
+			boolean in = false;
+//			System.out.println(game.getComment());
+			
+			for(int i = 0; i < game.getComment().size();i++) {
+				
+				@SuppressWarnings("unchecked")
+				List<Object> diffreviews =  (List<Object>) game.getComment().get(i);
+				String specificuser = (String) diffreviews.get(0);
+				if(specificuser.equals(username)) {
+					System.out.println(true);
+					return true;
+				}
+				
+				
+			}
+			System.out.println(false);
+			return false;
+			
+		}
+		
 		
 		public static void review_game(String username, Game game, int review, String comment, String reccomendation) 
 				throws IOException {
@@ -73,7 +95,7 @@ public class Review {
 				
 			};
 			
-			if(UserExists(username) & noAppReviews(game.getID())) {
+			if(UserExists(username) & noAppReviews(game.getID()) & (AlreadyReviewed(game, username) == false)  ) {
 				
 //				Find User
 		    	Document user_found = find_user(username);
@@ -106,6 +128,9 @@ public class Review {
 		    		System.err.println("ERROR: "+e);
 		    	}
 		    	
+			}
+			else {
+				System.out.println("This User already reviewed the game");
 			}
 			
 		}
@@ -336,20 +361,22 @@ public class Review {
 		
 		public static void main(String[] args) throws IOException {
 			
-////			CheckUpdateGame(1747800);
-////
-////			Get the Game from the database using it's ID
-//			Game game = GameData.getGame(105600);
-////			System.out.print(game);
-////			User 1 and User 2 review the game
-////			review_game("User2", game, 9, "Game is bad", "No" );
-////
+//////			CheckUpdateGame(1747800);
+//////
+//////			Get the Game from the database using it's ID
+//			Game game = GameData.getGame(271590);
+//////			System.out.print(game);
+//////			User 1 and User 2 review the game
+//			review_game("User2", game, 9, "Game is bad", "No" );
+//////
 //			User user = UsersImpl.getUser("User1");
-//			User user2 = UsersImpl.getUser("User2");
-////
+////			User user2 = UsersImpl.getUser("User2");
+//////
+////			
+////			addCommentToUserReview(user, "Great Review", user2, game );
+////			addCommentToUserReview(user, "Great Review", user2, game );
 //			
-//			addCommentToUserReview(user, "Great Review", user2, game );
-//			addCommentToUserReview(user, "Great Review", user2, game );
+//			AlreadyReviewed(game, "User1");
 						
 
 		  }
