@@ -96,12 +96,6 @@ public class GUIGameReviews extends JPanel {
 			review(reviews.get(i));
 		}
 		
-		
-//		review(); // needs to pass information to review, (username, rating, recommendation, review, and comment info)
-//		review(); // I recommend putting a loop that goes through all reviews and calls this with the relevant data
-//		review();
-//		review();
-		
 		//setup misc.
 		reviewTitleLabel.setText(game.getName());
 		backLocation = "game";
