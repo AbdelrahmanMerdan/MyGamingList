@@ -72,4 +72,34 @@ class TestReview {
 			assertNotNull(Review.getAllComments(game));
 		}
 
+
+		@Test
+		@Order(5)
+		void CheckForGettingAllUsersAndCommentsForRecommandation() throws IOException{
+			
+			//No need to check the other get methods for only getting the comments or users for one recommendation, or the whole game, since this is a base for the rest
+			
+			Review.review_game(TEST_USER, game, 9, "Game is Good!", "Yes" );
+			
+			User newUser = new User("Bob", "123");
+			User newUser1 = new User("Jane", "abc");
+			
+			Review.addCommentToUserReview(newUser, "I don't agree!", user, game);
+			Review.addCommentToUserReview(newUser1, "Hard to believe!", user, game);
+			
+			List<Object> theComments = new ArrayList<Object>();
+			
+			String user1 = "Bob";
+			String user2 = "Jane";
+			String message1 = "I don't agree!";
+			String message2 = "Hard to believe!";
+			
+			theComments.add(user1);
+			theComments.add(message1);
+			theComments.add(user2);
+			theComments.add(message2);
+			
+			assertEquals(theComments, Review.getAllCommentsForReview(user, game));
+		}
+
 }
