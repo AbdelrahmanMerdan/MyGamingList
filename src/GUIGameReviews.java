@@ -14,7 +14,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
+import database.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -91,10 +91,8 @@ public class GUIGameReviews extends JPanel {
 		
 		//Fill the box
 		List<Object> reviews = GUIGame.game.getComment();
-		System.out.println(reviews.size());
-		System.out.println(GUIGame.game);
+
 		for( int i = 0; i < reviews.size(); i++) {
-			
 			review(reviews.get(i));
 		}
 		
@@ -127,7 +125,6 @@ public class GUIGameReviews extends JPanel {
 							}
 						}
 					});
-					System.out.println(game.getName());
 				}
 				else {
 					JOptionPane.showMessageDialog(buttonPanel,
@@ -274,11 +271,32 @@ public class GUIGameReviews extends JPanel {
 		newComentLabel.addMouseListener(new MouseAdapter() {					// needs to be implemented, comment needs to be saved to db alongside username
 			public void mouseClicked(MouseEvent e) {
 				if (GUIMain.usernameLoggedIn != null) {
-					String comment = JOptionPane.showInputDialog(reviewContentPane,
+					String comment;
+					
+					//Prompt user for comment
+					comment = JOptionPane.showInputDialog(reviewContentPane,
 							"Enter your Comment:",
 							"Add Comment",
 							JOptionPane.PLAIN_MESSAGE);
-					System.out.println("User: " + GUIMain.usernameLoggedIn + " has commented: " + comment); // proof of concept
+	
+					//Keep prompting till user puts a thing
+					while(comment != null && comment.equals(""))
+					{
+						JOptionPane.showMessageDialog(reviewContentPane,
+								"Please enter a comment",
+								"Error",
+								JOptionPane.PLAIN_MESSAGE);
+						
+						comment = JOptionPane.showInputDialog(reviewContentPane,
+								"Enter your Comment:",
+								"Add Comment",
+								JOptionPane.PLAIN_MESSAGE);
+					}
+					
+					if(comment != null)
+					{
+						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(Username), GUIGame.game);
+					}
 				} else {
 					JOptionPane.showMessageDialog(reviewContentPane,
 							"Please Login to Comment",
