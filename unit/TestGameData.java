@@ -1,4 +1,4 @@
-package test;
+package unit;
 
 import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,8 +36,8 @@ class TestGameData {
 
 			//Delete settings
 			Bson update = Updates.unset("description");
-			Bson update2 = Updates.unset("number_of_reviews");
-			Bson update3 = Updates.unset("user_reviews");
+			Bson update2 = Updates.unset("sum_of_all_reviews");
+			Bson update3 = Updates.unset("num_of_reviews");
 			Bson total = Updates.combine(update, update2, update3);
 
 			//Deleting description
@@ -99,7 +99,7 @@ class TestGameData {
 			String cover = game.getCover();
 			String shortDesc = game.getShortDesc();
 			Integer numOfReviews = game.getNumOfReviews();
-			Integer userReviews = game.getUserReviews();
+			Integer userReviews = game.getSumOfAllReviews();
 			assertNotNull(name);
 			assertNotNull(sysReq);
 			assertNotNull(metaScore);

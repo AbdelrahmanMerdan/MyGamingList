@@ -3,11 +3,14 @@ package src;
 import database.GameData;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -24,8 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class GUIGame {
 	
@@ -34,6 +35,7 @@ public class GUIGame {
 	private static JEditorPane sysRequireText;
 	private static JEditorPane descriptionText;
 	private static JButton reviewGameButton;
+	public static Game game;
 	
 	//private static JButton criticReviewButton;
 	private static JLabel criticReviewLabel;
@@ -99,11 +101,19 @@ public class GUIGame {
 		gameOptionsNorthPane.setLayout(new BorderLayout(0, 0));
 		
 		//unfinished buttons
-		reviewGameButton = new JButton("Review Game");
+		reviewGameButton = new JButton("Reviews");
 		reviewGameButton.setFocusable(false);
 		reviewGameButton.setForeground(Color.WHITE); // only here for temp critic review
 		reviewGameButton.setBackground(Color.BLACK);
 		gameOptionsNorthPane.add(reviewGameButton, BorderLayout.CENTER);
+		
+		reviewGameButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				//GUIGameReviews reviews = new GUIGameReviews(cardPane);
+				GUIGameReviews.loadGameReviews(cardPane, game);
+				((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
+			}
+		});
 		
 		JPanel gameOptionsSouthPane = new JPanel();
 		gameOptionsSouthPane.setBackground(Color.BLACK);
@@ -146,21 +156,22 @@ public class GUIGame {
 		
 	}
 	
-	public static void loadGame(Game game) {
-		//When database don't have app details
-		if(GameData.noAppDetails(game.getID()) || GameData.noAppReviews(game.getID()))
+	public static void loadGame(int id) {
+		//When database don't have app or all details
+		if(GameData.noAppExists(id))
+		{
+			//Add entry
+			GameData.addApp(id);
+		}
+		
+		if(GameData.noAppDetails(id) || GameData.noAppReviews(id))
 		{
 			//Update database
-			GameData.updateAppDetails(game.getID());
-			game = GameData.getGame(game.getID());
+			GameData.updateAppDetails(id);
 			
 		}
 		
-		//For games that didn't have their info in the database when the program boots
-		if(game.getSysRequire() == null)
-		{
-			game = GameData.getGame(game.getID());
-		}
+		game = GameData.getGame(id);
 		
 		//Setting game page
 		gameTitleLabel.setText(game.getName());
@@ -215,7 +226,6 @@ public class GUIGame {
 			});
 			
 		}
-		
 		
 		//Get image from database and set
 		URL url = null;

@@ -22,8 +22,11 @@ import com.mongodb.client.*;
 
 public class GUIMain extends JFrame{
 	
-	private static JPanel mainPane = new JPanel();
-	private static JPanel cardPane = new JPanel();
+	private static JPanel basePane;
+	private static JPanel mainPane;
+	private static JPanel cardPane;
+	public static JButton loginButton;
+	public static String usernameLoggedIn = null;
 	
 	public GUIMain() {
 		
@@ -32,17 +35,25 @@ public class GUIMain extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 800);
 		
+		//instantiate base pane
+		basePane = new JPanel();
+		basePane.setLayout(new CardLayout());
+		setContentPane(basePane);
+		
+		//load login page
+		GUILogin login = new GUILogin();
+		basePane.add(login.getMainPane(), "login");
+		//((CardLayout) basePane.getLayout()).show(basePane, "login");
+		
+		//instantiate main pane
+		mainPane = new JPanel();
 		mainPane.setBackground(Color.BLACK);
 		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(mainPane);
 		mainPane.setLayout(new BorderLayout(0, 0));
+		basePane.add(mainPane, "main");
+		((CardLayout) basePane.getLayout()).show(basePane, "main");
 		
-		mainPane.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				mainPane.requestFocus();
-			}
-		});
-		
+		//instantiate components for main pane
 		JPanel headerPane = new JPanel();
 		headerPane.setBackground(Color.BLACK);
 		headerPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,6 +64,7 @@ public class GUIMain extends JFrame{
 		headerPane.add(headerOptionsPane, BorderLayout.WEST);
 		headerOptionsPane.setOpaque(false);
 		JButton homeButton = new JButton("Home");
+		homeButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		homeButton.setFocusable(false);
 		headerOptionsPane.add(homeButton);
 		
@@ -63,10 +75,46 @@ public class GUIMain extends JFrame{
 			}
 		});
 		
-		JButton myGamesButton = new JButton("My Games");
-		myGamesButton.setFocusable(false);
-		headerOptionsPane.add(myGamesButton);
+		
+		//Set up My Reviews
+		JButton myReviewsButton = new JButton("My Reviews");
+		myReviewsButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		myReviewsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(loginButton == null || loginButton.getText().equals("Log in"))
+				{
+					((CardLayout) basePane.getLayout()).show(basePane, "login");
+				}
+				else
+				{
+					//((CardLayout) cardPane.getLayout()).show(cardPane, "myReviewedGames");
+					GUIGameReviews.loadUserReviews(cardPane, usernameLoggedIn);
+					((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
+				}
+			}
+		});
+		
+		myReviewsButton.setFocusable(false);
+		headerOptionsPane.add(myReviewsButton);
+		
+		//Set up My Friends
 		JButton friendsButton = new JButton("Friends");
+		friendsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(loginButton == null || loginButton.getText().equals("Log in"))
+				{
+					((CardLayout) basePane.getLayout()).show(basePane, "login");
+				}
+				else
+				{
+					GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
+					((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
+				}
+			}
+		});
+		
+		friendsButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		friendsButton.setFocusable(false);
 		headerOptionsPane.add(friendsButton);
 		
@@ -75,7 +123,26 @@ public class GUIMain extends JFrame{
 		headerSearchPane.setOpaque(false);
 		
 		JTextField headerSearchBox = new JTextField();
+		headerSearchBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		String searchPrompt = "Search";
+		
+		loginButton = new JButton("Log in");
+		loginButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(loginButton.getText() != null && loginButton.getText().equals("Log out"))
+				{
+					((CardLayout) cardPane.getLayout()).show(cardPane, "mainMenu");
+					loginButton.setText("Log in");
+				}
+				else
+				{
+					((CardLayout) basePane.getLayout()).show(basePane, "login");
+				}
+			}
+		});
+		
+		headerSearchPane.add(loginButton);
 		headerSearchBox.setText(searchPrompt);
 		headerSearchPane.add(headerSearchBox);
 		headerSearchBox.setColumns(15);
@@ -91,48 +158,47 @@ public class GUIMain extends JFrame{
 						Pattern.CASE_INSENSITIVE);
 				Bson filter = regex("name", namePattern);
 				FindIterable<Document> result = GameData.games.find(filter);
-				System.out.println(result.first());
 				
 				if (result.first() != null) {
-					try {
-						Game gameResult = GameData.map.readValue(result.first().toJson(),Game.class);
-						GUIGame.loadGame(gameResult);
-						((CardLayout) cardPane.getLayout()).show(cardPane, "game");
-					} catch (JsonMappingException e1) {
-						System.out.println("JsonMappingException");
-					} catch (JsonProcessingException e1) {
-						System.out.println("JsonProcessingException");
-					}
+					int id = result.first().getInteger("_id");
+					GUIGame.loadGame(id);
+					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 				} else {
 					headerSearchBox.setText("Invalid Name");
 				}
 				headerSearchBox.getRootPane().requestFocus();
 			}
 		});
-		
+
+		//focus management
 		headerSearchBox.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				headerSearchBox.setText("");
 			}
 			public void focusLost(FocusEvent e) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {}
 				headerSearchBox.setText(searchPrompt);
 			}
 		});
-		
-		//JPanel footerPane = new JPanel();
-		//mainPane.add(footerPane, BorderLayout.SOUTH);
-		
-		mainPane.add(cardPane, BorderLayout.CENTER);
-		cardPane.setLayout(new CardLayout());
+
+		mainPane.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				mainPane.requestFocus();
+			}
+		});
 		
 		//order matters
 		PopReleases popReleases = new PopReleases();
 		MostPlayed mostPlayed = new MostPlayed();
 		
+		//instantiate card pane
+		cardPane = new JPanel();
+		mainPane.add(cardPane, BorderLayout.CENTER);
+		cardPane.setLayout(new CardLayout());
+		
+		//instantiate all GUI elements
 		GUIMainMenu mainMenu = new GUIMainMenu(cardPane, mostPlayed, popReleases);
+		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
+		
 	}
 }

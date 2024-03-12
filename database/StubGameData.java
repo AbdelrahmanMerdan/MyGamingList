@@ -1,5 +1,12 @@
 package database;
 
+import static com.mongodb.client.model.Filters.eq;
+
+import org.bson.Document;
+import org.bson.conversions.Bson;
+
+import com.mongodb.client.FindIterable;
+
 import src.Game;
 
 public class StubGameData extends GameData {
@@ -47,6 +54,12 @@ public class StubGameData extends GameData {
     	
     	GameData.addApp(id);
 
+    }
+    
+    public static String getName(int id) {
+    	changeConnection();
+    	
+    	return GameData.getName(id);
     }
 
     public static Game getGame(int id) {

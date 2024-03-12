@@ -12,7 +12,7 @@ import database.GameData;
 public class MostPlayed {
 
 	//Instance variable
-	public static ArrayList<Game> games = new ArrayList<>();
+	public ArrayList<Integer> ids = new ArrayList<>();
 
 	public MostPlayed() {
 		try {
@@ -34,8 +34,12 @@ public class MostPlayed {
 			for(JsonNode node : jsonArray) 
 			{
 				int id = node.get("appid").asInt();
-				games.add(GameData.getGame(id));
 				
+				//Game ID: 1329410 is a game not available in Canada
+				if(id != 1329410) 
+				{
+					ids.add(id);
+				}
 			}
 			
 		} catch(InterruptedException e) {
@@ -46,17 +50,17 @@ public class MostPlayed {
 		} 
 	}
 
-	public ArrayList<Game> getGames() {
-		return games;
+	public ArrayList<Integer> getIDs() {
+		return ids;
 	}
 	
-	public Game getGame(int i) {
-		return games.get(i);
+	public int getID(int i) {
+		return ids.get(i);
 	}
 
 	
 	public int getSize() {
-		return games.size();
+		return ids.size();
 	}
 
 }

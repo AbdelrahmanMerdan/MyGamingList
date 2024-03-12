@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Game {
 
 	//Instance variables
-	private int id, sum_of_all_reviews, userReviews;
+	private int id, sum_of_all_reviews, num_of_reviews;
 	private String name, shortDesc, desc, cover, sysRequire, metaScore, metaURL;
 	private List<Object> comments;
 
 	public Game(@JsonProperty("_id") int id, @JsonProperty("name") String name, @JsonProperty("short_description") String shortDesc, @JsonProperty("description") String desc, @JsonProperty("cover_art") String cover, 
 			@JsonProperty("pc_requirements") String sysRequire, @JsonProperty("meta_score") String metaScore, @JsonProperty("meta_link") String metaURL, @JsonProperty("sum_of_all_reviews") int sum_of_all_reviews, 
-			@JsonProperty("user_reviews") int userReviews, @JsonProperty("comments")List<Object> comments) {
+			@JsonProperty("num_of_reviews") int num_of_reviews, @JsonProperty("comments")List<Object> comments) {
 		this.id = id;
 		this.name = name;
 		this.shortDesc = shortDesc;
@@ -24,7 +24,7 @@ public class Game {
 		this.metaScore = metaScore;
 		this.metaURL = metaURL;
 		this.sum_of_all_reviews = sum_of_all_reviews;
-		this.userReviews = userReviews;
+		this.num_of_reviews = num_of_reviews;
 		this.comments = comments;
 	}
 
@@ -92,111 +92,30 @@ public class Game {
 		this.metaURL = metaURL;
 	}
 	
-	public int getNumOfReviews() {
+	public int getSumOfAllReviews() {
 		return sum_of_all_reviews;
 	}
 
-	public void setNumOfReviews(int numOfReviews) {
-		this.sum_of_all_reviews = numOfReviews;
+	public void setSumOfAllReviews(int SumOfReviews) {
+		this.sum_of_all_reviews = SumOfReviews;
 	}
 
-	public int getUserReviews() {
-		return userReviews;
+	public int getNumOfReviews() {
+		return num_of_reviews;
 	}
 
-	public void setUserReviews(int userReviews) {
-		this.userReviews = userReviews;
+	public void setNumOfReviews(int numReviews) {
+		this.num_of_reviews = numReviews;
 	}
 	
 	public List<Object> getComment() {
 		return this.comments;
 	}
 	
-	public void addFirstComment(List<Object> comment) {
-		this.comments.add(0, comment);
+	public void addComment(List<Object> comment) {
+		this.comments.add(comment);
 	}
 
-		@SuppressWarnings("unchecked")
-	public List<Object> getAllReccomandationComments(){
-		
-		List<Object> copy = new ArrayList<>();
-		
-		for(int i = 0; i < this.comments.size(); i++) {
-			
-			copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(1));
-			
-		}
-		
-		return copy;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Object> getAllReccomandationUser(){
-		
-		List<Object> copy = new ArrayList<>();
-		
-		for(int i = 0; i < this.comments.size(); i++) {
-			
-			copy.add((((List<List<Object>>) this.comments.get(i)).get(4)).get(0));
-			
-		}
-		
-		return copy;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public int retrieveIndex(User user) {
-		
-		int index = -1;
-		
-		for(int i = 0; i < this.comments.size(); i++) {
-			
-			if(((List<Object>) this.comments.get(i)).get(0).equals(user.getUsername())) {
-				
-				index = i;
-				break;
-				
-			}
-		}
-		
-		return index;
-	}
-	
-
-	@SuppressWarnings("unchecked")
-	public Object getOneReccomandationComment(User userWithReccomandation){
-		
-		int index = retrieveIndex(userWithReccomandation);
-		
-		return ((List<Object>) this.comments.get(index)).get(4);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Object getOneReccomandationUser(User userWithReccomandation){
-		
-		int index = retrieveIndex(userWithReccomandation);
-		
-		return ((List<Object>) this.comments.get(index)).get(0);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void addCommentToUserRecommandation(User user, String message, User userWithTheReview) {
-		
-		//empty list
-		int reccomandationIndex = 0;
-		List<Object> toAdd = new ArrayList<>();
-		
-		//the first index will have the username and the seccond will have the message of the comment
-		toAdd.add(user.getUsername());
-		toAdd.add(message);
-		
-		reccomandationIndex = retrieveIndex(userWithTheReview);
-		
-		//adding the comment with all the info to the recommendation
-		(((List<List<Object>>) this.comments.get(reccomandationIndex)).get(4)).add(toAdd);
-		
-	}
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -216,9 +135,17 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return " name=" + name + "\n id=" + id + "\n shortDesc=" + shortDesc + "\n desc=" + desc + "\n cover=" + cover
-				+ "\n sysRequire=" + sysRequire + "\n metaScore=" + metaScore + "\n metaURL=" + metaURL;
+		return "Game [id=" + id + ", sum_of_all_reviews=" + sum_of_all_reviews + ", num_of_reviews=" + num_of_reviews
+				+ ", name=" + name + ", shortDesc=" + shortDesc + ", desc=" + desc + ", cover=" + cover
+				+ ", sysRequire=" + sysRequire + ", metaScore=" + metaScore + ", metaURL=" + metaURL + ", comments="
+				+ comments + "]";
 	}
+
+//	@Override
+//	public String toString() {
+//		return " name=" + name + "\n id=" + id + "\n shortDesc=" + shortDesc + "\n desc=" + desc + "\n cover=" + cover
+//				+ "\n sysRequire=" + sysRequire + "\n metaScore=" + metaScore + "\n metaURL=" + metaURL;
+//	}
 	
 	
 }

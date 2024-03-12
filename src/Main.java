@@ -10,6 +10,7 @@ public class Main {
 				try {
 					GUIMain appFrame = new GUIMain();
 					appFrame.setVisible(true);
+					appFrame.getComponent(0).requestFocus();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
