@@ -33,21 +33,20 @@ public class GameData implements Database, StubDatabase {
     public final static ObjectMapper map = new ObjectMapper();
     
 
-public static boolean noAppExists(int id) {
+    public static boolean noAppExists(int id) {
     	//Filtering
     	Bson filter = eq("_id", id);
     	FindIterable<Document> result = games.find(filter);
-    	
+
     	//Checking if app does not exist
     	if(result.first() == null)
     	{
     		return true;
     	}
-    	
+
     	return false;
     }
 
-	
 	public static boolean noAppDetails(int id) {
     	//Filtering
     	Bson filter = and(eq("_id", id), exists("description"));
@@ -126,8 +125,11 @@ public static boolean noAppExists(int id) {
 
 		} catch(IOException e) {
 			e.printStackTrace();
-		}
-    	 	
+			
+        } catch(NullPointerException e) {
+			//When game is not available in Canada :(
+			setDefaultParameters(game);
+    	}
     }
 
     public static void removeApp(int id) {
@@ -204,8 +206,18 @@ public static boolean noAppExists(int id) {
 
 		} catch(IOException e) {
 			e.printStackTrace();
-		}
-    	 	
+			
+		} catch(NullPointerException e) {
+			//When game is not available in Canada
+			Document na = new Document().append("_id", id).append("name", "REGION-LOCKED GAME");
+			
+			try {
+				InsertOneResult result = games.insertOne(na);
+				System.out.println("Added region-locked Game: "+result.wasAcknowledged());
+			} catch (MongoException f) {
+				System.err.println("ERROR: "+f);
+			}
+		} 	 
     }
     
     public static String getName(int id) {
@@ -235,6 +247,24 @@ public static boolean noAppExists(int id) {
 		}
     	
     	return null;
+    }
+    
+    private static void setDefaultParameters(Document game) {
+    	Bson update1 = Updates.set("short_description", "Game is not available in Canada.");
+		Bson update2 = Updates.set("description", "Game is not available in Canada");
+		Bson update3 = Updates.set("cover_art", "");
+		Bson update4 = Updates.set("pc_requirements", "N/A");
+		
+		Bson update = Updates.combine(update1, update2, update3, update4, updateReview(), updateComment());
+		
+		//Updating
+		try {
+			UpdateResult updateResult = games.updateOne(game, update);
+			System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
+			
+		} catch(MongoException f) {
+			System.err.println("ERROR: "+f);
+		}
     }
     
 	private static Bson updateShortDesc(JsonNode jsonResponse) {

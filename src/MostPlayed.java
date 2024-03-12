@@ -34,14 +34,8 @@ public class MostPlayed {
 			for(JsonNode node : jsonArray) 
 			{
 				int id = node.get("appid").asInt();
-				
-				//Game ID: 1329410 is a game not available in Canada
-				if(id != 1329410) 
-				{
-					ids.add(id);
-				}
+				ids.add(id);
 			}
-			
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 
