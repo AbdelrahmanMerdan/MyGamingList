@@ -1,4 +1,4 @@
-package test;
+package integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 
 import database.GameData;
-import database.StubGameData;
 import database.UsersImpl;
 
 import org.junit.jupiter.api.Test;
