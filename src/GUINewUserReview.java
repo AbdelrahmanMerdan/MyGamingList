@@ -94,7 +94,7 @@ public class GUINewUserReview extends JDialog{
 				
 				
 				
-				System.out.println(GUIMain.usernameLoggedIn + " " + game.getName() + " " + recommendCheckBox.isSelected() + " " + ratingSpinner.getValue() + " " + reviewTextPane.getText());
+				//System.out.println(GUIMain.usernameLoggedIn + " " + game.getName() + " " + recommendCheckBox.isSelected() + " " + ratingSpinner.getValue() + " " + reviewTextPane.getText());
 				dispose();
 			
 			

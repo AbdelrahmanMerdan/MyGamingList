@@ -44,8 +44,6 @@ public class Review {
 	    }
 		
 		public static boolean CheckUpdateGame(int id) {
-			
-			
 			Bson filter = and(eq("_id", id), exists("name"));
 	    	FindIterable<Document> result = GameData.games.find(filter);
 	    	
@@ -88,14 +86,12 @@ public class Review {
 		public static void review_game(String username, Game game, int review, String comment, String reccomendation) 
 				throws IOException {
 			
-			if( CheckUpdateGame(game.getID()) ) {
-				
-				game = GameData.getGame(game.getID());
-				
-				
-			};
+//			if(CheckUpdateGame(game.getID()) ) {
+//				
+//				game = GameData.getGame(game.getID());
+//			}
 			
-			if(UserExists(username) & noAppReviews(game.getID()) & (AlreadyReviewed(game, username) == false)  ) {
+			if(UserExists(username) && (AlreadyReviewed(game, username) == false)  ) {
 				
 //				Find User
 		    	Document user_found = find_user(username);
@@ -257,6 +253,7 @@ public class Review {
 			return copy;
 		}
 
+		
 		@SuppressWarnings("unchecked")
         public static List<Object> getAllCommentsForReview(User userWithReview, Game game){
 
