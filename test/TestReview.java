@@ -54,4 +54,22 @@ class TestReview {
 			assertEquals(true, Review.AlreadyReviewed(game, TEST_USER));
 		}
 
+		@Test
+		@Order(3)
+		void CheckForNoCommentsForAGame(){
+			//Should have no comments 
+			List<Object> empty = new ArrayList<>();
+			assertEquals(empty, Review.getAllComments(game));
+		}
+		
+		@Test
+		@Order(4)
+		void CheckForACommentsForAGame() throws IOException{
+			
+			Review.review_game(TEST_USER, game, 9, "Game is Good!", "Yes" );
+			User newUser = new User("Bob", "123");
+			Review.addCommentToUserReview(newUser, "I don't agree!", user, game);
+			assertNotNull(Review.getAllComments(game));
+		}
+
 }
