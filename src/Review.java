@@ -59,7 +59,29 @@ public class Review {
 	    		return false;
 	    	}
 	    	return false;
+
 	    	
+	    	
+		public static boolean AlreadyReviewed(Game game, String username){
+			
+			boolean in = false;
+//			System.out.println(game.getComment());
+			
+			for(int i = 0; i < game.getComment().size();i++) {
+				
+				@SuppressWarnings("unchecked")
+				List<Object> diffreviews =  (List<Object>) game.getComment().get(i);
+				String specificuser = (String) diffreviews.get(0);
+				if(specificuser.equals(username)) {
+					System.out.println(true);
+					return true;
+				}
+				
+				
+			}
+			System.out.println(false);
+			return false;
+			
 		}
 		
 		
@@ -73,7 +95,7 @@ public class Review {
 				
 			};
 			
-			if(UserExists(username) & noAppReviews(game.getID())) {
+			if(UserExists(username) & noAppReviews(game.getID()) & (AlreadyReviewed(game, username) == false)  ) {
 				
 //				Find User
 		    	Document user_found = find_user(username);
@@ -106,6 +128,9 @@ public class Review {
 		    		System.err.println("ERROR: "+e);
 		    	}
 		    	
+			}
+			else {
+				System.out.println("This User already reviewed the game");
 			}
 			
 		}
@@ -207,42 +232,48 @@ public class Review {
 	
 		
 
-//		@SuppressWarnings("unchecked")
-//		public static List<Object> getAllComments(Game game){
-//			
-//			List<Object> copy = new ArrayList<>();
-//			
-//			for(int i = 0; i < game.getComment().size(); i++) {
-//				
-//				int j = 0;
-//	
-//				for(j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).size(); j++) {
-//					
-//					if(j % 2 == 1) {
-//						
-//						copy.add(((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).get(j));
-//						
-//					}
-//					
-//				}
-//				
-//				
-//			}
-//			
-//			return copy;
-//		}
-
 		@SuppressWarnings("unchecked")
-		public static List<Object> getAllCommentsForReview(User userWithReview, Game game){
+		public static List<Object> getAllComments(Game game){
 			
 			List<Object> copy = new ArrayList<>();
 			
-			int index = retrieveIndex(userWithReview, game);
+			for(int i = 0; i < game.getComment().size(); i++) {
+				
+				int j = 0;
 	
+				for(j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).size(); j++) {
+					
+					if(j % 2 == 1) {
+						
+						copy.add(((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).get(j));
+						
+					}
+					
+				}
+				
+				
+			}
 			
-			for(int j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).size(); j++) {
+			return copy;
+		}
 
-				copy.add(((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).get(j));
+		@SuppressWarnings("unchecked")
+		public List<Object> getAllUsersForComments(Game game){
+			
+			List<Object> copy = new ArrayList<>();
+	
+			for(int i = 0; i < game.getComment().size(); i++) {
+				
+				int j = 0;
+	
+				for(j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).size(); j++) {
+					
+					if(j % 2 == 0) {
+						
+						copy.add(((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).get(j));
+						
+					}
+				}
 			}
 			
 			return copy;
@@ -267,41 +298,41 @@ public class Review {
 		}
 		
 	
-//		@SuppressWarnings("unchecked")
-//		public Object getComment(User userWithReccomandation, Game game){
-//			
-//			int index = retrieveIndex(userWithReccomandation, game);
-//			List<Object> copy = new ArrayList<>();
-//			
-//			for(int j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).size(); j++) {
-//				
-//				if(j % 2 == 1) {
-//					
-//					copy.add(((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).get(j));
-//					
-//				}
-//			}
-//			
-//			return copy;
-//		}
+		@SuppressWarnings("unchecked")
+		public Object getComment(User userWithReccomandation, Game game){
+			
+			int index = retrieveIndex(userWithReccomandation, game);
+			List<Object> copy = new ArrayList<>();
+			
+			for(int j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).size(); j++) {
+				
+				if(j % 2 == 1) {
+					
+					copy.add(((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).get(j));
+					
+				}
+			}
+			
+			return copy;
+		}
 		
-//		@SuppressWarnings("unchecked")
-//		public Object getUserForComment(User userWithReccomandation, Game game){
-//			
-//			int index = retrieveIndex(userWithReccomandation,game);
-//			List<Object> copy = new ArrayList<>();
-//			
-//			for(int j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).size(); j++) {
-//				
-//				if(j % 2 == 0) {
-//					
-//					copy.add(((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).get(j));
-//					
-//				}
-//			}
-//			
-//			return copy;
-//		}
+		@SuppressWarnings("unchecked")
+		public Object getUserForComment(User userWithReccomandation, Game game){
+			
+			int index = retrieveIndex(userWithReccomandation,game);
+			List<Object> copy = new ArrayList<>();
+			
+			for(int j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).size(); j++) {
+				
+				if(j % 2 == 0) {
+					
+					copy.add(((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).get(j));
+					
+				}
+			}
+			
+			return copy;
+		}
 		
 		@SuppressWarnings("unchecked")
 		public static void addCommentToUserReview(User user, String message, User userWithTheReview, Game game) {
@@ -319,6 +350,8 @@ public class Review {
 
 			Bson Update = Updates.set("comments", comments);
 
+			System.out.println(comments);
+
 			try {
 				UpdateResult updateResult = GameData.games.updateOne(game_found, Update);
 				System.out.println("Updated comment: "+updateResult.wasAcknowledged());
@@ -331,25 +364,22 @@ public class Review {
 		
 		public static void main(String[] args) throws IOException {
 			
-////			CheckUpdateGame(1747800);
-////
-////			Get the Game from the database using it's ID
-				Game game = GameData.getGame(271590);
-////			System.out.print(game);
-////			User 1 and User 2 review the game
-////			review_game("User2", game, 9, "Game is bad", "No" );
-////
-			User user = UsersImpl.getUser("User1");
-			User user2 = UsersImpl.getUser("User2");
-			User user3 = UsersImpl.getUser("User3");
-////
+//////			CheckUpdateGame(1747800);
+//////
+//////			Get the Game from the database using it's ID
+//			Game game = GameData.getGame(271590);
+//////			System.out.print(game);
+//////			User 1 and User 2 review the game
+//			review_game("User2", game, 9, "Game is bad", "No" );
+//////
+//			User user = UsersImpl.getUser("User1");
+////			User user2 = UsersImpl.getUser("User2");
+//////
+////			
+////			addCommentToUserReview(user, "Great Review", user2, game );
+////			addCommentToUserReview(user, "Great Review", user2, game );
 //			
-			System.out.println(getAllCommentsForReview(user, game));
-//			addCommentToUserReview(user, "Great Review", user2, game );
-//			addCommentToUserReview(user2, "I agree", user, game );
-//			addCommentToUserReview(user3, "Nice job", user2, game);
-//			addCommentToUserReview(user3, "Good job", user, game);
-//			addCommentToUserReview(user, "Nice Review", user3, game);
+//			AlreadyReviewed(game, "User1");
 						
 
 		  }
