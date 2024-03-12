@@ -258,26 +258,21 @@ public class Review {
 		}
 
 		@SuppressWarnings("unchecked")
-		public List<Object> getAllUsersForComments(Game game){
-			
-			List<Object> copy = new ArrayList<>();
-	
-			for(int i = 0; i < game.getComment().size(); i++) {
-				
-				int j = 0;
-	
-				for(j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).size(); j++) {
-					
-					if(j % 2 == 0) {
-						
-						copy.add(((List<Object>) ((List<Object>) game.getComment().get(i)).get(4)).get(j));
-						
-					}
-				}
-			}
-			
-			return copy;
-		}
+        public static List<Object> getAllCommentsForReview(User userWithReview, Game game){
+
+            List<Object> copy = new ArrayList<>();
+
+            int index = retrieveIndex(userWithReview, game);
+
+
+            for(int j = 0; j < ((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).size(); j++) {
+
+                copy.add(((List<Object>) ((List<Object>) game.getComment().get(index)).get(4)).get(j));
+            }
+
+            return copy;
+        }
+		
 		
 		@SuppressWarnings("unchecked")
 		public static int retrieveIndex(User user, Game game) {
