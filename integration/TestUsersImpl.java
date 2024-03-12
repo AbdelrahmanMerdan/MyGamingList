@@ -1,4 +1,4 @@
-package test;
+package integration;
 
 import database.UsersImpl;
 import org.junit.jupiter.api.AfterEach;
