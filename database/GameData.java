@@ -31,7 +31,7 @@ public class GameData implements Database, StubDatabase {
 
     //ObjectMapper
     public final static ObjectMapper map = new ObjectMapper();
-
+    
 
 public static boolean noAppExists(int id) {
     	//Filtering
@@ -64,7 +64,7 @@ public static boolean noAppExists(int id) {
 	
 	public static boolean noAppReviews(int id) {
     	//Filtering
-    	Bson filter = and(eq("_id", id), exists("user_reviews"));
+    	Bson filter = and(eq("_id", id), exists("num_of_reviews"));
     	FindIterable<Document> result = games.find(filter);
     	
     	//Checking if details is unavailable for the game
@@ -207,6 +207,15 @@ public static boolean noAppExists(int id) {
 		}
     	 	
     }
+    
+    public static String getName(int id) {
+    	//Grabbing specified game
+    	Bson filter = eq("_id", id);
+    	FindIterable<Document> result = games.find(filter);
+    	Document game = result.first();
+    	
+    	return game.getString("name");
+    }
 
 	
     public static Game getGame(int id) {
@@ -262,13 +271,16 @@ public static boolean noAppExists(int id) {
 
 
 	private static Bson updateSysRequire(JsonNode jsonResponse) {
-		//Grabbing sys requirements
-		String txt = jsonResponse.get("pc_requirements").get("minimum").asText();
+		String txt = "N/A";
 		
 		try {
-			//Adding recommended sys requirements if there is
+			txt = jsonResponse.get("pc_requirements").get("minimum").asText();
+		} catch(NullPointerException e) {
+			//Else, do nothing
+		}
+		
+		try {
 			txt = txt+jsonResponse.get("pc_requirements").get("recommended").asText();
-			
 		} catch(NullPointerException e) {
 			//Else, do nothing
 		}
@@ -309,7 +321,7 @@ public static boolean noAppExists(int id) {
 		int UserReview = 0;
 		int NumberofReview = 0;
 		
-		Bson update = Updates.set("user_reviews", UserReview);
+		Bson update = Updates.set("num_of_reviews", UserReview);
 		Bson update2 = Updates.set("sum_of_all_reviews", NumberofReview);
 		Bson total = Updates.combine(update, update2);
 

@@ -1,32 +1,26 @@
 package src;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
+import database.GameData;
 
 public class GUIMainMenu extends JFrame {
 	
@@ -48,18 +42,18 @@ public class GUIMainMenu extends JFrame {
 		JLabel mostPlayedLabel = new JLabel("Most Played");
 		mostPlayedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		mostPlayedLabel.setForeground(Color.WHITE);
-		mostPlayedLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		mostPlayedLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		mostPlayedBox.add(mostPlayedLabel);
 		
 		for (int i = 0; i < mostPlayed.getSize(); i++) {
 			int game = i;
             mostPlayedBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
-            JLabel lbl = new JLabel(mostPlayed.getGame(game).getName());
+            JLabel lbl = new JLabel(GameData.getName(mostPlayed.getID(game)));
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
             lbl.addMouseListener(new MouseAdapter() {
     			public void mouseClicked(MouseEvent e) {
-    				GUIGame.loadGame(mostPlayed.getGame(game));
+    				GUIGame.loadGame(mostPlayed.getID(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
     			}
     		});
@@ -86,26 +80,20 @@ public class GUIMainMenu extends JFrame {
 		JLabel popularReleaseLabel = new JLabel("Popular Releases");
 		popularReleaseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		popularReleaseLabel.setForeground(Color.WHITE);
-		popularReleaseLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		popularReleaseLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		popularReleaseBox.add(popularReleaseLabel);
 		
 		for (int i = 0; i < popReleases.getSize(); i++) {
 			int game = i;
             popularReleaseBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
-            JLabel lbl = new JLabel(popReleases.getGame(game).getName());
+            JLabel lbl = new JLabel(GameData.getName(popReleases.getID(game)));
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            lbl.addMouseListener(new MouseListener() {
-				@Override
+            lbl.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					GUIGame.loadGame(popReleases.getGame(game));
+					GUIGame.loadGame(popReleases.getID(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
-				}
-				@Override public void mousePressed(MouseEvent e) {}
-				@Override public void mouseReleased(MouseEvent e) {}
-				@Override public void mouseEntered(MouseEvent e) {}
-				@Override public void mouseExited(MouseEvent e) {}
-            	
+				}            	
             });
             popularReleaseBox.add(lbl);
         }
