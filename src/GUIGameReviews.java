@@ -14,7 +14,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
+import database.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -89,20 +89,12 @@ public class GUIGameReviews extends JPanel {
 		//reset everything
 		new GUIGameReviews(cardPane);
 		
-		
+		//Fill the box
 		List<Object> reviews = GUIGame.game.getComment();
-		System.out.println(reviews.size());
-		System.out.println(GUIGame.game);
+
 		for( int i = 0; i < reviews.size(); i++) {
-			
 			review(reviews.get(i));
 		}
-		
-		//fill the box
-//		review(); // needs to pass information to review, (username, rating, recommendation, review, and comment info)
-//		review(); // I recommend putting a loop that goes through all reviews and calls this with the relevant data
-//		review();
-//		review();
 		
 		//setup misc.
 		reviewTitleLabel.setText(game.getName());
@@ -127,7 +119,6 @@ public class GUIGameReviews extends JPanel {
 							}
 						}
 					});
-					System.out.println(game.getName());
 				}
 				else {
 					JOptionPane.showMessageDialog(buttonPanel,
@@ -223,11 +214,21 @@ public class GUIGameReviews extends JPanel {
 		//create container
 		Box commentBox = new Box(1);
 		
-		//fill comtainer (this should be filled using the comment data from the database in a similar manner as written above)
-		comment(commentBox); // needs to pass comment information to comment(usernames and comments)
-		comment(commentBox);
-		comment(commentBox);
-		comment(commentBox);
+		//Fill comment box
+		
+		@SuppressWarnings("unchecked")
+		List<Object> comments = (List<Object>) ((List<Object>) reviews).get(4);
+		
+		for(int i = 0; i < comments.size(); i +=2)
+		{
+			comment(commentBox, comments, i);
+		}
+		
+//		//fill comtainer (this should be filled using the comment data from the database in a similar manner as written above)
+//		comment(commentBox); // needs to pass comment information to comment(usernames and comments)
+//		comment(commentBox);
+//		comment(commentBox);
+//		comment(commentBox);
 		
 		JScrollPane commentScrollPane = new JScrollPane(commentBox);
 		forumPane.add(commentScrollPane);
@@ -264,11 +265,32 @@ public class GUIGameReviews extends JPanel {
 		newComentLabel.addMouseListener(new MouseAdapter() {					// needs to be implemented, comment needs to be saved to db alongside username
 			public void mouseClicked(MouseEvent e) {
 				if (GUIMain.usernameLoggedIn != null) {
-					String comment = JOptionPane.showInputDialog(reviewContentPane,
+					String comment;
+					
+					//Prompt user for comment
+					comment = JOptionPane.showInputDialog(reviewContentPane,
 							"Enter your Comment:",
 							"Add Comment",
 							JOptionPane.PLAIN_MESSAGE);
-					System.out.println("User: " + GUIMain.usernameLoggedIn + " has commented: " + comment); // proof of concept
+	
+					//Keep prompting till user puts a thing
+					while(comment != null && comment.equals(""))
+					{
+						JOptionPane.showMessageDialog(reviewContentPane,
+								"Please enter a comment",
+								"Error",
+								JOptionPane.PLAIN_MESSAGE);
+						
+						comment = JOptionPane.showInputDialog(reviewContentPane,
+								"Enter your Comment:",
+								"Add Comment",
+								JOptionPane.PLAIN_MESSAGE);
+					}
+					
+					if(comment != null)
+					{
+						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(Username), GUIGame.game);
+					}
 				} else {
 					JOptionPane.showMessageDialog(reviewContentPane,
 							"Please Login to Comment",
@@ -281,7 +303,10 @@ public class GUIGameReviews extends JPanel {
 		reviewBox.add(reviewPane);
 	}
 	
-	private static void comment(Box commentBox) {
+	private static void comment(Box commentBox, Object comment, int i) {
+		@SuppressWarnings("unchecked")
+		List<Object> comments = (List<Object>) comment;
+		
 		JPanel commentPane = new JPanel();
 		commentPane.setLayout(new BorderLayout(0, 0));
 		
@@ -290,13 +315,15 @@ public class GUIGameReviews extends JPanel {
 		commentPane.add(commentHeaderPane, BorderLayout.NORTH);
 		commentHeaderPane.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JLabel usernameLabel = new JLabel("USERNAME");						// set this to the username
+		String userName = (String) comments.get(i);
+		JLabel usernameLabel = new JLabel(userName);						// set this to the username
 		usernameLabel.setForeground(Color.BLACK);
 		commentHeaderPane.add(usernameLabel);
 		
+		String message = (String) comments.get(i+1);
 		JTextPane commentContentPane = new JTextPane();
 		commentContentPane.setEditable(false);
-		commentContentPane.setText("Fuck you Steve");						// set this to the comment text
+		commentContentPane.setText(message);						// set this to the comment text
 		commentPane.add(commentContentPane, BorderLayout.CENTER);
 		
 		commentBox.add(commentPane);
