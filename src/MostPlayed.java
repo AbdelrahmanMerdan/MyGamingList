@@ -12,7 +12,7 @@ import database.GameData;
 public class MostPlayed {
 
 	//Instance variable
-	public static ArrayList<Integer> ids = new ArrayList<>();
+	public ArrayList<Integer> ids = new ArrayList<>();
 
 	public MostPlayed() {
 		try {
