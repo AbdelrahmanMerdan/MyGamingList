@@ -165,7 +165,7 @@ public class GUIGameReviews extends JPanel {
 //		review();
 		
 		//setup misc.
-		reviewTitleLabel.setText(user);
+		reviewTitleLabel.setText(user+" Reviews");
 		backLocation = "mainMenu";
 		//newReviewButton.setVisible(false);
 	}
@@ -203,7 +203,7 @@ public class GUIGameReviews extends JPanel {
 		reviewPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel reviewHeaderPane = new JPanel();
-		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(0, 0, 0)));
+		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
 		reviewHeaderPane.setBackground(new Color(23, 26, 33));
 		reviewPane.add(reviewHeaderPane, BorderLayout.NORTH);
 		reviewHeaderPane.setLayout(new BorderLayout(0, 0));
