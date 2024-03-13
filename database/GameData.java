@@ -254,8 +254,10 @@ public class GameData implements Database, StubDatabase {
 		Bson update2 = Updates.set("description", "Game is not available in Canada");
 		Bson update3 = Updates.set("cover_art", "");
 		Bson update4 = Updates.set("pc_requirements", "N/A");
+		Bson update5 = Updates.set("meta_score", "N/A");
+		Bson update6 = Updates.set("meta_link", "N/A");
 		
-		Bson update = Updates.combine(update1, update2, update3, update4, updateReview(), updateComment());
+		Bson update = Updates.combine(update1, update2, update3, update4, update5, update6, updateReview(), updateComment());
 		
 		//Updating
 		try {
@@ -332,7 +334,6 @@ public class GameData implements Database, StubDatabase {
 			//Adding metacritic reviews if there is
 			score = jsonResponse.get("metacritic").get("score").asText();
 			link = jsonResponse.get("metacritic").get("url").asText();
-			
 		} catch(NullPointerException e) {
 			//Else, do nothing
 		} 
