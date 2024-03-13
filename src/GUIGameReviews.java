@@ -46,12 +46,13 @@ public class GUIGameReviews extends JPanel {
 	public GUIGameReviews(JPanel cardPane) {
 		JPanel mainPane = new JPanel();
 		mainPane.setLayout(new BorderLayout(0, 0));
-		mainPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) Color.DARK_GRAY));
+		mainPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) new Color(27, 40, 56)));
 		cardPane.add(mainPane, "reviews");
 		
 		//generate container
 		reviewBox = new Box(1);
-		reviewBox.setBorder(new MatteBorder(0, 10, 10, 10, (Color) new Color(0, 0, 0)));
+		reviewBox.setBackground(new Color(27, 40, 56));
+		reviewBox.setBorder(new MatteBorder(0, 10, 10, 10, (Color) new Color(23, 26, 33)));
 		
 		//generate scrollable
 		JScrollPane reviewScrollPane = generateScrollable(reviewBox);
@@ -59,13 +60,13 @@ public class GUIGameReviews extends JPanel {
 		
 		//this  rest is mostly formatting and shit
 		JPanel ReviewHeaderPane = new JPanel();
-		ReviewHeaderPane.setBackground(Color.BLACK);
+		ReviewHeaderPane.setBackground(new Color(27, 40, 56));
 		mainPane.add(ReviewHeaderPane, BorderLayout.NORTH);
 		ReviewHeaderPane.setLayout(new BorderLayout(0, 0));
 		
 		reviewTitleLabel = new JLabel("GAME/USER");
 		reviewTitleLabel.setForeground(Color.WHITE);
-		reviewTitleLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		reviewTitleLabel.setFont(new Font("MS Song", Font.BOLD, 40));
 		reviewTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ReviewHeaderPane.add(reviewTitleLabel, BorderLayout.WEST);
 		
@@ -74,6 +75,9 @@ public class GUIGameReviews extends JPanel {
 		ReviewHeaderPane.add(buttonPanel, BorderLayout.EAST);
 		
 		JButton backButton = new JButton("  BACK  ");
+		backButton.setForeground(Color.WHITE);
+		backButton.setBackground(new Color(23, 26, 33));
+		backButton.setFont(new Font("Verdana", Font.PLAIN, 16));
 		buttonPanel.add(backButton, BorderLayout.EAST);
 		backButton.setFocusable(false);
 		
@@ -102,6 +106,9 @@ public class GUIGameReviews extends JPanel {
 		//newReviewButton.setVisible(true);
 		
 		JButton newReviewButton = new JButton("REVIEW");
+		newReviewButton.setForeground(Color.WHITE);
+		newReviewButton.setBackground(new Color(23, 26, 33));
+		newReviewButton.setFont(new Font("Verdana", Font.PLAIN, 16));
 		buttonPanel.add(newReviewButton, BorderLayout.WEST);
 		newReviewButton.setFocusable(false);
 		
@@ -166,6 +173,7 @@ public class GUIGameReviews extends JPanel {
 	private JScrollPane generateScrollable(Box box) {
 		//set up the scroll pane
 		JScrollPane reviewScrollPane = new JScrollPane(box);
+		reviewScrollPane.getViewport().setBackground(new Color(27, 40, 56));
 		reviewScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		reviewScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		JScrollBar reviewScrollVertical = reviewScrollPane.getVerticalScrollBar();
@@ -196,26 +204,26 @@ public class GUIGameReviews extends JPanel {
 		
 		JPanel reviewHeaderPane = new JPanel();
 		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(0, 0, 0)));
-		reviewHeaderPane.setBackground(Color.BLACK);
+		reviewHeaderPane.setBackground(new Color(23, 26, 33));
 		reviewPane.add(reviewHeaderPane, BorderLayout.NORTH);
 		reviewHeaderPane.setLayout(new BorderLayout(0, 0));
 		
 		String gameName = (String) review.get(1);
 		JLabel nameLabel = new JLabel(gameName);							// set this to the username or game name
-		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		nameLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
 		nameLabel.setForeground(Color.WHITE);
 		reviewHeaderPane.add(nameLabel, BorderLayout.WEST);
 		
 		String Reccommended = (String) review.get(3);
 		JLabel reccomendLabel = new JLabel("RECCOMENDED: "+ Reccommended);					// set this to the yes/no reccomended
-		reccomendLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		reccomendLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
 		reccomendLabel.setForeground(Color.WHITE);
 		reccomendLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		reviewHeaderPane.add(reccomendLabel, BorderLayout.CENTER);
 		
 		String Score = String.valueOf(review.get(2));
 		JLabel scoreLabel = new JLabel("SCORE: " + Score);							// set this to the score
-		scoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		scoreLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
 		scoreLabel.setForeground(Color.WHITE);
 		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		reviewHeaderPane.add(scoreLabel, BorderLayout.EAST);
@@ -243,20 +251,27 @@ public class GUIGameReviews extends JPanel {
 		forumPane.add(commentScrollPane);
 		
 		JPanel comentHeaderPane = new JPanel();
-		comentHeaderPane.setBackground(Color.LIGHT_GRAY);
+		comentHeaderPane.setBackground(new Color(23, 26, 33));
 		commentPane.add(comentHeaderPane, BorderLayout.NORTH);
 		comentHeaderPane.setLayout(new BorderLayout(0, 0));
 		
 		JLabel commentLabel = new JLabel("SHOW / HIDE COMMENTS");
+		commentLabel.setFont(new Font("MS Song", Font.PLAIN, 16));
+		commentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(commentLabel, BorderLayout.WEST);
 		
-		JLabel newComentLabel = new JLabel("Add a Comment");
+		JLabel newComentLabel = new JLabel("ADD A COMMENT");
+		newComentLabel.setFont(new Font("MS Song", Font.PLAIN, 16));
+		newComentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
 		
 		JTextPane reviewContentPane = new JTextPane();
 		reviewContentPane.setEditable(false);
 		
 		String ReviewText = String.valueOf(review.get(4));
+		reviewContentPane.setBackground(new Color(27, 40, 56));
+		reviewContentPane.setForeground(Color.WHITE);
+		reviewContentPane.setFont(new Font("MS Song", Font.PLAIN, 20));
 		reviewContentPane.setText(ReviewText);	// set this to the review text
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
@@ -323,27 +338,27 @@ public class GUIGameReviews extends JPanel {
 		reviewPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel reviewHeaderPane = new JPanel();
-		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(0, 0, 0)));
-		reviewHeaderPane.setBackground(Color.BLACK);
+		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
+		reviewHeaderPane.setBackground(new Color(23, 26, 33));
 		reviewPane.add(reviewHeaderPane, BorderLayout.NORTH);
 		reviewHeaderPane.setLayout(new BorderLayout(0, 0));
 		
 		String Username = (String) review.get(0);
 		JLabel nameLabel = new JLabel(Username);							// set this to the username or game name
-		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		nameLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
 		nameLabel.setForeground(Color.WHITE);
 		reviewHeaderPane.add(nameLabel, BorderLayout.WEST);
 		
 		String Reccommended = (String) review.get(2);
 		JLabel reccomendLabel = new JLabel("RECCOMENDED: "+ Reccommended);					// set this to the yes/no reccomended
-		reccomendLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		reccomendLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
 		reccomendLabel.setForeground(Color.WHITE);
 		reccomendLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		reviewHeaderPane.add(reccomendLabel, BorderLayout.CENTER);
 		
 		String Score = String.valueOf(review.get(1));
 		JLabel scoreLabel = new JLabel("SCORE: " + Score);							// set this to the score
-		scoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		scoreLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
 		scoreLabel.setForeground(Color.WHITE);
 		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		reviewHeaderPane.add(scoreLabel, BorderLayout.EAST);
@@ -375,20 +390,27 @@ public class GUIGameReviews extends JPanel {
 		forumPane.add(commentScrollPane);
 		
 		JPanel comentHeaderPane = new JPanel();
-		comentHeaderPane.setBackground(Color.LIGHT_GRAY);
+		comentHeaderPane.setBackground(new Color(23, 26, 33));
 		commentPane.add(comentHeaderPane, BorderLayout.NORTH);
 		comentHeaderPane.setLayout(new BorderLayout(0, 0));
 		
 		JLabel commentLabel = new JLabel("SHOW / HIDE COMMENTS");
+		commentLabel.setFont(new Font("MS Song", Font.PLAIN, 16));
+		commentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(commentLabel, BorderLayout.WEST);
 		
-		JLabel newComentLabel = new JLabel("Add a Comment");
+		JLabel newComentLabel = new JLabel("Add A COMMENT");
+		newComentLabel.setFont(new Font("MS Song", Font.PLAIN, 16));
+		newComentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
 		
 		JTextPane reviewContentPane = new JTextPane();
 		reviewContentPane.setEditable(false);
 		
 		String ReviewText = String.valueOf(review.get(3));
+		reviewContentPane.setBackground(new Color(27, 40, 56));
+		reviewContentPane.setForeground(Color.WHITE);
+		reviewContentPane.setFont(new Font("MS Song", Font.PLAIN, 20));
 		reviewContentPane.setText(ReviewText);	// set this to the review text
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
@@ -452,18 +474,22 @@ public class GUIGameReviews extends JPanel {
 		commentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel commentHeaderPane = new JPanel();
-		commentHeaderPane.setBackground(Color.LIGHT_GRAY);
+		commentHeaderPane.setBackground(new Color(23, 26, 33));
 		commentPane.add(commentHeaderPane, BorderLayout.NORTH);
 		commentHeaderPane.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		String userName = (String) comments.get(i);
 		JLabel usernameLabel = new JLabel(userName);						// set this to the username
-		usernameLabel.setForeground(Color.BLACK);
+		usernameLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
+		usernameLabel.setForeground(Color.WHITE);
 		commentHeaderPane.add(usernameLabel);
 		
 		String message = (String) comments.get(i+1);
 		JTextPane commentContentPane = new JTextPane();
 		commentContentPane.setEditable(false);
+		commentContentPane.setBackground(new Color(27, 40, 56));
+		commentContentPane.setForeground(Color.WHITE);
+		commentContentPane.setFont(new Font("MS Song", Font.PLAIN, 20));
 		commentContentPane.setText(message);						// set this to the comment text
 		commentPane.add(commentContentPane, BorderLayout.CENTER);
 		

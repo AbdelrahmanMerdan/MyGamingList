@@ -55,16 +55,19 @@ public class GUIMain extends JFrame{
 		
 		//instantiate components for main pane
 		JPanel headerPane = new JPanel();
-		headerPane.setBackground(Color.BLACK);
+		headerPane.setBackground(new Color(23, 26, 33));
 		headerPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		mainPane.add(headerPane, BorderLayout.NORTH);
 		headerPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel headerOptionsPane = new JPanel();
+		headerOptionsPane.setBackground(new Color(23, 26, 33));
 		headerPane.add(headerOptionsPane, BorderLayout.WEST);
 		headerOptionsPane.setOpaque(false);
 		JButton homeButton = new JButton("Home");
-		homeButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		homeButton.setForeground(Color.WHITE);
+		homeButton.setBackground(new Color(23, 26, 33));
+		homeButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		homeButton.setFocusable(false);
 		headerOptionsPane.add(homeButton);
 		
@@ -78,7 +81,9 @@ public class GUIMain extends JFrame{
 		
 		//Set up My Reviews
 		JButton myReviewsButton = new JButton("My Reviews");
-		myReviewsButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		myReviewsButton.setForeground(Color.WHITE);
+		myReviewsButton.setBackground(new Color(23, 26, 33));
+		myReviewsButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		myReviewsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -100,6 +105,8 @@ public class GUIMain extends JFrame{
 		
 		//Set up My Friends
 		JButton friendsButton = new JButton("Friends");
+		friendsButton.setForeground(Color.WHITE);
+		friendsButton.setBackground(new Color(23, 26, 33));
 		friendsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(loginButton == null || loginButton.getText().equals("Log in"))
@@ -114,7 +121,7 @@ public class GUIMain extends JFrame{
 			}
 		});
 		
-		friendsButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		friendsButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		friendsButton.setFocusable(false);
 		headerOptionsPane.add(friendsButton);
 		
@@ -123,11 +130,13 @@ public class GUIMain extends JFrame{
 		headerSearchPane.setOpaque(false);
 		
 		JTextField headerSearchBox = new JTextField();
-		headerSearchBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		headerSearchBox.setFont(new Font("MS Song", Font.PLAIN, 20));
 		String searchPrompt = "Search";
 		
 		loginButton = new JButton("Log in");
-		loginButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		loginButton.setForeground(Color.WHITE);
+		loginButton.setBackground(new Color(23, 26, 33));
+		loginButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(loginButton.getText() != null && loginButton.getText().equals("Log out"))
@@ -194,6 +203,7 @@ public class GUIMain extends JFrame{
 		cardPane = new JPanel();
 		mainPane.add(cardPane, BorderLayout.CENTER);
 		cardPane.setLayout(new CardLayout());
+		cardPane.setBackground(new Color(27, 40, 56));
 		
 		//instantiate all GUI elements
 		GUIMainMenu mainMenu = new GUIMainMenu(cardPane, mostPlayed, popReleases);
