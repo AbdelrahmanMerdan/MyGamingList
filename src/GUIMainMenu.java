@@ -27,9 +27,9 @@ public class GUIMainMenu extends JFrame {
 	public GUIMainMenu(JPanel cardPane, MostPlayed mostPlayed, PopReleases popReleases) {
 		
 		JPanel mainMenuPane = new JPanel();
-		mainMenuPane.setForeground(Color.BLACK); // useless?
-		mainMenuPane.setBackground(Color.DARK_GRAY);
-		mainMenuPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) new Color(64, 64, 64)));
+		mainMenuPane.setForeground(Color.BLACK);
+		mainMenuPane.setBackground(new Color(27, 40, 56));
+		mainMenuPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) new Color(27, 40, 56)));
 		cardPane.add(mainMenuPane, "mainMenu");
 		mainMenuPane.setLayout(new GridLayout(1, 0, 100, 0));
 		
@@ -39,6 +39,7 @@ public class GUIMainMenu extends JFrame {
 		
 		// populate pane
 		Box mostPlayedBox = new Box(1);
+		mostPlayedBox.setBackground(new Color(23, 26, 33));
 		JLabel mostPlayedLabel = new JLabel("Most Played");
 		mostPlayedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		mostPlayedLabel.setForeground(Color.WHITE);
@@ -50,7 +51,7 @@ public class GUIMainMenu extends JFrame {
             mostPlayedBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(GameData.getName(mostPlayed.getID(game)));
             lbl.setForeground(Color.WHITE);
-            lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+            lbl.setFont(new Font("MS Song", Font.PLAIN, 20));
             lbl.addMouseListener(new MouseAdapter() {
     			public void mouseClicked(MouseEvent e) {
     				GUIGame.loadGame(mostPlayed.getID(game));
@@ -69,7 +70,7 @@ public class GUIMainMenu extends JFrame {
 		mostPlayedPane.add(mostPlayedScrollPane);
 		mostPlayedScrollPane.getVerticalScrollBar().setUnitIncrement(20);
         mostPlayedScrollPane.setBorder(BorderFactory.createEmptyBorder());
-        mostPlayedScrollPane.getViewport().setBackground(Color.BLACK);
+        mostPlayedScrollPane.getViewport().setBackground(new Color(23, 26, 33));
 		
         JPanel popularReleasePane = new JPanel();
 		mainMenuPane.add(popularReleasePane);
@@ -77,6 +78,7 @@ public class GUIMainMenu extends JFrame {
 		
 		// populate pane
 		Box popularReleaseBox = new Box(1);
+		popularReleaseBox.setBackground(new Color(23, 26, 33));
 		JLabel popularReleaseLabel = new JLabel("Popular Releases");
 		popularReleaseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		popularReleaseLabel.setForeground(Color.WHITE);
@@ -88,7 +90,7 @@ public class GUIMainMenu extends JFrame {
             popularReleaseBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(GameData.getName(popReleases.getID(game)));
             lbl.setForeground(Color.WHITE);
-            lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+            lbl.setFont(new Font("MS Song", Font.PLAIN, 20));
             lbl.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					GUIGame.loadGame(popReleases.getID(game));
@@ -107,7 +109,7 @@ public class GUIMainMenu extends JFrame {
 		popularReleasePane.add(popularReleaseScrollPane);
 		popularReleaseScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		popularReleaseScrollPane.setBorder(BorderFactory.createEmptyBorder());
-		popularReleaseScrollPane.getViewport().setBackground(Color.BLACK);
+		popularReleaseScrollPane.getViewport().setBackground(new Color(23, 26, 33));
 		
 	}
 

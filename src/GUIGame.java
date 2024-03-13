@@ -43,7 +43,7 @@ public class GUIGame {
 	public GUIGame(JPanel cardPane) {
 		
 		JPanel gamePane = new JPanel();
-		gamePane.setBackground(Color.DARK_GRAY);
+		gamePane.setBackground(new Color(27, 40, 56));
 		cardPane.add(gamePane, "game");
 		gamePane.setLayout(new BorderLayout(0, 0));
 		
@@ -55,7 +55,7 @@ public class GUIGame {
 		
 		gameTitleLabel = new JLabel("GLOOBERLANTIS");
 		gameTitleLabel.setForeground(Color.WHITE);
-		gameTitleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		gameTitleLabel.setFont(new Font("MS Song", Font.BOLD, 40));
 		gameHeaderPane.add(gameTitleLabel);
 		
 		JPanel gameFooterPane = new JPanel();
@@ -65,8 +65,10 @@ public class GUIGame {
 		
 		sysRequireText = new JEditorPane();
 		sysRequireText.setContentType("text/html");
-		sysRequireText.setBackground(Color.WHITE);
-		sysRequireText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		sysRequireText.setBackground(new Color(27, 40, 56));
+		sysRequireText.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+		sysRequireText.setForeground(Color.WHITE);
+		sysRequireText.setFont(new Font("MS Song", Font.PLAIN, 20));
 		sysRequireText.setEditable(false);
 		
 		JScrollPane sysRequireScrollPane = new JScrollPane(sysRequireText);
@@ -96,7 +98,7 @@ public class GUIGame {
 		gameOptionsPane.setOpaque(false);
 		
 		JPanel gameOptionsNorthPane = new JPanel();
-		gameOptionsNorthPane.setBackground(Color.BLACK);
+		gameOptionsNorthPane.setBackground(new Color(23, 26, 33));
 		gameOptionsPane.add(gameOptionsNorthPane);
 		gameOptionsNorthPane.setLayout(new BorderLayout(0, 0));
 		
@@ -104,7 +106,8 @@ public class GUIGame {
 		reviewGameButton = new JButton("Reviews");
 		reviewGameButton.setFocusable(false);
 		reviewGameButton.setForeground(Color.WHITE); // only here for temp critic review
-		reviewGameButton.setBackground(Color.BLACK);
+		reviewGameButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+		reviewGameButton.setBackground(new Color(23, 26, 33));
 		gameOptionsNorthPane.add(reviewGameButton, BorderLayout.CENTER);
 		
 		reviewGameButton.addMouseListener(new MouseAdapter() {
@@ -116,7 +119,7 @@ public class GUIGame {
 		});
 		
 		JPanel gameOptionsSouthPane = new JPanel();
-		gameOptionsSouthPane.setBackground(Color.BLACK);
+		gameOptionsSouthPane.setBackground(new Color(23, 26, 33));
 		gameOptionsPane.add(gameOptionsSouthPane);
 		gameOptionsSouthPane.setLayout(new BorderLayout(0, 0));
 		
@@ -129,7 +132,7 @@ public class GUIGame {
 		//temp
 		criticReviewLabel = new JLabel();
 		criticReviewLabel.setForeground(Color.WHITE);
-		criticReviewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		criticReviewLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
 		gameOptionsSouthPane.add(criticReviewLabel);
 		
 		JPanel gameDescriptionPane = new JPanel();
@@ -138,9 +141,11 @@ public class GUIGame {
 		gamePane.add(gameDescriptionPane, BorderLayout.CENTER);
 		
 		descriptionText = new JEditorPane();
-		descriptionText.setBackground(Color.WHITE);
+		descriptionText.setBackground(new Color(27, 40, 56));
 		descriptionText.setContentType("text/html");
-		descriptionText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		descriptionText.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+		descriptionText.setForeground(Color.WHITE);
+		descriptionText.setFont(new Font("MS Song", Font.PLAIN, 20));
 		descriptionText.setEditable(false);
 		
 		JScrollPane descriptionScrollPane = new JScrollPane(descriptionText);
