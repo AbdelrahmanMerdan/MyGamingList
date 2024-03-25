@@ -27,6 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 
 public class GUIGame {
 	
@@ -35,12 +37,17 @@ public class GUIGame {
 	private static JEditorPane sysRequireText;
 	private static JEditorPane descriptionText;
 	private static JButton reviewGameButton;
+	private static JPanel gameOptionsSouthPane;
 	public static Game game;
 	
-	//private static JButton criticReviewButton;
-	private static JLabel criticReviewLabel;
+	public static JLabel criticReviewLabel;
 	
 	public GUIGame(JPanel cardPane) {
+		
+		//So my eyes don't hurt whenever i see a link 
+		HTMLEditorKit kit = new HTMLEditorKit();
+        StyleSheet styleSheet = kit.getStyleSheet();
+        styleSheet.addRule("a {color:white;}");
 		
 		JPanel gamePane = new JPanel();
 		gamePane.setBackground(new Color(27, 40, 56));
@@ -102,34 +109,25 @@ public class GUIGame {
 		gameOptionsPane.add(gameOptionsNorthPane);
 		gameOptionsNorthPane.setLayout(new BorderLayout(0, 0));
 		
-		//unfinished buttons
 		reviewGameButton = new JButton("Reviews");
 		reviewGameButton.setFocusable(false);
-		reviewGameButton.setForeground(Color.WHITE); // only here for temp critic review
+		reviewGameButton.setForeground(Color.WHITE); 
 		reviewGameButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		reviewGameButton.setBackground(new Color(23, 26, 33));
 		gameOptionsNorthPane.add(reviewGameButton, BorderLayout.CENTER);
 		
 		reviewGameButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				//GUIGameReviews reviews = new GUIGameReviews(cardPane);
 				GUIGameReviews.loadGameReviews(cardPane, game);
 				((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 			}
 		});
 		
-		JPanel gameOptionsSouthPane = new JPanel();
+		gameOptionsSouthPane = new JPanel();
 		gameOptionsSouthPane.setBackground(new Color(23, 26, 33));
 		gameOptionsPane.add(gameOptionsSouthPane);
 		gameOptionsSouthPane.setLayout(new BorderLayout(0, 0));
 		
-		/*criticReviewButton = new JButton("Critic Reviews");
-		criticReviewButton.setFocusable(false);
-		criticReviewButton.setForeground(Color.WHITE);
-		criticReviewButton.setBackground(Color.BLACK);
-		gameOptionsSouthPane.add(criticReviewButton, BorderLayout.CENTER);*/
-		
-		//temp
 		criticReviewLabel = new JLabel();
 		criticReviewLabel.setForeground(Color.WHITE);
 		criticReviewLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
@@ -155,51 +153,77 @@ public class GUIGame {
 		descriptionScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		gameDescriptionPane.setLayout(new GridLayout(0, 1, 0, 0));
 		gameDescriptionPane.add(descriptionScrollPane);
-		descriptionScrollPane.setBorder(BorderFactory.createEmptyBorder());
-		
-		
-		
+		descriptionScrollPane.setBorder(BorderFactory.createEmptyBorder());	
 	}
 	
 	public static void loadGame(int id) {
-		//When database don't have app or all details
-		if(GameData.noAppExists(id))
-		{
-			//Add entry
-			GameData.addApp(id);
-		}
-		
-		if(GameData.noAppDetails(id) || GameData.noAppReviews(id))
-		{
-			//Update database
-			GameData.updateAppDetails(id);
-			
-		}
+		checkGameData(id);
 		
 		game = GameData.getGame(id);
 		
-		//Setting game page
+		setGameCover();
+		setGameInfo();
+		setMetacriticReviews();
+	}
+	
+	private static void checkGameData(int id) {
+		if(GameData.noAppExists(id))
+		{
+			GameData.addApp(id);
+		}
+
+		if(GameData.noAppDetails(id) || GameData.noAppReviews(id))
+		{
+			GameData.updateAppDetails(id);
+		}
+		
+	}
+	
+	private static void setGameInfo() {
 		gameTitleLabel.setText(game.getName());
 		
-		//Formatting HTML
+		//Formatting 
 		String sysRequireHtml = "<html>" + game.getSysRequire()
-				.replace("\"", "")
-				.replace("\\", "")
-				.replace("{minimum:", "")
-				.replace("}", "")
-				.replace(",recommended:", "")+ "</html>";
-		String descriptionHtml = "<html>" + game.getDesc() + "</html>";
+		.replace("\"", "")
+		.replace("\\", "")
+		.replace("{minimum:", "")
+		.replace("}", "")
+		.replace(",recommended:", "")+ "</html>";
 		
-		//Formatting text
+		String descriptionHtml = "<html>" + game.getDesc() + "</html>";
+
 		sysRequireText.setText(sysRequireHtml);
 		sysRequireText.setCaretPosition(0);
 		descriptionText.setText(descriptionHtml);
 		descriptionText.setCaretPosition(0);
+	}
+	
+	private static void setGameCover() {
+		URL url = null;
 		
-		//Setting critic review
+		//Get image from database and set
+		try {
+			url = new URL(game.getCover());
+			gameImageLabel.setIcon(new ImageIcon(ImageIO.read(url)));
+		} catch (MalformedURLException ex) {
+			System.out.println("Malformed URL");
+		} catch (IOException iox) {
+			System.out.println("Can not load file");
+		}
+	}
+	
+	private static void setMetacriticReviews() {
+		//Reset reviews
+		gameOptionsSouthPane.remove(criticReviewLabel);
+
+		//Create new label with its own unique properties
+		criticReviewLabel = new JLabel();
+		criticReviewLabel.setForeground(Color.WHITE);
+		criticReviewLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
+
 		String metaScore = game.getMetaScore();
 		String metaLink = game.getMetaURL();
-		
+
 		if(metaScore.equals("N/A")) 
 		{
 			criticReviewLabel.setText("Critic Score: " + metaScore);
@@ -207,40 +231,31 @@ public class GUIGame {
 		else
 		{
 			criticReviewLabel.setText("<html>" + "Critic Score: " + metaScore + "<br/><br/>Read Critic Reviews" + "</html>");
-			
+
 			criticReviewLabel.addMouseListener(new MouseAdapter() {
-				
+
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					try {
-	                    Desktop.getDesktop().browse(new URI(metaLink));
-	                } catch (IOException | URISyntaxException e1) {
-	                    e1.printStackTrace();
-	                }
+						Desktop.getDesktop().browse(new URI(metaLink));
+					} catch (IOException | URISyntaxException e1) {
+						e1.printStackTrace();
+					}
 				}
-				
+
 				@Override
-	            public void mouseExited(MouseEvent e) {
+				public void mouseExited(MouseEvent e) {
 					criticReviewLabel.setText("<html>" + "Critic Score: " + metaScore + "<br/><br/>Read Critic Reviews" + "</html>");
-	            }
-	 
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	            	criticReviewLabel.setText( "<html>" + "Critic Score: " + metaScore + "<br/><br/><a href=''>Read Critic Reviews</a>" + "</html>");
-	            }
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					criticReviewLabel.setText( "<html>" + "Critic Score: " + metaScore + "<br/><br/><a href=''>Read Critic Reviews</a>" + "</html>");
+				}
 			});
-			
+
 		}
-		
-		//Get image from database and set
-		URL url = null;
-	    try {
-	        url = new URL(game.getCover());
-	        gameImageLabel.setIcon(new ImageIcon(ImageIO.read(url)));
-	    } catch (MalformedURLException ex) {
-	        System.out.println("Malformed URL");
-	    } catch (IOException iox) {
-	        System.out.println("Can not load file");
-	    }
+
+		gameOptionsSouthPane.add(criticReviewLabel);	
 	}
 }
