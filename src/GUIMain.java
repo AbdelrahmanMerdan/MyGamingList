@@ -31,7 +31,7 @@ public class GUIMain extends JFrame{
 	public GUIMain() {
 		
 		setTitle("MyGamingList");
-		setBackground(Color.BLACK);
+		setBackground(new Color(23, 26, 33));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 800);
 		
@@ -47,7 +47,7 @@ public class GUIMain extends JFrame{
 		
 		//instantiate main pane
 		mainPane = new JPanel();
-		mainPane.setBackground(Color.BLACK);
+		mainPane.setBackground(new Color(23, 26, 33));
 		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		mainPane.setLayout(new BorderLayout(0, 0));
 		basePane.add(mainPane, "main");
