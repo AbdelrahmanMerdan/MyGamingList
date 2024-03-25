@@ -212,6 +212,7 @@ public class GUILogin extends JFrame {
 					try {
 						users.createAccount(newUser);
 						System.out.println("Created new account for " + newUsername);
+						GUIMain.usernameLoggedIn = newUsername;
 						login();
 					} catch (IllegalArgumentException exp) {
 						newUsernameField.setText(exp.getMessage().split(",")[0]);

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,6 +35,8 @@ public class GUIMain extends JFrame{
 		setBackground(new Color(23, 26, 33));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 800);
+		setLocationRelativeTo(null);
+		setSize(new Dimension (1511, 885));
 		
 		//instantiate base pane
 		basePane = new JPanel();
@@ -143,6 +146,7 @@ public class GUIMain extends JFrame{
 				{
 					((CardLayout) cardPane.getLayout()).show(cardPane, "mainMenu");
 					loginButton.setText("Log in");
+					usernameLoggedIn = null;
 				}
 				else
 				{

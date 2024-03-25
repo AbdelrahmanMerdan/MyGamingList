@@ -399,7 +399,7 @@ public class GUIGameReviews extends JPanel {
 		commentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(commentLabel, BorderLayout.WEST);
 		
-		JLabel newComentLabel = new JLabel("Add A COMMENT");
+		JLabel newComentLabel = new JLabel("ADD A COMMENT");
 		newComentLabel.setFont(new Font("MS Song", Font.PLAIN, 16));
 		newComentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
