@@ -128,10 +128,10 @@ public class GUIGameReviews extends JPanel {
 					});
 				}
 				else if(hasReviewed) {
-					JOptionPane.showMessageDialog(buttonPanel, "Error: User has already reviewed.");
+					JOptionPane.showMessageDialog(null, "Error: User has already reviewed.");
 				}
 				else {
-					JOptionPane.showMessageDialog(buttonPanel, "Error: User is not logged in.");
+					JOptionPane.showMessageDialog(null, "Error: User is not logged in.");
 				}
 			}
 		});
