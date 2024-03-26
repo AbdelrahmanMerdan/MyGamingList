@@ -94,7 +94,7 @@ public class GUIGameReviews extends JPanel {
 		new GUIGameReviews(cardPane);
 		
 		//Fill the box
-		List<Object> reviews = GUIGame.game.getComment();
+		List<Object> reviews = game.getComment();
 
 		for( int i = 0; i < reviews.size(); i++) {
 			review(reviews.get(i));
@@ -103,7 +103,6 @@ public class GUIGameReviews extends JPanel {
 		//setup misc.
 		reviewTitleLabel.setText(game.getName());
 		backLocation = "game";
-		//newReviewButton.setVisible(true);
 		
 		JButton newReviewButton = new JButton("REVIEW");
 		newReviewButton.setForeground(Color.WHITE);
@@ -115,11 +114,12 @@ public class GUIGameReviews extends JPanel {
 		//listener for new review button
 		newReviewButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (GUIMain.usernameLoggedIn != null) {
+				boolean hasReviewed = Review.AlreadyReviewed(game, GUIMain.usernameLoggedIn);
+				if (GUIMain.usernameLoggedIn != null && !hasReviewed) {
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
 							try {
-								GUINewUserReview reviewFrame = new GUINewUserReview(game);
+								GUINewUserReview reviewFrame = new GUINewUserReview(cardPane, game);
 								reviewFrame.setVisible(true);
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -127,9 +127,11 @@ public class GUIGameReviews extends JPanel {
 						}
 					});
 				}
+				else if(hasReviewed) {
+					JOptionPane.showMessageDialog(buttonPanel, "Error: User has already reviewed.");
+				}
 				else {
-					JOptionPane.showMessageDialog(buttonPanel,
-							"Error, Not Logged In");
+					JOptionPane.showMessageDialog(buttonPanel, "Error: User is not logged in.");
 				}
 			}
 		});
@@ -157,17 +159,10 @@ public class GUIGameReviews extends JPanel {
 			
 			userReview(myReview, myComments, user);
 		}
-			
-//		//fill the box
-//		review(); // same as above
-//		review();
-//		review();
-//		review();
 		
 		//setup misc.
 		reviewTitleLabel.setText(user+" Reviews");
 		backLocation = "mainMenu";
-		//newReviewButton.setVisible(false);
 	}
 	
 	private JScrollPane generateScrollable(Box box) {

@@ -178,6 +178,7 @@ public class GUIMain extends JFrame{
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 				} else {
 					headerSearchBox.setText("Invalid Name");
+					
 				}
 				headerSearchBox.getRootPane().requestFocus();
 			}
@@ -189,6 +190,11 @@ public class GUIMain extends JFrame{
 				headerSearchBox.setText("");
 			}
 			public void focusLost(FocusEvent e) {
+				try {
+					Thread.sleep(330);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				headerSearchBox.setText(searchPrompt);
 			}
 		});

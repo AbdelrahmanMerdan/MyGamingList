@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -33,7 +34,7 @@ import javax.swing.JScrollPane;
 
 public class GUINewUserReview extends JDialog{
 	
-	public GUINewUserReview(Game game) {
+	public GUINewUserReview(JPanel cardPane, Game game) {
 		setTitle("New Review");
 		setBounds(100, 100, 600, 300);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -119,17 +120,14 @@ public class GUINewUserReview extends JDialog{
 				
 				
 				try {
-					Review.review_game(GUIMain.usernameLoggedIn, game, Score, comment , recommended);
+					Review.review_game(GUIMain.usernameLoggedIn, game, Score, comment, recommended);
+					GUIGameReviews.loadGameReviews(cardPane, game);
+					((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				
-				
-				
-				//System.out.println(GUIMain.usernameLoggedIn + " " + game.getName() + " " + recommendCheckBox.isSelected() + " " + ratingSpinner.getValue() + " " + reviewTextPane.getText());
 				dispose();
-			
-			
 			}
 		});
 	}
