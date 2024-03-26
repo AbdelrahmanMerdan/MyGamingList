@@ -90,6 +90,8 @@ public class GUILogin extends JFrame {
 		loginButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
+				
+				@SuppressWarnings("deprecation")
 				String password = passwordField.getText();
 				User user = new User(username, password);
 
