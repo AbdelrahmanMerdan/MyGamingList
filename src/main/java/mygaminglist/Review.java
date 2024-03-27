@@ -446,12 +446,12 @@ public class Review {
 	public static void main(String[] args) throws IOException {
 
 		////			Get the Game from the database using it's ID
-					Game game = GameData.getGame(271590);
-
-					User user = UsersImpl.getUser("User2");
-					
-					DeleteReview(user.getUsername(), game);
-		
+//					Game game = GameData.getGame(271590);
+//
+//					User user = UsersImpl.getUser("User2");
+//					
+//					DeleteReview(user.getUsername(), game);
+//		
 
 
 	}
