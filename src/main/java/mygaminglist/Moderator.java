@@ -1,5 +1,5 @@
 
-package src;
+package mygaminglist;
 
 import java.util.ArrayList;
 import java.util.List;
