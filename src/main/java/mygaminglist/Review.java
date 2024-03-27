@@ -117,12 +117,114 @@ public class Review {
 		}
 
 	}
+	
+//	Delete Review
 
+	public static boolean DeleteReview(String username, Game game) {
+		//Find User
+		if(AlreadyReviewed(game, username)) {
+			
+			User user = UsersImpl.getUser(username);
+			DeleteReviewFromUser(user, game);
+			DeleteReviewFromGame(username,game);
+			
+			return true;
+		}
+
+		return false;
+	}
+	
+	private static void DeleteReviewFromUser(User user, Game game) {
+		
+		for(int i = 0; i < user.getGames().size(); i++) {
+			
+			@SuppressWarnings("unchecked")
+			List<Object> review = (List<Object>) user.getGames().get(i);
+			
+//			System.out.println(game.getName());
+			
+			if(review.get(1).equals(game.getName())) {
+				
+				user.getGames().remove(i);
+				Bson Update = Updates.set("Games", user.getGames());
+
+			
+				//Find User
+				Document user_found = find_user(user.getUsername());
+
+				try {
+					UpdateResult updateResultUser = UsersImpl.users.updateOne(user_found, Update);
+					System.out.println("Comment in User Deleted: "+updateResultUser.wasAcknowledged());
+
+				} catch(MongoException e) {
+					System.err.println("ERROR: "+e);
+				}
+
+			}
+			
+			
+		}
+	}
+	
+	
+	private static void DeleteReviewFromGame(String username, Game game) {
+		
+		for(int i = 0; i < game.getComment().size(); i++) {
+			
+			@SuppressWarnings("unchecked")
+			List<Object> review = (List<Object>) game.getComment().get(i);
+			
+			if(review.get(0).equals(username)) {
+				
+				game.getComment().remove(i);
+
+				Bson UpdateComment = Updates.set("comments", game.getComment());
+				
+				int reviewscore = (int) review.get(1);
+				reviewscore *= -1;
+				
+				Bson update = Updates.combine(UpdateDeletedNumReview(game),
+						UpdateSumOfReviews(game,reviewscore),
+						UpdateComment
+						);
+
+			
+				//Find User
+				Document game_found = find_game(game);
+
+				try {
+					UpdateResult updateResultUser = GameData.games.updateOne(game_found, update);
+					System.out.println("Comment in Game Deleted: "+updateResultUser.wasAcknowledged());
+
+				} catch(MongoException e) {
+					System.err.println("ERROR: "+e);
+				}
+
+			}
+			
+			
+		}
+	}
+	
+
+	
 	//Update the Game Review
 	private static Bson UpdateNumReview(Game game) {
 
 		int prevreviews = game.getNumOfReviews();
 		prevreviews++;
+
+		Bson Update = Updates.set("num_of_reviews", prevreviews);
+		game.setNumOfReviews(prevreviews);
+		return Update;
+
+
+	}
+	
+	private static Bson UpdateDeletedNumReview(Game game) {
+
+		int prevreviews = game.getNumOfReviews();
+		prevreviews--;
 
 		Bson Update = Updates.set("num_of_reviews", prevreviews);
 		game.setNumOfReviews(prevreviews);
@@ -343,22 +445,13 @@ public class Review {
 
 	public static void main(String[] args) throws IOException {
 
-		//////			CheckUpdateGame(1747800);
-		//////
-		//////			Get the Game from the database using it's ID
-		//			Game game = GameData.getGame(271590);
-		//////			System.out.print(game);
-		//////			User 1 and User 2 review the game
-		//			review_game("User2", game, 9, "Game is bad", "No" );
-		//////
-		//			User user = UsersImpl.getUser("User1");
-		////			User user2 = UsersImpl.getUser("User2");
-		//////
-		////			
-		////			addCommentToUserReview(user, "Great Review", user2, game );
-		////			addCommentToUserReview(user, "Great Review", user2, game );
-		//			
-		//			AlreadyReviewed(game, "User1");
+		////			Get the Game from the database using it's ID
+					Game game = GameData.getGame(271590);
+
+					User user = UsersImpl.getUser("User2");
+					
+					DeleteReview(user.getUsername(), game);
+		
 
 
 	}
