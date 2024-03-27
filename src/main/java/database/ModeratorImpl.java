@@ -10,7 +10,7 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import src.User;
+import mygaminglist.User;
 
 import java.util.List;
 
