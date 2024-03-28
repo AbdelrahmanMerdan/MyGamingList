@@ -324,12 +324,7 @@ public class GUIGameReviews extends JPanel {
 					
 					if(comment != null)
 					{
-						if(GUIGame.game == null) {
-							
-							GUIGame.game = game;
-						}
-						
-						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(user), GUIGame.game);
+						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(user), game);
 					}
 				} else {
 					JOptionPane.showMessageDialog(reviewContentPane,
