@@ -158,7 +158,7 @@ public class GUIGameReviews extends JPanel {
 			//Get user reviews
 			List<Object> myComments = Review.getAllCommentsForReview(current, game);
 			
-			userReview(myReview, myComments, user);
+			userReview(myReview, myComments, user, game);
 		}
 		
 		//setup misc.
@@ -188,7 +188,7 @@ public class GUIGameReviews extends JPanel {
 		return reviewScrollPane;
 	}
 	
-	private static void userReview(Object reviews, List<Object> comments, String user) {
+	private static void userReview(Object reviews, List<Object> comments, String user, Game game) {
 		//reviewBox.add(Box.createRigidArea(new Dimension(0, 20)));
 		
 		@SuppressWarnings("unchecked")
@@ -325,6 +325,11 @@ public class GUIGameReviews extends JPanel {
 					
 					if(comment != null)
 					{
+						if(GUIGame.game == null) {
+							
+							GUIGame.game = game;
+						}
+						
 						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(user), GUIGame.game);
 					}
 				} else {
