@@ -197,7 +197,7 @@ public class GUIGameReviews extends JPanel {
 		JPanel reviewPane = new JPanel();
 		reviewPane.setBackground(Color.BLACK);
 		reviewPane.setLayout(new BorderLayout(0, 0));
-		reviewPane.setPreferredSize(new Dimension(0,0));
+//		reviewPane.setPreferredSize(new Dimension(0,0));
 		
 		JPanel reviewHeaderPane = new JPanel();
 		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
@@ -353,7 +353,7 @@ public class GUIGameReviews extends JPanel {
 		JPanel reviewPane = new JPanel();
 		reviewPane.setBackground(Color.BLACK);
 		reviewPane.setLayout(new BorderLayout(0, 0));
-		reviewPane.setPreferredSize(new Dimension(0, 0));
+//		reviewPane.setPreferredSize(new Dimension(0, 0));
 		
 		JPanel reviewHeaderPane = new JPanel();
 		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
