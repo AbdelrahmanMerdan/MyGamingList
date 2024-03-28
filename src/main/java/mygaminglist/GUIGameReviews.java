@@ -1,4 +1,4 @@
-package src;
+package mygaminglist;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
