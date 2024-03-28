@@ -38,7 +38,6 @@ public class GUIGameReviews extends JPanel {
 	private static Box reviewBox;
 	private static JLabel reviewTitleLabel;
 	private static String backLocation;
-	//private static JButton newReviewButton;
 	private static JPanel buttonPanel;
 	private static JScrollPane reviewScrollPane;
 
