@@ -105,7 +105,7 @@ public class GUIGameReviews extends JPanel {
 		List<Object> reviews = game.getComment();
 
 		for( int i = 0; i < reviews.size(); i++) {
-			review(reviews.get(i));
+			review(cardPane, reviews.get(i));
 		}
 		
 		//setup misc.
@@ -171,7 +171,7 @@ public class GUIGameReviews extends JPanel {
 			//Get user reviews
 			List<Object> myComments = Review.getAllCommentsForReview(current, game);
 			
-			userReview(myReview, myComments, user, game);
+			userReview(cardPane, myReview, myComments, user, game);
 		}
 		
 		//setup misc.
@@ -185,7 +185,7 @@ public class GUIGameReviews extends JPanel {
 		});
 	}
 	
-	private static void userReview(Object reviews, List<Object> comments, String user, Game game) {
+	private static void userReview(JPanel cardPane, Object reviews, List<Object> comments, String user, Game game) {
 		//reviewBox.add(Box.createRigidArea(new Dimension(0, 20)));
 		
 		@SuppressWarnings("unchecked")
@@ -324,6 +324,8 @@ public class GUIGameReviews extends JPanel {
 					if(comment != null)
 					{
 						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(user), game);
+						GUIGameReviews.loadUserReviews(cardPane, user);
+						((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 					}
 				} else {
 					JOptionPane.showMessageDialog(reviewContentPane,
@@ -337,7 +339,7 @@ public class GUIGameReviews extends JPanel {
 		reviewBox.add(reviewPane);
 	}
 	
-	private static void review(Object reviews) {
+	private static void review(JPanel cardPane, Object reviews) {
 		//reviewBox.add(Box.createRigidArea(new Dimension(0, 20)));
 		
 		@SuppressWarnings("unchecked")
@@ -480,6 +482,8 @@ public class GUIGameReviews extends JPanel {
 					if(comment != null)
 					{
 						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(Username), GUIGame.game);
+						GUIGameReviews.loadGameReviews(cardPane, GUIGame.game);
+						((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 					}
 				} else {
 					JOptionPane.showMessageDialog(reviewContentPane,
