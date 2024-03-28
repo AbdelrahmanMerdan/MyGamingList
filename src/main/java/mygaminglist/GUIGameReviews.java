@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
@@ -39,6 +40,7 @@ public class GUIGameReviews extends JPanel {
 	private static String backLocation;
 	//private static JButton newReviewButton;
 	private static JPanel buttonPanel;
+	private static JScrollPane reviewScrollPane;
 
 	/**
 	 * Create the panel.
@@ -54,8 +56,15 @@ public class GUIGameReviews extends JPanel {
 		reviewBox.setBackground(new Color(27, 40, 56));
 		reviewBox.setBorder(new MatteBorder(0, 10, 10, 10, (Color) new Color(23, 26, 33)));
 		
-		//generate scrollable
-		JScrollPane reviewScrollPane = generateScrollable(reviewBox);
+		//generate scrollable		
+		reviewScrollPane = new JScrollPane(reviewBox);
+		reviewScrollPane.getViewport().setBackground(new Color(27, 40, 56));
+		reviewScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		reviewScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		reviewScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));
+		reviewScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		reviewScrollPane.setBorder(BorderFactory.createEmptyBorder());
+
 		mainPane.add(reviewScrollPane, BorderLayout.CENTER);
 		
 		//this  rest is mostly formatting and shit
@@ -135,6 +144,12 @@ public class GUIGameReviews extends JPanel {
 				}
 			}
 		});
+		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				reviewScrollPane.getVerticalScrollBar().setValue(0);
+			}
+		});
 	}
 	
 	public static void loadUserReviews(JPanel cardPane, String user) { //ideally this would be a User not a string but /shrug as long as it works (UsersImpl methods should be static i think)
@@ -157,37 +172,21 @@ public class GUIGameReviews extends JPanel {
 			//Get user reviews
 			List<Object> myComments = Review.getAllCommentsForReview(current, game);
 			
-			userReview(myReview, myComments, user);
+			userReview(myReview, myComments, user, game);
 		}
 		
 		//setup misc.
 		reviewTitleLabel.setText(user+" Reviews");
 		backLocation = "mainMenu";
-	}
-	
-	private JScrollPane generateScrollable(Box box) {
-		//set up the scroll pane
-		JScrollPane reviewScrollPane = new JScrollPane(box);
-		reviewScrollPane.getViewport().setBackground(new Color(27, 40, 56));
-		reviewScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		reviewScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		JScrollBar reviewScrollVertical = reviewScrollPane.getVerticalScrollBar();
-		reviewScrollVertical.setPreferredSize(new Dimension(0,0));
-		reviewScrollPane.setPreferredSize(new Dimension(400,0));
-		reviewScrollPane.getVerticalScrollBar().setUnitIncrement(20);
-		reviewScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
-		//scroll to top
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() { 
-				reviewScrollVertical.setValue(0);
+			public void run() {
+				reviewScrollPane.getVerticalScrollBar().setValue(0);
 			}
 		});
-
-		return reviewScrollPane;
 	}
 	
-	private static void userReview(Object reviews, List<Object> comments, String user) {
+	private static void userReview(Object reviews, List<Object> comments, String user, Game game) {
 		//reviewBox.add(Box.createRigidArea(new Dimension(0, 20)));
 		
 		@SuppressWarnings("unchecked")
@@ -196,6 +195,7 @@ public class GUIGameReviews extends JPanel {
 		JPanel reviewPane = new JPanel();
 		reviewPane.setBackground(Color.BLACK);
 		reviewPane.setLayout(new BorderLayout(0, 0));
+//		reviewPane.setPreferredSize(new Dimension(0,0));
 		
 		JPanel reviewHeaderPane = new JPanel();
 		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
@@ -232,7 +232,7 @@ public class GUIGameReviews extends JPanel {
 		forumPane.setLayout(new BorderLayout(0, 0));
 		
 		forumPane.setVisible(false);
-
+		
 		//create container
 		Box commentBox = new Box(1);
 		
@@ -243,6 +243,7 @@ public class GUIGameReviews extends JPanel {
 		}
 		
 		JScrollPane commentScrollPane = new JScrollPane(commentBox);
+		commentScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		forumPane.add(commentScrollPane);
 		
 		JPanel comentHeaderPane = new JPanel();
@@ -260,7 +261,9 @@ public class GUIGameReviews extends JPanel {
 		newComentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
 		
-		JTextPane reviewContentPane = new JTextPane();
+		JTextArea reviewContentPane = new JTextArea();
+		reviewContentPane.setLineWrap(true);
+		reviewContentPane.setWrapStyleWord(true);
 		reviewContentPane.setEditable(false);
 		
 		String ReviewText = String.valueOf(review.get(4));
@@ -270,11 +273,24 @@ public class GUIGameReviews extends JPanel {
 		reviewContentPane.setText(ReviewText);	// set this to the review text
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				commentScrollPane.getVerticalScrollBar().setValue(0);
+				commentScrollPane.getHorizontalScrollBar().setValue(0);
+			}
+		});
+		
 		commentLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (forumPane.isVisible()){
 					forumPane.setVisible(false);
 				} else {
+					commentScrollPane.setPreferredSize(null);
+					int offset = 70;
+					int maxHeight = Math.max(500,(int) (reviewPane.getSize().getHeight() - reviewContentPane.getPreferredSize().getHeight() - offset));
+					if (commentScrollPane.getPreferredSize().getHeight() > maxHeight) {
+						commentScrollPane.setPreferredSize(new Dimension(0,maxHeight));
+					}
 					forumPane.setVisible(true);
 				}
 			}
@@ -308,7 +324,7 @@ public class GUIGameReviews extends JPanel {
 					
 					if(comment != null)
 					{
-						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(user), GUIGame.game);
+						Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(user), game);
 					}
 				} else {
 					JOptionPane.showMessageDialog(reviewContentPane,
@@ -331,6 +347,7 @@ public class GUIGameReviews extends JPanel {
 		JPanel reviewPane = new JPanel();
 		reviewPane.setBackground(Color.BLACK);
 		reviewPane.setLayout(new BorderLayout(0, 0));
+//		reviewPane.setPreferredSize(new Dimension(0, 0));
 		
 		JPanel reviewHeaderPane = new JPanel();
 		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
@@ -365,9 +382,9 @@ public class GUIGameReviews extends JPanel {
 		JPanel forumPane = new JPanel();
 		commentPane.add(forumPane);
 		forumPane.setLayout(new BorderLayout(0, 0));
-		
-		forumPane.setVisible(false);
 
+		forumPane.setVisible(false);
+		
 		//create container
 		Box commentBox = new Box(1);
 		
@@ -382,6 +399,7 @@ public class GUIGameReviews extends JPanel {
 		}
 		
 		JScrollPane commentScrollPane = new JScrollPane(commentBox);
+		commentScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		forumPane.add(commentScrollPane);
 		
 		JPanel comentHeaderPane = new JPanel();
@@ -399,7 +417,9 @@ public class GUIGameReviews extends JPanel {
 		newComentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
 		
-		JTextPane reviewContentPane = new JTextPane();
+		JTextArea reviewContentPane = new JTextArea();
+		reviewContentPane.setLineWrap(true);
+		reviewContentPane.setWrapStyleWord(true);
 		reviewContentPane.setEditable(false);
 		
 		String ReviewText = String.valueOf(review.get(3));
@@ -409,11 +429,24 @@ public class GUIGameReviews extends JPanel {
 		reviewContentPane.setText(ReviewText);	// set this to the review text
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				commentScrollPane.getVerticalScrollBar().setValue(0);
+				commentScrollPane.getHorizontalScrollBar().setValue(0);
+			}
+		});
+		
 		commentLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (forumPane.isVisible()){
 					forumPane.setVisible(false);
 				} else {
+					commentScrollPane.setPreferredSize(null);
+					int offset = 70;
+					int maxHeight = Math.max(500,(int) (reviewPane.getSize().getHeight() - reviewContentPane.getPreferredSize().getHeight() - offset));
+					if (commentScrollPane.getPreferredSize().getHeight() > maxHeight) {
+						commentScrollPane.setPreferredSize(new Dimension(0,maxHeight));
+					}
 					forumPane.setVisible(true);
 				}
 			}
