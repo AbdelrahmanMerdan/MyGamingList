@@ -234,7 +234,7 @@ public class GUIGameReviews extends JPanel {
 		forumPane.setLayout(new BorderLayout(0, 0));
 		
 		forumPane.setVisible(false);
-
+		
 		//create container
 		Box commentBox = new Box(1);
 		
@@ -274,11 +274,24 @@ public class GUIGameReviews extends JPanel {
 		reviewContentPane.setText(ReviewText);	// set this to the review text
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				commentScrollPane.getVerticalScrollBar().setValue(0);
+				commentScrollPane.getHorizontalScrollBar().setValue(0);
+			}
+		});
+		
 		commentLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (forumPane.isVisible()){
 					forumPane.setVisible(false);
 				} else {
+					commentScrollPane.setPreferredSize(null);
+					int offset = 70;
+					int maxHeight = Math.max(400,(int) (reviewPane.getSize().getHeight() - reviewContentPane.getPreferredSize().getHeight() - offset));
+					if (commentScrollPane.getPreferredSize().getHeight() > maxHeight) {
+						commentScrollPane.setPreferredSize(new Dimension(0,maxHeight));
+					}
 					forumPane.setVisible(true);
 				}
 			}
@@ -335,7 +348,7 @@ public class GUIGameReviews extends JPanel {
 		JPanel reviewPane = new JPanel();
 		reviewPane.setBackground(Color.BLACK);
 		reviewPane.setLayout(new BorderLayout(0, 0));
-		reviewPane.setPreferredSize(new Dimension(0,0));
+		reviewPane.setPreferredSize(new Dimension(0, 0));
 		
 		JPanel reviewHeaderPane = new JPanel();
 		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
@@ -370,9 +383,9 @@ public class GUIGameReviews extends JPanel {
 		JPanel forumPane = new JPanel();
 		commentPane.add(forumPane);
 		forumPane.setLayout(new BorderLayout(0, 0));
-		
-		forumPane.setVisible(false);
 
+		forumPane.setVisible(false);
+		
 		//create container
 		Box commentBox = new Box(1);
 		
@@ -416,11 +429,24 @@ public class GUIGameReviews extends JPanel {
 		reviewContentPane.setText(ReviewText);	// set this to the review text
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				commentScrollPane.getVerticalScrollBar().setValue(0);
+				commentScrollPane.getHorizontalScrollBar().setValue(0);
+			}
+		});
+		
 		commentLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (forumPane.isVisible()){
 					forumPane.setVisible(false);
 				} else {
+					commentScrollPane.setPreferredSize(null);
+					int offset = 70;
+					int maxHeight = Math.max(400,(int) (reviewPane.getSize().getHeight() - reviewContentPane.getPreferredSize().getHeight() - offset));
+					if (commentScrollPane.getPreferredSize().getHeight() > maxHeight) {
+						commentScrollPane.setPreferredSize(new Dimension(0,maxHeight));
+					}
 					forumPane.setVisible(true);
 				}
 			}
