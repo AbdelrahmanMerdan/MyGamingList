@@ -96,6 +96,7 @@ public class ModeratorImpl extends UsersImpl implements Database {
     }
     
 // Get Moderator -----------------------------------------------------------------------
+    
     public Moderator get(String username) {
         Bson filter = eq(USER_KEY, username);
         Document result = moderators.find(filter).first();
@@ -126,7 +127,27 @@ public class ModeratorImpl extends UsersImpl implements Database {
     	return null;
     }
 
+ // Friends -------------------------------------------------------------------    
     
+    public void updateFriend(String username, String friendName, String operation) {
+        Bson filter = eq(USER_KEY, username);
+        Document document = moderators.find(filter).first();
+
+        Bson update;
+        if (operation.equals("add")) {
+            update = Updates.addToSet(FRIENDS_KEY, friendName);
+        } else {
+            update = Updates.pull(FRIENDS_KEY, friendName);
+        }
+
+        try {
+            UpdateResult result = moderators.updateOne(document, update);
+            System.out.println("Friend " + " was " + operation + " for " + username + ": " + result.wasAcknowledged());
+        } catch (Exception exp) {
+            System.err.println("Error happened when adding new friend " + exp.getMessage());
+        }
+    }
+
  // Delete Moderator -------------------------------------------------------------------
     public boolean delete(String username) {
         Bson filter = eq(USER_KEY, username);
