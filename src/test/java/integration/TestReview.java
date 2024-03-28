@@ -15,9 +15,7 @@ import database.UsersImpl;
 
 import org.junit.jupiter.api.Test;
 
-import src.Game;
-import src.Review;
-import src.User;
+import mygaminglist.*;
 
 class TestReview {
 	

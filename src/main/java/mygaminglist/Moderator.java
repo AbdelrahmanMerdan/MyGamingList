@@ -1,4 +1,7 @@
-
+//<<<<<<< HEAD
+//=======
+//
+//>>>>>>> branch 'Gradle' of https://github.com/AbdelrahmanMerdan/MyGamingList
 package mygaminglist;
 
 import java.util.ArrayList;

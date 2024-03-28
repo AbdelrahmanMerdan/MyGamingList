@@ -4,7 +4,7 @@ import database.UsersImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import src.User;
+import mygaminglist.User;
 
 import java.util.List;
 
