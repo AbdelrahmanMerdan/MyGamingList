@@ -42,6 +42,7 @@ public class Moderator extends User {
 	
 	public boolean banUser(String username) {
 		return false;
+		
 	}
 	
 	public boolean unbanUser(String username) {
