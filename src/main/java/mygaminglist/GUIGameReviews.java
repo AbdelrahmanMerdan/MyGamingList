@@ -1,4 +1,4 @@
-package mygaminglist;
+package src;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
@@ -196,6 +197,7 @@ public class GUIGameReviews extends JPanel {
 		JPanel reviewPane = new JPanel();
 		reviewPane.setBackground(Color.BLACK);
 		reviewPane.setLayout(new BorderLayout(0, 0));
+		reviewPane.setPreferredSize(new Dimension(0,0));
 		
 		JPanel reviewHeaderPane = new JPanel();
 		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
@@ -260,7 +262,9 @@ public class GUIGameReviews extends JPanel {
 		newComentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
 		
-		JTextPane reviewContentPane = new JTextPane();
+		JTextArea reviewContentPane = new JTextArea();
+		reviewContentPane.setLineWrap(true);
+		reviewContentPane.setWrapStyleWord(true);
 		reviewContentPane.setEditable(false);
 		
 		String ReviewText = String.valueOf(review.get(4));
@@ -331,6 +335,7 @@ public class GUIGameReviews extends JPanel {
 		JPanel reviewPane = new JPanel();
 		reviewPane.setBackground(Color.BLACK);
 		reviewPane.setLayout(new BorderLayout(0, 0));
+		reviewPane.setPreferredSize(new Dimension(0,0));
 		
 		JPanel reviewHeaderPane = new JPanel();
 		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
@@ -399,7 +404,9 @@ public class GUIGameReviews extends JPanel {
 		newComentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
 		
-		JTextPane reviewContentPane = new JTextPane();
+		JTextArea reviewContentPane = new JTextArea();
+		reviewContentPane.setLineWrap(true);
+		reviewContentPane.setWrapStyleWord(true);
 		reviewContentPane.setEditable(false);
 		
 		String ReviewText = String.valueOf(review.get(3));
