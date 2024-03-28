@@ -3,4 +3,10 @@
 out
 .DS_Store
 lib/.DS_Store
-/build/
+/bin/
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

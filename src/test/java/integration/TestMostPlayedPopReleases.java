@@ -1,6 +1,6 @@
 package integration;
 
-import src.*;
+import mygaminglist.*;
 import database.*;
 import static org.junit.jupiter.api.Assertions.*;
 

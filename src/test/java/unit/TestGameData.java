@@ -17,7 +17,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 
-import src.Game;
+import mygaminglist.Game;
 
 @TestMethodOrder(OrderAnnotation.class)
 class TestGameData {

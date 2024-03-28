@@ -1,7 +1,6 @@
 package mygaminglist;
 
-import database.UsersImpl;
-
+import database.*;
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
 import java.awt.Color;

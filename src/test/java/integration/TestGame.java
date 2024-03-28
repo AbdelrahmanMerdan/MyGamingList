@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import database.GameData;
 import org.junit.jupiter.api.Test;
 
-import src.Game;
+import mygaminglist.Game;
 
 class TestGame {
 
