@@ -70,6 +70,7 @@ public class GUIMain extends JFrame{
 		JButton homeButton = new JButton("Home");
 		homeButton.setForeground(Color.WHITE);
 		homeButton.setBackground(new Color(23, 26, 33));
+		homeButton.setOpaque(true);
 		homeButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		homeButton.setFocusable(false);
 		headerOptionsPane.add(homeButton);
@@ -86,6 +87,7 @@ public class GUIMain extends JFrame{
 		JButton myReviewsButton = new JButton("My Reviews");
 		myReviewsButton.setForeground(Color.WHITE);
 		myReviewsButton.setBackground(new Color(23, 26, 33));
+		myReviewsButton.setOpaque(true);
 		myReviewsButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		myReviewsButton.addActionListener(new ActionListener() {
 			@Override
@@ -110,6 +112,7 @@ public class GUIMain extends JFrame{
 		JButton friendsButton = new JButton("Friends");
 		friendsButton.setForeground(Color.WHITE);
 		friendsButton.setBackground(new Color(23, 26, 33));
+		friendsButton.setOpaque(true);
 		friendsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(loginButton == null || loginButton.getText().equals("Log in"))
@@ -139,6 +142,7 @@ public class GUIMain extends JFrame{
 		loginButton = new JButton("Log in");
 		loginButton.setForeground(Color.WHITE);
 		loginButton.setBackground(new Color(23, 26, 33));
+		loginButton.setOpaque(true);
 		loginButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
