@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Game {
 
 	//Instance variables
-	private int id, sum_of_all_reviews, num_of_reviews;
+	private int id, sum_of_all_reviews, num_of_reviews, players, peak;
 	private String name, shortDesc, desc, cover, sysRequire, metaScore, metaURL;
 	private List<Object> comments;
 
 	public Game(@JsonProperty("_id") int id, @JsonProperty("name") String name, @JsonProperty("short_description") String shortDesc, @JsonProperty("description") String desc, @JsonProperty("cover_art") String cover, 
 			@JsonProperty("pc_requirements") String sysRequire, @JsonProperty("meta_score") String metaScore, @JsonProperty("meta_link") String metaURL, @JsonProperty("sum_of_all_reviews") int sum_of_all_reviews, 
-			@JsonProperty("num_of_reviews") int num_of_reviews, @JsonProperty("comments")List<Object> comments) {
+			@JsonProperty("num_of_reviews") int num_of_reviews, @JsonProperty("comments")List<Object> comments, @JsonProperty("player_count") int players, @JsonProperty("twenty_four_hr_peak") int peak) {
 		this.id = id;
 		this.name = name;
 		this.shortDesc = shortDesc;
@@ -26,6 +26,8 @@ public class Game {
 		this.sum_of_all_reviews = sum_of_all_reviews;
 		this.num_of_reviews = num_of_reviews;
 		this.comments = comments;
+		this.players = players;
+		this.peak = peak;
 	}
 
 	public int getID() {
@@ -115,6 +117,22 @@ public class Game {
 	public void addComment(List<Object> comment) {
 		this.comments.add(comment);
 	}
+	
+	public int getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(int players) {
+		this.players = players;
+	}
+
+	public int getPeak() {
+		return peak;
+	}
+
+	public void setPeak(int peak) {
+		this.peak = peak;
+	}
 
 	@Override
 	public int hashCode() {
@@ -139,13 +157,5 @@ public class Game {
 				+ ", name=" + name + ", shortDesc=" + shortDesc + ", desc=" + desc + ", cover=" + cover
 				+ ", sysRequire=" + sysRequire + ", metaScore=" + metaScore + ", metaURL=" + metaURL + ", comments="
 				+ comments + "]";
-	}
-
-//	@Override
-//	public String toString() {
-//		return " name=" + name + "\n id=" + id + "\n shortDesc=" + shortDesc + "\n desc=" + desc + "\n cover=" + cover
-//				+ "\n sysRequire=" + sysRequire + "\n metaScore=" + metaScore + "\n metaURL=" + metaURL;
-//	}
-	
-	
+	}	
 }

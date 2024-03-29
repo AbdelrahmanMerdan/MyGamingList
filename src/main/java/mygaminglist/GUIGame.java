@@ -181,6 +181,12 @@ public class GUIGame {
 		{
 			GameData.setReviewsComments(id);
 		}
+		
+		if(GameData.noGameStats(id))
+		{
+			GameData.setGameStats(id);
+		}
+		
 	}
 	
 	private static void setGameInfo() {
