@@ -89,6 +89,7 @@ public class GUIGameReviews extends JPanel {
 		backButton.setForeground(Color.WHITE);
 		backButton.setBackground(new Color(23, 26, 33));
 		backButton.setFont(new Font("Verdana", Font.PLAIN, 16));
+		backButton.setOpaque(true);
 		buttonPanel.add(backButton, BorderLayout.EAST);
 		backButton.setFocusable(false);
 		
@@ -118,6 +119,7 @@ public class GUIGameReviews extends JPanel {
 		JButton newReviewButton = new JButton("REVIEW");
 		newReviewButton.setForeground(Color.WHITE);
 		newReviewButton.setBackground(new Color(23, 26, 33));
+		newReviewButton.setOpaque(true);
 		newReviewButton.setFont(new Font("Verdana", Font.PLAIN, 16));
 		buttonPanel.add(newReviewButton, BorderLayout.WEST);
 		newReviewButton.setFocusable(false);
