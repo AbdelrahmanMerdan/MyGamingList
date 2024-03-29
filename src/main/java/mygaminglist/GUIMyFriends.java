@@ -176,7 +176,12 @@ public class GUIMyFriends extends JFrame {
                 if (friendUsername != null && !friendUsername.isEmpty()) {
                     // Check if the user is a friend
                     if (users.listFriend(usernameLoggedIn).contains(friendUsername)) {
-                        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this friend?");
+                        int confirm = JOptionPane.showOptionDialog(null,
+                                "Are you sure you want to remove this friend?",
+                                "Confirm Removal",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null, null, null);
                         if (confirm == JOptionPane.YES_OPTION) {
                             // Remove the friend and update the GUI
                             users.updateFriend(usernameLoggedIn, friendUsername, "remove");
