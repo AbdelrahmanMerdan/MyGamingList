@@ -42,7 +42,7 @@ public class GUIMyFriends extends JFrame {
 		
 		//Set up base pane
 		JPanel myFriendsPane = new JPanel();
-		myFriendsPane.setBackground(new Color(23, 26, 33));
+		myFriendsPane.setBackground(new Color(27, 40, 56));
 		myFriendsPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) new Color(27, 40, 56)));
         myFriendsPane.setLayout(new BorderLayout(0, 0));
         cardPane.add(myFriendsPane, "myFriends");
@@ -54,7 +54,7 @@ public class GUIMyFriends extends JFrame {
 		
 		//Populate games pane
 		Box friendsBox = new Box(1);
-		friendsBox.setBorder(new MatteBorder(1, 10, 10, 10, (Color) new Color(23, 26, 33)));
+		friendsBox.setBorder(new MatteBorder(30, 10, 10, 10, (Color) new Color(23, 26, 33)));
 		friendsBox.setBackground(new Color(27, 40, 56));
 		
 		// This does not work yet but isn't breaking anything
@@ -64,14 +64,14 @@ public class GUIMyFriends extends JFrame {
 			friendsBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel("Click below to Add a Friend");
             lbl.setForeground(Color.WHITE);
-            lbl.setFont(new Font("MS Song", Font.PLAIN, 20));
+            lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
 		}
 		else {
 			for (int i = 0; i < friends.size(); i++) {
 	            friendsBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
 	            JLabel lbl = new JLabel(friends.get(i));
 	            lbl.setForeground(Color.WHITE);
-	            lbl.setFont(new Font("MS Song", Font.PLAIN, 20));
+	            lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
 	            lbl.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
 //						GUIGame.loadGame(popReleases.getGame(game));
@@ -102,14 +102,14 @@ public class GUIMyFriends extends JFrame {
 		addFriendButton.setBackground(new Color(23, 26, 33));
 		addFriendButton.setOpaque(true);
 		addFriendButton.setForeground(Color.WHITE);
-		addFriendButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+		addFriendButton.setFont(new Font("Verdana", Font.PLAIN, 32));
 
 		// Create "Remove Friend" button
 		JButton removeFriendButton = new JButton("Remove Friend");
 		removeFriendButton.setBackground(new Color(23, 26, 33));
 		removeFriendButton.setOpaque(true);
 		removeFriendButton.setForeground(Color.WHITE);
-		removeFriendButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		removeFriendButton.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		
 		// Add buttons to the panel
 		buttonsPanel.add(addFriendButton);
