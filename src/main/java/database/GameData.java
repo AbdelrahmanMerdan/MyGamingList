@@ -232,7 +232,7 @@ public class GameData implements Database, StubDatabase {
 	   //Updating
 	   try {
 		   UpdateResult updateResult = games.updateOne(game, update);
-		   System.out.println("Added Reviews: "+updateResult.wasAcknowledged());
+		   System.out.println("Added Only Reviews: "+updateResult.wasAcknowledged());
 
 	   } catch(MongoException e) {
 		   System.err.println("ERROR: "+e);
