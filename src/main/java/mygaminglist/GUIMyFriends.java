@@ -1,8 +1,9 @@
-package mygaminglist;
+package src;
 
 import java.awt.CardLayout;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -42,44 +43,51 @@ public class GUIMyFriends extends JFrame {
 		
 		//Set up base pane
 		JPanel myFriendsPane = new JPanel();
-		myFriendsPane.setBackground(new Color(27, 40, 56));
-		myFriendsPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) new Color(27, 40, 56)));
+		myFriendsPane.setForeground(Color.BLACK); 
+		myFriendsPane.setBackground(Color.BLACK);
+		myFriendsPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) new Color(64, 64, 64)));
         myFriendsPane.setLayout(new BorderLayout(0, 0));
         cardPane.add(myFriendsPane, "myFriends");
         
-        //Set up games pane
+        //Set up friends pane
         JPanel friendsPane = new JPanel();
 		myFriendsPane.add(friendsPane);
 		friendsPane.setLayout(new BoxLayout(friendsPane, BoxLayout.Y_AXIS));
 		
-		//Populate games pane
+		//Populate friends pane
 		Box friendsBox = new Box(1);
-		friendsBox.setBorder(new MatteBorder(30, 10, 10, 10, (Color) new Color(23, 26, 33)));
-		friendsBox.setBackground(new Color(27, 40, 56));
 		
-		// This does not work yet but isn't breaking anything
 		if (usernameLoggedIn != null) {
-		List<String> friends = users.listFriend(usernameLoggedIn);
-		if (friends.isEmpty()) {
-			friendsBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
-            JLabel lbl = new JLabel("Click below to Add a Friend");
-            lbl.setForeground(Color.WHITE);
-            lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
-		}
-		else {
-			for (int i = 0; i < friends.size(); i++) {
-	            friendsBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
-	            JLabel lbl = new JLabel(friends.get(i));
-	            lbl.setForeground(Color.WHITE);
-	            lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
-	            lbl.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent e) {
-//						GUIGame.loadGame(popReleases.getGame(game));
-//						((CardLayout) cardPane.getLayout()).show(cardPane, "game");
-					}            	
-	            });
-	            friendsBox.add(lbl);
-	        }}
+		    List<String> friends = users.listFriend(usernameLoggedIn);
+		    int nonEmptyCount = (int) friends.stream().filter(friend -> !friend.isEmpty()).count();
+
+		    if (nonEmptyCount == 0) {
+		        JLabel lbl = new JLabel("Click below to Add a Friend");
+		        lbl.setForeground(Color.WHITE);
+		        lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		        friendsBox.add(lbl);
+		    } else {
+		    	for (int i = 0; i < friends.size(); i++) {
+		    	    friendsBox.add(Box.createRigidArea(new Dimension(0, 5))); // creates space between the components
+		    	    String friendName = friends.get(i);
+		    	    JLabel nameLabel = new JLabel(friendName);
+		    	    nameLabel.setForeground(Color.WHITE);
+		    	    nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		    	    nameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
+		    	    nameLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY)); 
+		    	    nameLabel.setOpaque(true); 
+		    	    nameLabel.setBackground(new Color(27, 40, 56));
+		    	    nameLabel.addMouseListener(new MouseAdapter() {
+		    	        @Override
+		    	        public void mouseClicked(MouseEvent e) {
+		    	            // Open the friend's reviews page when the name is clicked
+		    	            GUIGameReviews.loadUserReviews(cardPane, friendName);
+		    	            ((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
+		    	        }
+		    	    });
+		    	    friendsBox.add(nameLabel);
+		    	}
+		    }
 		}
 		
 		//Set up scroll feature
@@ -95,32 +103,25 @@ public class GUIMyFriends extends JFrame {
 		
 		// Create a panel to hold the buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		buttonsPanel.setBackground(new Color (23, 26, 33));
 
 		// Create "Add Friend" button
 		JButton addFriendButton = new JButton("Add Friend");
-		addFriendButton.setBackground(new Color(23, 26, 33));
-		addFriendButton.setOpaque(true);
-		addFriendButton.setForeground(Color.WHITE);
-		addFriendButton.setFont(new Font("Verdana", Font.PLAIN, 32));
+		addFriendButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		// Create "Remove Friend" button
 		JButton removeFriendButton = new JButton("Remove Friend");
-		removeFriendButton.setBackground(new Color(23, 26, 33));
-		removeFriendButton.setOpaque(true);
-		removeFriendButton.setForeground(Color.WHITE);
-		removeFriendButton.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		removeFriendButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		// Add buttons to the panel
 		buttonsPanel.add(addFriendButton);
 		buttonsPanel.add(removeFriendButton);
 		myFriendsPane.add(buttonsPanel, BorderLayout.SOUTH);
-		friendsScrollPane.getViewport().setBackground(new Color(27, 40, 56));
+		friendsScrollPane.getViewport().setBackground(Color.BLACK);
 		
 		// This will change later, maybe to look better. Good enough for now
 		JLabel myFriendsLabel = new JLabel(usernameLoggedIn + " - My Friends");
 		myFriendsLabel.setForeground(Color.WHITE);
-		myFriendsLabel.setFont(new Font("MS Song", Font.BOLD, 40));
+		myFriendsLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		myFriendsPane.add(myFriendsLabel, BorderLayout.NORTH);
 
         // Add action listener for the "Add Friend" button
@@ -176,7 +177,7 @@ public class GUIMyFriends extends JFrame {
                 if (friendUsername != null && !friendUsername.isEmpty()) {
                     // Check if the user is a friend
                     if (users.listFriend(usernameLoggedIn).contains(friendUsername)) {
-                        int confirm = JOptionPane.showOptionDialog(null,
+                    	int confirm = JOptionPane.showOptionDialog(null,
                                 "Are you sure you want to remove this friend?",
                                 "Confirm Removal",
                                 JOptionPane.YES_NO_OPTION,
