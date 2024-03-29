@@ -20,6 +20,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Filters.eq;
@@ -31,8 +32,8 @@ public class GameData implements Database, StubDatabase {
 
     //ObjectMapper
     public final static ObjectMapper map = new ObjectMapper();
+   
     
-
     public static boolean noAppExists(int id) {
     	//Filtering
     	Bson filter = eq("_id", id);
@@ -266,11 +267,98 @@ public class GameData implements Database, StubDatabase {
 	   //Updating
 	   try {
 		   UpdateResult updateResult = games.updateOne(game, update);
-		   System.out.println("Added Only Game Stats: "+updateResult.wasAcknowledged());
+		   System.out.println("Initialized Game Stats: "+updateResult.wasAcknowledged());
 
 	   } catch(MongoException e) {
 		   System.err.println("ERROR: "+e);
 	   }  
+   }
+   
+   public static void updateGameStats(int id) {
+	   setPlayerCount(id);
+	   setPlayerPeak(id);
+   }
+   
+   private static void setPlayerCount(int id) {
+	   String appID = String.valueOf(id);
+	   JsonNode jsonResponse;
+	   
+	   try {
+		   //Calling API
+		   HttpRequest request = HttpRequest.newBuilder()
+				   .uri(URI.create("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid="+appID))
+				   .method("GET", HttpRequest.BodyPublishers.noBody())
+				   .build();
+
+		   //Grabbing JSON response
+		   HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+		   String responseBody = response.body();
+		   
+		   jsonResponse = map.readTree(responseBody);
+		   jsonResponse = jsonResponse.get("response");
+		   int players = jsonResponse.get("player_count").asInt();
+		   
+		   //Grabbing specified game
+		   Bson filter = eq("_id", id);
+		   FindIterable<Document> result = games.find(filter);
+		   Document game = result.first();
+		   
+		   //Update database
+		   Bson update = Updates.set("player_count", players);
+		   try {
+			   UpdateResult updateResult = games.updateOne(game, update);
+			   System.out.println("Updated Only Game Stats: "+updateResult.wasAcknowledged());
+
+		   } catch(MongoException m) {
+			   System.err.println("ERROR: "+m);
+		   } 
+		   
+	   } catch(InterruptedException e) {
+		   e.printStackTrace();
+
+	   } catch(IOException e) {
+		   e.printStackTrace();
+
+	   } catch(NullPointerException e) {
+		   //Set default stats
+		   Bson update = updateGameStats();
+		   
+		   //Grabbing specified game
+		   Bson filter = eq("_id", id);
+		   FindIterable<Document> result = games.find(filter);
+		   Document game = result.first();
+		   
+		   //Updating
+		   try {
+			   UpdateResult updateResult = games.updateOne(game, update);
+			   System.out.println("Updated Player Count: "+updateResult.wasAcknowledged());
+
+		   } catch(MongoException m) {
+			   System.err.println("ERROR: "+m);
+		   }  
+	   } 	 
+   }
+   
+   private static void setPlayerPeak(int id) {
+	   Bson filter = eq("_id", id);
+	   FindIterable<Document> result = games.find(filter);
+	   Document game = result.first();
+	   int players = game.getInteger("player_count");
+	   int peak = game.getInteger("twenty_four_hr_peak");
+	   
+	   if(players > peak)
+	   {
+		   peak = players;
+		   
+		   Bson update = Updates.set("twenty_four_hr_peak", peak);
+		   try {
+			   UpdateResult updateResult = games.updateOne(game, update);
+			   System.out.println("Updated Player Count: "+updateResult.wasAcknowledged());
+
+		   } catch(MongoException m) {
+			   System.err.println("ERROR: "+m);
+		   }
+	   }
    }
     
     public static String getName(int id) {

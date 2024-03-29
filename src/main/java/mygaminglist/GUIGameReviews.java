@@ -180,7 +180,8 @@ public class GUIGameReviews extends JPanel {
 			} else {
 				review = reviews.get(reviews.size() - 1 - i);
 			}
-
+			
+			@SuppressWarnings("unchecked")
 			List<Object> reviewElements = (List<Object>) review;
 			String isRecommended = (String) reviewElements.get(2);
 			if (recommendSort == 1 && !isRecommended.equals("Yes")) {

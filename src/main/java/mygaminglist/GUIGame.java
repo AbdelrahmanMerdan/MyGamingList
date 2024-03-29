@@ -1,6 +1,7 @@
 package mygaminglist;
 
 import database.GameData;
+import database.TimeData;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -29,11 +30,13 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
+import java.awt.Component;
 
 public class GUIGame {
 	
 	private static JLabel gameTitleLabel;
 	private static JLabel gameImageLabel;
+	private static JLabel gameStatsLabel;
 	private static JEditorPane sysRequireText;
 	private static JEditorPane descriptionText;
 	private static JButton reviewGameButton;
@@ -91,12 +94,17 @@ public class GUIGame {
 		JPanel gameImagePane = new JPanel();
 		gameImagePane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		gamePane.add(gameImagePane, BorderLayout.WEST);
-		gameImagePane.setLayout(new BoxLayout(gameImagePane, BoxLayout.X_AXIS));
 		gameImagePane.setOpaque(false);
 		
-		ImageIcon image = new ImageIcon("src/gloober.png");
+		ImageIcon image = new ImageIcon();
+		gameImagePane.setLayout(new BorderLayout(0, 0));
 		gameImageLabel = new JLabel(image);
 		gameImagePane.add(gameImageLabel);
+		
+		gameStatsLabel = new JLabel();
+		gameStatsLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
+		gameStatsLabel.setForeground(Color.WHITE);
+		gameImagePane.add(gameStatsLabel, BorderLayout.SOUTH);
 		
 		JPanel gameOptionsPane = new JPanel();
 		gameOptionsPane.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -182,11 +190,12 @@ public class GUIGame {
 			GameData.setReviewsComments(id);
 		}
 		
-		if(GameData.noGameStats(id))
+		if(GameData.noGameStats(id) || TimeData.isNextDay())
 		{
 			GameData.setGameStats(id);
 		}
 		
+		GameData.updateGameStats(id);
 	}
 	
 	private static void setGameInfo() {
@@ -201,11 +210,13 @@ public class GUIGame {
 		.replace(",recommended:", "")+ "</html>";
 		
 		String descriptionHtml = "<html>" + game.getDesc() + "</html>";
+		String gameStatsHtml = "<html><b>GLOBAL STATS:</b><br><br><b>Active Players:</b> "+game.getPlayers()+"<br><br><b>24-Hour Peak:</b> "+game.getPeak()+"</html>";
 
 		sysRequireText.setText(sysRequireHtml);
 		sysRequireText.setCaretPosition(0);
 		descriptionText.setText(descriptionHtml);
 		descriptionText.setCaretPosition(0);
+		gameStatsLabel.setText(gameStatsHtml);
 	}
 	
 	private static void setGameCover() {
