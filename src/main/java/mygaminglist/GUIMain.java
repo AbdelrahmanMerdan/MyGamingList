@@ -35,8 +35,8 @@ public class GUIMain extends JFrame{
 		setBackground(new Color(23, 26, 33));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 800);
+		setSize(new Dimension (1920, 1080)); //Old Resolution: 1511, 885
 		setLocationRelativeTo(null);
-		setSize(new Dimension (1511, 885));
 		
 		//instantiate base pane
 		basePane = new JPanel();

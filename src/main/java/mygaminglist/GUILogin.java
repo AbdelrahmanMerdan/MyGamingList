@@ -88,7 +88,7 @@ public class GUILogin extends JFrame {
 		loginButton.setBackground(new Color(23, 26, 33));
 		loginButton.setOpaque(true);
 		loginButton.setForeground(Color.WHITE);
-		loginButton.setFont(new Font("Verdana", Font.PLAIN, 16));
+		loginButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 			loginButton.requestFocus();
 		loginButtonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		loginButtonPane.add(loginButton);
@@ -118,7 +118,7 @@ public class GUILogin extends JFrame {
 		signUpButton.setBackground(new Color(23, 26, 33));
 		signUpButton.setOpaque(true);
 		signUpButton.setForeground(Color.WHITE);
-		signUpButton.setFont(new Font("Verdana", Font.PLAIN, 16));
+		signUpButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		signUpButton.setFocusable(false);
 		loginButtonPane.add(signUpButton);
 		
@@ -132,7 +132,7 @@ public class GUILogin extends JFrame {
 				((CardLayout) mainPane.getParent().getLayout()).show(mainPane.getParent(), "main");
 			}
 		});
-		cancelButton.setFont(new Font("Verdana", Font.PLAIN, 16));
+		cancelButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		loginButtonPane.add(cancelButton);
 		
 		//switch to signup page
@@ -151,7 +151,7 @@ public class GUILogin extends JFrame {
 		usernameField = new JTextField();
 		usernameField.setBackground(new Color(27, 40, 56));
 		usernameField.setForeground(Color.WHITE);
-		usernameField.setFont(new Font("MS Song", Font.PLAIN, 16));
+		usernameField.setFont(new Font("MS Song", Font.PLAIN, 20));
 		loginMainPane.add(usernameField, BorderLayout.NORTH);
 		usernameField.setColumns(10);
 		usernameField.setText(usernamePrompt);
@@ -173,7 +173,7 @@ public class GUILogin extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setBackground(new Color(27, 40, 56));
 		passwordField.setForeground(Color.WHITE);
-		passwordField.setFont(new Font("MS Song", Font.PLAIN, 16));
+		passwordField.setFont(new Font("MS Song", Font.PLAIN, 20));
 		loginMainPane.add(passwordField, BorderLayout.SOUTH);
 		passwordField.setText(passwordPrompt);
 		passwordField.setEchoChar((char)0);
@@ -218,7 +218,7 @@ public class GUILogin extends JFrame {
 		createAccountButton.setBackground(new Color(23, 26, 33));
 		createAccountButton.setOpaque(true);
 		createAccountButton.setForeground(Color.WHITE);
-		createAccountButton.setFont(new Font("Verdana", Font.PLAIN, 16));
+		createAccountButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		createAccountButton.setFocusable(false);
 		newUserButtonPane.add(createAccountButton);
 		
@@ -252,7 +252,7 @@ public class GUILogin extends JFrame {
 		signUpBackButton.setBackground(new Color(23, 26, 33));
 		signUpBackButton.setOpaque(true);
 		signUpBackButton.setForeground(Color.WHITE);
-		signUpBackButton.setFont(new Font("Verdana", Font.PLAIN, 16));
+		signUpBackButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		signUpBackButton.setFocusable(false);
 		newUserButtonPane.add(signUpBackButton);
 		
@@ -272,7 +272,7 @@ public class GUILogin extends JFrame {
 		newUsernameField = new JTextField();
 		newUsernameField.setBackground(new Color(27, 40, 56));
 		newUsernameField.setForeground(Color.WHITE);
-		newUsernameField.setFont(new Font("MS Song", Font.PLAIN, 16));
+		newUsernameField.setFont(new Font("MS Song", Font.PLAIN, 20));
 		newUserMainPane.add(newUsernameField, BorderLayout.NORTH);
 		newUsernameField.setColumns(10);
 		newUsernameField.setText(usernamePrompt);
@@ -294,7 +294,7 @@ public class GUILogin extends JFrame {
 		newPasswordField = new JTextField();
 		newPasswordField.setBackground(new Color(27, 40, 56));
 		newPasswordField.setForeground(Color.WHITE);
-		newPasswordField.setFont(new Font("MS Song", Font.PLAIN, 16));
+		newPasswordField.setFont(new Font("MS Song", Font.PLAIN, 20));
 		newPasswordField.setColumns(10);
 		newUserMainPane.add(newPasswordField, BorderLayout.CENTER);
 		newPasswordField.setText(passwordPrompt);
@@ -316,7 +316,7 @@ public class GUILogin extends JFrame {
 		confirmPasswordField = new JTextField();
 		confirmPasswordField.setBackground(new Color(27, 40, 56));
 		confirmPasswordField.setForeground(Color.WHITE);
-		confirmPasswordField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmPasswordField.setFont(new Font("MS Song", Font.PLAIN, 20));
 		confirmPasswordField.setColumns(10);
 		newUserMainPane.add(confirmPasswordField, BorderLayout.SOUTH);
 		confirmPasswordField.setText(confirmPasswordPrompt);
