@@ -1,5 +1,6 @@
 package mygaminglist;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import database.*;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -23,6 +25,8 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -34,19 +38,28 @@ import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JToggleButton;
+import javax.swing.DefaultComboBoxModel;
 
 public class GUIGameReviews extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private static Box reviewBox;
 	private static JLabel reviewTitleLabel;
+	private static JButton newReviewButton;
 	private static String backLocation;
 	private static JPanel buttonPanel;
 	private static JScrollPane reviewScrollPane;
+	private static Game loadedGame;
+	private static String loadedUser;
+	private static boolean chronOrder = true;
+	private static int recommendSort = 0;
 
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public GUIGameReviews(JPanel cardPane) {
 		JPanel mainPane = new JPanel();
 		mainPane.setLayout(new BorderLayout(0, 0));
@@ -82,16 +95,34 @@ public class GUIGameReviews extends JPanel {
 		ReviewHeaderPane.add(reviewTitleLabel, BorderLayout.WEST);
 		
 		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BorderLayout(0, 0));
 		ReviewHeaderPane.add(buttonPanel, BorderLayout.EAST);
+		buttonPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JComboBox sortRecommendedComboBox = new JComboBox();
+		sortRecommendedComboBox.setModel(new DefaultComboBoxModel(new String[] {"All Reviews", "Recommended", "Not Recommended"}));
+		sortRecommendedComboBox.setMaximumRowCount(3);
+		sortRecommendedComboBox.setSelectedIndex(recommendSort);
+		buttonPanel.add(sortRecommendedComboBox);
 		
 		JButton backButton = new JButton("  BACK  ");
 		backButton.setForeground(Color.WHITE);
 		backButton.setBackground(new Color(23, 26, 33));
 		backButton.setFont(new Font("Verdana", Font.PLAIN, 16));
 		backButton.setOpaque(true);
-		buttonPanel.add(backButton, BorderLayout.EAST);
+		buttonPanel.add(backButton);
 		backButton.setFocusable(false);
+		
+		JToggleButton sortOrderButton = new JToggleButton("Sort by New");
+		sortOrderButton.setSelected(!chronOrder);
+		buttonPanel.add(sortOrderButton);
+		
+		newReviewButton = new JButton("REVIEW");
+		newReviewButton.setForeground(Color.WHITE);
+		newReviewButton.setBackground(new Color(23, 26, 33));
+		newReviewButton.setOpaque(true);
+		newReviewButton.setFont(new Font("Verdana", Font.PLAIN, 16));
+		buttonPanel.add(newReviewButton);
+		newReviewButton.setFocusable(false);
 		
 		//listener for back button, changes between targets
 		backButton.addMouseListener(new MouseAdapter() {
@@ -99,32 +130,73 @@ public class GUIGameReviews extends JPanel {
 				((CardLayout) cardPane.getLayout()).show(cardPane, backLocation);
 			}
 		});
+		
+		sortOrderButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean selected = sortOrderButton.isSelected();
+				chronOrder = !selected;
+				if (loadedUser == null) {
+					loadGameReviews(cardPane, loadedGame);
+				} else {
+					loadUserReviews(cardPane, loadedUser);
+				}
+				((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
+			}
+		});
+		
+		sortRecommendedComboBox.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	int selected = sortRecommendedComboBox.getSelectedIndex();
+		    	recommendSort = selected;
+		    	if (loadedUser == null) {
+					loadGameReviews(cardPane, loadedGame);
+				} else {
+					loadUserReviews(cardPane, loadedUser);
+				}
+		    	((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
+		    }
+		});
 	}
+//	public static void loadGameReviews(JPanel cardPane, Game game) {
+//		loadedGame = game;
+//		loadedUser = null;
+//		loadGameReviews(cardPane, game, true, 0);
+//	}
 	
 	public static void loadGameReviews(JPanel cardPane, Game game) {
-		//reset everything
+		// reset everything
+		loadedGame = game;
+		loadedUser = null;
 		new GUIGameReviews(cardPane);
 		
-		//Fill the box
+		// Fill the box
 		List<Object> reviews = game.getComment();
 
 		for( int i = 0; i < reviews.size(); i++) {
-			review(cardPane, reviews.get(i));
+			
+			Object review;
+			if (chronOrder) {
+				review = reviews.get(i);
+			} else {
+				review = reviews.get(reviews.size() - 1 - i);
+			}
+
+			List<Object> reviewElements = (List<Object>) review;
+			String isRecommended = (String) reviewElements.get(2);
+			if (recommendSort == 1 && !isRecommended.equals("Yes")) {
+				continue;
+			} else if (recommendSort == 2 && !isRecommended.equals("No")) {
+				continue;
+			}
+			
+			review(cardPane, review);
 		}
 		
-		//setup misc.
+		// setup misc.
 		reviewTitleLabel.setText(game.getName());
 		backLocation = "game";
 		
-		JButton newReviewButton = new JButton("REVIEW");
-		newReviewButton.setForeground(Color.WHITE);
-		newReviewButton.setBackground(new Color(23, 26, 33));
-		newReviewButton.setOpaque(true);
-		newReviewButton.setFont(new Font("Verdana", Font.PLAIN, 16));
-		buttonPanel.add(newReviewButton, BorderLayout.WEST);
-		newReviewButton.setFocusable(false);
-		
-		//listener for new review button
+		// listener for new review button
 		newReviewButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				boolean hasReviewed = Review.AlreadyReviewed(game, GUIMain.usernameLoggedIn);
@@ -156,8 +228,17 @@ public class GUIGameReviews extends JPanel {
 		});
 	}
 	
-	public static void loadUserReviews(JPanel cardPane, String user) { //ideally this would be a User not a string but /shrug as long as it works (UsersImpl methods should be static i think)
+//	public static void loadUserReviews(JPanel cardPane, String user) {
+//		loadedUser = user;
+//		loadedGame = null;
+//		loadUserReviews(cardPane, user, true, 0);
+//	}
+	
+	@SuppressWarnings("unchecked")
+	public static void loadUserReviews(JPanel cardPane, String user) { // recommend: 0 = normal, 1 = recommended, 2 = not recommended
 		//reset everything
+		loadedUser = user;
+		loadedGame = null;
 		new GUIGameReviews(cardPane);
 		
 		User current = UsersImpl.getUser(user);
@@ -166,10 +247,20 @@ public class GUIGameReviews extends JPanel {
 		
 		for(int i = 0; i < myReviews.size(); i++)
 		{
-			//Gets the reviews
-			@SuppressWarnings("unchecked")
-			List<Object> myReview = (List<Object>) myReviews.get(i);
-			
+			List<Object> myReview;
+			if (chronOrder) {
+				myReview = (List<Object>) myReviews.get(i);
+			} else {
+				myReview = (List<Object>) myReviews.get(myReviews.size() - 1 - i);
+			}
+
+			String isRecommended = (String) myReview.get(3);
+			if (recommendSort == 1 && !isRecommended.equals("Yes")) {
+				continue;
+			} else if (recommendSort == 2 && !isRecommended.equals("No")) {
+				continue;
+			}
+
 			int id = (int) myReview.get(0);
 			Game game = GameData.getGame(id);
 			
