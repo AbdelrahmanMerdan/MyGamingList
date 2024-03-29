@@ -26,7 +26,7 @@ public class TimeData implements Database {
 		Bson filter = eq("_id", 0);
 		FindIterable<Document> result = time.find(filter);
 		Document data = result.first();
-		long nextTime = data.getInteger("next_day");
+		long nextTime = (long) data.get("next_day");
 		
 		if(System.currentTimeMillis() >= nextTime)
 		{
@@ -38,14 +38,10 @@ public class TimeData implements Database {
 	}
 	
 	public static void updateTime() {
-		if(isNextDay())
-		{
-			try {
-				resetLaunchTime();
-				updateEndTime();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+		try {
+			updateEndTime();
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -69,6 +65,8 @@ public class TimeData implements Database {
 	}
 	
 	private static void updateEndTime() throws ParseException {
+		resetLaunchTime();
+		
 		Bson filter = eq("_id", 0);
 		FindIterable<Document> result = time.find(filter);
 		Document data = result.first();
