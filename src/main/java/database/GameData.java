@@ -114,7 +114,7 @@ public class GameData implements Database, StubDatabase {
     		//Updating
 			try {
 				UpdateResult updateResult = games.updateOne(game, update);
-				System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
+				System.out.println("Updated Game: "+updateResult.wasAcknowledged());
 				
 			} catch(MongoException e) {
 				System.err.println("ERROR: "+e);
@@ -221,8 +221,22 @@ public class GameData implements Database, StubDatabase {
 		} 	 
     }
     
-   public static void setReviewsComments() {
+   public static void setReviewsComments(int id) {
+	   Bson update = Updates.combine(updateReview(), updateComment());
 	   
+	   //Grabbing specified game
+	   Bson filter = eq("_id", id);
+	   FindIterable<Document> result = games.find(filter);
+	   Document game = result.first();
+	   
+	   //Updating
+	   try {
+		   UpdateResult updateResult = games.updateOne(game, update);
+		   System.out.println("Added Reviews: "+updateResult.wasAcknowledged());
+
+	   } catch(MongoException e) {
+		   System.err.println("ERROR: "+e);
+	   }  
    }
     
     public static String getName(int id) {

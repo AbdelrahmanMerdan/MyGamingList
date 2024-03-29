@@ -172,11 +172,15 @@ public class GUIGame {
 			GameData.addApp(id);
 		}
 
-		if(GameData.noAppDetails(id) || GameData.noAppReviews(id))
+		if(GameData.noAppDetails(id))
 		{
 			GameData.updateAppDetails(id);
 		}
 		
+		if(GameData.noAppReviews(id)) 
+		{
+			GameData.setReviewsComments(id);
+		}
 	}
 	
 	private static void setGameInfo() {
