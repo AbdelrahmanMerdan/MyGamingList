@@ -76,7 +76,7 @@ public class ModeratorImpl extends UsersImpl implements Database {
                 .append(PWD_KEY, moderator.getPassword())
                 .append(GAMES_KEY, moderator.getGames())
                 .append(FRIENDS_KEY, moderator.getFriends())
-                .append(BANNEDUSERS_KEY, moderator.getBanlist());
+                ;
         
     }
     
