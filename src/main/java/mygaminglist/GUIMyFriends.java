@@ -1,4 +1,4 @@
-package mygaminglist;
+package src;
 
 import java.awt.CardLayout;
 
@@ -43,9 +43,8 @@ public class GUIMyFriends extends JFrame {
 		
 		//Set up base pane
 		JPanel myFriendsPane = new JPanel();
-		myFriendsPane.setForeground(Color.BLACK); 
-		myFriendsPane.setBackground(Color.BLACK);
-		myFriendsPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) new Color(64, 64, 64)));
+		myFriendsPane.setBackground(new Color(27, 40, 56));
+		myFriendsPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) new Color(27, 40, 56)));
         myFriendsPane.setLayout(new BorderLayout(0, 0));
         cardPane.add(myFriendsPane, "myFriends");
         
@@ -89,7 +88,7 @@ public class GUIMyFriends extends JFrame {
 		    	}
 		    }
 		}
-		
+
 		//Set up scroll feature
 		JScrollPane friendsScrollPane = new JScrollPane(friendsBox);
 		friendsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -103,25 +102,32 @@ public class GUIMyFriends extends JFrame {
 		
 		// Create a panel to hold the buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		buttonsPanel.setBackground(new Color (23, 26, 33));
 
 		// Create "Add Friend" button
 		JButton addFriendButton = new JButton("Add Friend");
-		addFriendButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		addFriendButton.setBackground(new Color(23, 26, 33));
+		addFriendButton.setOpaque(true);
+		addFriendButton.setForeground(Color.WHITE);
+		addFriendButton.setFont(new Font("Verdana", Font.PLAIN, 32));
 
 		// Create "Remove Friend" button
 		JButton removeFriendButton = new JButton("Remove Friend");
-		removeFriendButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		removeFriendButton.setBackground(new Color(23, 26, 33));
+		removeFriendButton.setOpaque(true);
+		removeFriendButton.setForeground(Color.WHITE);
+		removeFriendButton.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		
 		// Add buttons to the panel
 		buttonsPanel.add(addFriendButton);
 		buttonsPanel.add(removeFriendButton);
 		myFriendsPane.add(buttonsPanel, BorderLayout.SOUTH);
-		friendsScrollPane.getViewport().setBackground(Color.BLACK);
+		friendsScrollPane.getViewport().setBackground(new Color(27, 40, 56));
 		
 		// This will change later, maybe to look better. Good enough for now
 		JLabel myFriendsLabel = new JLabel(usernameLoggedIn + " - My Friends");
 		myFriendsLabel.setForeground(Color.WHITE);
-		myFriendsLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		myFriendsLabel.setFont(new Font("MS Song", Font.BOLD, 40));
 		myFriendsPane.add(myFriendsLabel, BorderLayout.NORTH);
 
         // Add action listener for the "Add Friend" button
@@ -177,7 +183,7 @@ public class GUIMyFriends extends JFrame {
                 if (friendUsername != null && !friendUsername.isEmpty()) {
                     // Check if the user is a friend
                     if (users.listFriend(usernameLoggedIn).contains(friendUsername)) {
-                    	int confirm = JOptionPane.showOptionDialog(null,
+                        int confirm = JOptionPane.showOptionDialog(null,
                                 "Are you sure you want to remove this friend?",
                                 "Confirm Removal",
                                 JOptionPane.YES_NO_OPTION,
