@@ -253,7 +253,7 @@ public class GameData implements Database, StubDatabase {
     	Bson update1 = Updates.set("short_description", "Game is not available in Canada.");
 		Bson update2 = Updates.set("description", "Game is not available in Canada");
 		Bson update3 = Updates.set("cover_art", "");
-		Bson update4 = Updates.set("pc_requirements", "");
+		Bson update4 = Updates.set("pc_requirements", "System requirements are not available.");
 		Bson update5 = Updates.set("meta_score", "N/A");
 		Bson update6 = Updates.set("meta_link", "N/A");
 		
