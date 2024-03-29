@@ -41,6 +41,7 @@ public class TimeData implements Database {
 		if(isNextDay())
 		{
 			try {
+				resetLaunchTime();
 				updateEndTime();
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -68,8 +69,6 @@ public class TimeData implements Database {
 	}
 	
 	private static void updateEndTime() throws ParseException {
-		resetLaunchTime();
-		
 		Bson filter = eq("_id", 0);
 		FindIterable<Document> result = time.find(filter);
 		Document data = result.first();
