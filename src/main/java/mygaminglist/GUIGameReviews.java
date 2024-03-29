@@ -23,6 +23,9 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -272,25 +275,43 @@ public class GUIGameReviews extends JPanel {
 		reviewContentPane.setText(ReviewText);	// set this to the review text
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
+		// when started
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				commentScrollPane.getVerticalScrollBar().setValue(0);
 				commentScrollPane.getHorizontalScrollBar().setValue(0);
 			}
 		});
-		
+
+		// when resized
+		class ResizeListener extends ComponentAdapter {
+			public void componentResized(ComponentEvent e) {
+				reviewPane.setPreferredSize(null);
+				reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
+			}
+		}
+		reviewPane.addComponentListener(new ResizeListener());
+
+		// when comments shown
 		commentLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (forumPane.isVisible()){
+				if (forumPane.isVisible()) {
 					forumPane.setVisible(false);
+
+					reviewPane.setPreferredSize(null);
+					reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
 				} else {
 					commentScrollPane.setPreferredSize(null);
 					int offset = 70;
-					int maxHeight = Math.max(500,(int) (reviewPane.getSize().getHeight() - reviewContentPane.getPreferredSize().getHeight() - offset));
+					int maxHeight = Math.max(500, (int) (reviewPane.getSize().getHeight()
+							- reviewContentPane.getPreferredSize().getHeight() - offset));
 					if (commentScrollPane.getPreferredSize().getHeight() > maxHeight) {
-						commentScrollPane.setPreferredSize(new Dimension(0,maxHeight));
+						commentScrollPane.setPreferredSize(new Dimension(0, maxHeight));
 					}
 					forumPane.setVisible(true);
+
+					reviewPane.setPreferredSize(null);
+					reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
 				}
 			}
 		});
@@ -429,31 +450,48 @@ public class GUIGameReviews extends JPanel {
 		reviewContentPane.setFont(new Font("MS Song", Font.PLAIN, 20));
 		reviewContentPane.setText(ReviewText);	// set this to the review text
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
-		
+
+		// when started
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				commentScrollPane.getVerticalScrollBar().setValue(0);
 				commentScrollPane.getHorizontalScrollBar().setValue(0);
 			}
 		});
-		
+
+		// when resized
+		class ResizeListener extends ComponentAdapter {
+			public void componentResized(ComponentEvent e) {
+				reviewPane.setPreferredSize(null);
+				reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
+			}
+		}
+		reviewPane.addComponentListener(new ResizeListener());
+
+		// when comments shown
 		commentLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (forumPane.isVisible()){
+				if (forumPane.isVisible()) {
 					forumPane.setVisible(false);
+
+					reviewPane.setPreferredSize(null);
+					reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
 				} else {
 					commentScrollPane.setPreferredSize(null);
 					int offset = 70;
-					int maxHeight = Math.max(500,(int) (reviewPane.getSize().getHeight() - reviewContentPane.getPreferredSize().getHeight() - offset));
+					int maxHeight = Math.max(500, (int) (reviewPane.getSize().getHeight()
+							- reviewContentPane.getPreferredSize().getHeight() - offset));
 					if (commentScrollPane.getPreferredSize().getHeight() > maxHeight) {
-						commentScrollPane.setPreferredSize(new Dimension(0,maxHeight));
+						commentScrollPane.setPreferredSize(new Dimension(0, maxHeight));
 					}
 					forumPane.setVisible(true);
+
+					reviewPane.setPreferredSize(null);
+					reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
 				}
 			}
 		});
 		
-		//comment prompt
 		newComentLabel.addMouseListener(new MouseAdapter() {					// needs to be implemented, comment needs to be saved to db alongside username
 			public void mouseClicked(MouseEvent e) {
 				if (GUIMain.usernameLoggedIn != null) {
