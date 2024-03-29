@@ -45,13 +45,14 @@ public class GUILogin extends JFrame {
 		//setup main panel
 		mainPane = new JPanel();
 		mainPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(65, 90, 108)));
-		mainPane.setBackground(new Color(65, 90, 108));
+		mainPane.setBackground(new Color(27, 40, 56));
 		FlowLayout flowLayout = (FlowLayout) mainPane.getLayout();
 		flowLayout.setHgap(0);
 		flowLayout.setVgap(100);
 		
 		//setup border panel
 		JPanel borderPane = new JPanel();
+		borderPane.setBackground(new Color(27, 40, 56));
 		borderPane.setLayout(new CardLayout(0, 0));
 		mainPane.add(borderPane);
 		
@@ -63,24 +64,31 @@ public class GUILogin extends JFrame {
 		
 		//setup login panel
 		JPanel loginPane = new JPanel();
+		loginPane.setBackground(new Color(27, 40, 56));
 		borderPane.add(loginPane, "login");
 		loginPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel loginHeaderPane = new JPanel();
+		loginHeaderPane.setBackground(new Color(23, 26, 33));
 		loginPane.add(loginHeaderPane, BorderLayout.NORTH);
 		FlowLayout fl_loginHeaderPanel = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		loginHeaderPane.setLayout(fl_loginHeaderPanel);
 		
 		JLabel loginPromptLabel = new JLabel("LOGIN");
-		loginPromptLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		loginPromptLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
+		loginPromptLabel.setForeground(Color.WHITE);
 		loginPromptLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		loginHeaderPane.add(loginPromptLabel);
 		
 		JPanel loginButtonPane = new JPanel();
+		loginButtonPane.setBackground(new Color(23, 26, 33));
 		loginPane.add(loginButtonPane, BorderLayout.SOUTH);
 		
 		JButton loginButton = new JButton("  Login  ");
-		loginButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		loginButton.setBackground(new Color(23, 26, 33));
+		loginButton.setOpaque(true);
+		loginButton.setForeground(Color.WHITE);
+		loginButton.setFont(new Font("Verdana", Font.PLAIN, 16));
 			loginButton.requestFocus();
 		loginButtonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		loginButtonPane.add(loginButton);
@@ -98,7 +106,7 @@ public class GUILogin extends JFrame {
 					users.login(user);
 					GUIMain.usernameLoggedIn = username;
 					System.out.println("successful login: " + username);
-					login();
+					login(borderPane);
 				} catch (IllegalArgumentException exp) {
 					System.out.println("login failed");
 					usernameField.setText(exp.getMessage());
@@ -107,18 +115,24 @@ public class GUILogin extends JFrame {
 		});
 		
 		JButton signUpButton = new JButton("Sign Up");
-		signUpButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		signUpButton.setBackground(new Color(23, 26, 33));
+		signUpButton.setOpaque(true);
+		signUpButton.setForeground(Color.WHITE);
+		signUpButton.setFont(new Font("Verdana", Font.PLAIN, 16));
 		signUpButton.setFocusable(false);
 		loginButtonPane.add(signUpButton);
 		
 		JButton cancelButton = new JButton("Cancel");
+		cancelButton.setBackground(new Color(23, 26, 33));
+		cancelButton.setOpaque(true);
+		cancelButton.setForeground(Color.WHITE);
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reset();
 				((CardLayout) mainPane.getParent().getLayout()).show(mainPane.getParent(), "main");
 			}
 		});
-		cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		cancelButton.setFont(new Font("Verdana", Font.PLAIN, 16));
 		loginButtonPane.add(cancelButton);
 		
 		//switch to signup page
@@ -129,12 +143,15 @@ public class GUILogin extends JFrame {
 		});
 		
 		JPanel loginMainPane = new JPanel();
+		loginMainPane.setBackground(new Color(23, 26, 33));
 		loginMainPane.setBorder(new EmptyBorder(30, 50, 40, 50));
 		loginPane.add(loginMainPane, BorderLayout.CENTER);
 		loginMainPane.setLayout(new BorderLayout(50, 0));
 		
 		usernameField = new JTextField();
-		usernameField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		usernameField.setBackground(new Color(27, 40, 56));
+		usernameField.setForeground(Color.WHITE);
+		usernameField.setFont(new Font("MS Song", Font.PLAIN, 16));
 		loginMainPane.add(usernameField, BorderLayout.NORTH);
 		usernameField.setColumns(10);
 		usernameField.setText(usernamePrompt);
@@ -154,7 +171,9 @@ public class GUILogin extends JFrame {
 		});
 		
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		passwordField.setBackground(new Color(27, 40, 56));
+		passwordField.setForeground(Color.WHITE);
+		passwordField.setFont(new Font("MS Song", Font.PLAIN, 16));
 		loginMainPane.add(passwordField, BorderLayout.SOUTH);
 		passwordField.setText(passwordPrompt);
 		passwordField.setEchoChar((char)0);
@@ -177,22 +196,29 @@ public class GUILogin extends JFrame {
 		
 		//setup new user panel
 		JPanel newUserPane = new JPanel();
+		newUserPane.setBackground(new Color(23, 26, 33));
 		borderPane.add(newUserPane, "signup");
 		newUserPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel newUserHeaderPane = new JPanel();
+		newUserHeaderPane.setBackground(new Color(23, 26, 33));
 		newUserPane.add(newUserHeaderPane, BorderLayout.NORTH);
 		
 		JLabel signUpPromptLabel = new JLabel("SIGN UP");
-		signUpPromptLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		signUpPromptLabel.setForeground(Color.WHITE);
+		signUpPromptLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
 		newUserHeaderPane.add(signUpPromptLabel);
 		
 		JPanel newUserButtonPane = new JPanel();
+		newUserButtonPane.setBackground(new Color(23, 26, 33));
 		newUserPane.add(newUserButtonPane, BorderLayout.SOUTH);
 		newUserButtonPane.setLayout(new GridLayout(0, 2, 100, 0));
 		
 		JButton createAccountButton = new JButton("Create Account");
-		createAccountButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		createAccountButton.setBackground(new Color(23, 26, 33));
+		createAccountButton.setOpaque(true);
+		createAccountButton.setForeground(Color.WHITE);
+		createAccountButton.setFont(new Font("Verdana", Font.PLAIN, 16));
 		createAccountButton.setFocusable(false);
 		newUserButtonPane.add(createAccountButton);
 		
@@ -214,7 +240,7 @@ public class GUILogin extends JFrame {
 						users.createAccount(newUser);
 						System.out.println("Created new account for " + newUsername);
 						GUIMain.usernameLoggedIn = newUsername;
-						login();
+						login(borderPane);
 					} catch (IllegalArgumentException exp) {
 						newUsernameField.setText(exp.getMessage().split(",")[0]);
 					}
@@ -223,7 +249,10 @@ public class GUILogin extends JFrame {
 		});
 		
 		JButton signUpBackButton = new JButton("Back");
-		signUpBackButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		signUpBackButton.setBackground(new Color(23, 26, 33));
+		signUpBackButton.setOpaque(true);
+		signUpBackButton.setForeground(Color.WHITE);
+		signUpBackButton.setFont(new Font("Verdana", Font.PLAIN, 16));
 		signUpBackButton.setFocusable(false);
 		newUserButtonPane.add(signUpBackButton);
 		
@@ -235,12 +264,15 @@ public class GUILogin extends JFrame {
 		});
 		
 		JPanel newUserMainPane = new JPanel();
+		newUserMainPane.setBackground(new Color(23, 26, 33));
 		newUserMainPane.setBorder(new EmptyBorder(30, 50, 40, 50));
 		newUserPane.add(newUserMainPane, BorderLayout.CENTER);
 		newUserMainPane.setLayout(new BorderLayout(50, 25));
 		
 		newUsernameField = new JTextField();
-		newUsernameField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		newUsernameField.setBackground(new Color(27, 40, 56));
+		newUsernameField.setForeground(Color.WHITE);
+		newUsernameField.setFont(new Font("MS Song", Font.PLAIN, 16));
 		newUserMainPane.add(newUsernameField, BorderLayout.NORTH);
 		newUsernameField.setColumns(10);
 		newUsernameField.setText(usernamePrompt);
@@ -260,7 +292,9 @@ public class GUILogin extends JFrame {
 		});
 		
 		newPasswordField = new JTextField();
-		newPasswordField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		newPasswordField.setBackground(new Color(27, 40, 56));
+		newPasswordField.setForeground(Color.WHITE);
+		newPasswordField.setFont(new Font("MS Song", Font.PLAIN, 16));
 		newPasswordField.setColumns(10);
 		newUserMainPane.add(newPasswordField, BorderLayout.CENTER);
 		newPasswordField.setText(passwordPrompt);
@@ -280,6 +314,8 @@ public class GUILogin extends JFrame {
 		});
 		
 		confirmPasswordField = new JTextField();
+		confirmPasswordField.setBackground(new Color(27, 40, 56));
+		confirmPasswordField.setForeground(Color.WHITE);
 		confirmPasswordField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		confirmPasswordField.setColumns(10);
 		newUserMainPane.add(confirmPasswordField, BorderLayout.SOUTH);
@@ -304,8 +340,9 @@ public class GUILogin extends JFrame {
 		return mainPane;
 	}
 	
-	private void login() {
+	private void login(JPanel borderPane) {
 		GUIMain.loginButton.setText("Log out");
+		((CardLayout) borderPane.getLayout()).show(borderPane, "login");
 		((CardLayout) mainPane.getParent().getLayout()).show(mainPane.getParent(), "main");
 		reset();
 	}
