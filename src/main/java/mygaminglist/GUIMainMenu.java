@@ -43,7 +43,7 @@ public class GUIMainMenu extends JFrame {
 		JLabel mostPlayedLabel = new JLabel("Most Played");
 		mostPlayedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		mostPlayedLabel.setForeground(Color.WHITE);
-		mostPlayedLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		mostPlayedLabel.setFont(new Font("Verdana", Font.BOLD, 50));
 		mostPlayedBox.add(mostPlayedLabel);
 		
 		for (int i = 0; i < mostPlayed.getSize(); i++) {
@@ -51,7 +51,7 @@ public class GUIMainMenu extends JFrame {
             mostPlayedBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(GameData.getName(mostPlayed.getID(game)));
             lbl.setForeground(Color.WHITE);
-            lbl.setFont(new Font("MS Song", Font.PLAIN, 20));
+            lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
             lbl.addMouseListener(new MouseAdapter() {
     			public void mouseClicked(MouseEvent e) {
     				GUIGame.loadGame(mostPlayed.getID(game));
@@ -82,7 +82,7 @@ public class GUIMainMenu extends JFrame {
 		JLabel popularReleaseLabel = new JLabel("Popular Releases");
 		popularReleaseLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		popularReleaseLabel.setForeground(Color.WHITE);
-		popularReleaseLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		popularReleaseLabel.setFont(new Font("Verdana", Font.BOLD, 50));
 		popularReleaseBox.add(popularReleaseLabel);
 		
 		for (int i = 0; i < popReleases.getSize(); i++) {
@@ -90,7 +90,7 @@ public class GUIMainMenu extends JFrame {
             popularReleaseBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(GameData.getName(popReleases.getID(game)));
             lbl.setForeground(Color.WHITE);
-            lbl.setFont(new Font("MS Song", Font.PLAIN, 20));
+            lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
             lbl.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					GUIGame.loadGame(popReleases.getID(game));
