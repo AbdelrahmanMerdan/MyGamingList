@@ -38,8 +38,8 @@ public class GUINewUserReview extends JDialog{
 		setTitle("New Review");
 		setBounds(100, 100, 600, 300);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setSize(new Dimension(960, 540)); //Old Resolution: 890, 507
 		setLocationRelativeTo(null);
-		setSize(new Dimension(890, 507));
 
 		JPanel mainPane = new JPanel();
 		mainPane.setBackground(new Color(23, 26, 33));
