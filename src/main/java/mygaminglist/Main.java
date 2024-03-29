@@ -2,9 +2,15 @@ package mygaminglist;
 
 import java.awt.EventQueue;
 
-public class Main {
+import database.TimeData;
 
+public class Main {
 	public static void main(String[] args) {
+		if(TimeData.isNextDay())
+		{
+			TimeData.updateTime();
+		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
