@@ -37,7 +37,18 @@ public class TimeData implements Database {
 		
 	}
 	
-	public static void resetLaunchTime() {
+	public static void updateTime() {
+		if(isNextDay())
+		{
+			try {
+				updateEndTime();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private static void resetLaunchTime() {
 		Bson filter = eq("_id", 0);
 		FindIterable<Document> result = time.find(filter);
 		Document data = result.first();
@@ -50,13 +61,15 @@ public class TimeData implements Database {
 		//Updating
 		try {
 			UpdateResult updateResult = time.updateOne(data, update);
-			System.out.println("Resetted Launch Time: "+updateResult.wasAcknowledged());
+			System.out.println("Initialized Launch Time: "+updateResult.wasAcknowledged());
 		} catch(MongoException e) {
 			System.err.println("ERROR: "+e);
 		} 
 	}
 	
-	public static void updateEndTime() throws ParseException {
+	private static void updateEndTime() throws ParseException {
+		resetLaunchTime();
+		
 		Bson filter = eq("_id", 0);
 		FindIterable<Document> result = time.find(filter);
 		Document data = result.first();
@@ -72,8 +85,7 @@ public class TimeData implements Database {
 		//Updating
 		try {
 			UpdateResult updateResult = time.updateOne(data, update);
-			System.out.println("Initialized Time: "+updateResult.wasAcknowledged());
-
+			System.out.println("Initialized End Time: "+updateResult.wasAcknowledged());
 		} catch(MongoException e) {
 			System.err.println("ERROR: "+e);
 		} 
