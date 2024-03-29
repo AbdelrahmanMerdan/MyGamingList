@@ -80,37 +80,46 @@ public class Review {
 			throws IOException {
 
 		if(UserExists(username)) {
+			
+			User user = UsersImpl.getUser(username);
+			
+			if(user.isBanned(username) == false) {
 
-			//Find User
-			Document user_found = find_user(username);
-
-
-			//Find Game
-			Document game_found = find_game(game);
-
-
-			Bson update = Updates.combine(UpdateNumReview(game),
-					UpdateSumOfReviews(game,review),
-					UpdateCommentReview(game, username,review,comment,reccomendation)
-					);
-
-			Bson userupdate = addUserReview(game,username,review,comment,reccomendation);
-
-			try {
-				UpdateResult updateResult = GameData.games.updateOne(game_found, update);
-				System.out.println("Review Game updated: "+updateResult.wasAcknowledged());
-
+				//Find User
+				Document user_found = find_user(username);
+	
+	
+				//Find Game
+				Document game_found = find_game(game);
+	
+	
+				Bson update = Updates.combine(UpdateNumReview(game),
+						UpdateSumOfReviews(game,review),
+						UpdateCommentReview(game, username,review,comment,reccomendation)
+						);
+	
+				Bson userupdate = addUserReview(game,username,review,comment,reccomendation);
+	
 				try {
-					UpdateResult updateResultUser = UsersImpl.users.updateOne(user_found, userupdate);
-					System.out.println("Review User updated: "+updateResultUser.wasAcknowledged());
-
-				}catch(MongoException e) {
+					UpdateResult updateResult = GameData.games.updateOne(game_found, update);
+					System.out.println("Review Game updated: "+updateResult.wasAcknowledged());
+	
+					try {
+						UpdateResult updateResultUser = UsersImpl.users.updateOne(user_found, userupdate);
+						System.out.println("Review User updated: "+updateResultUser.wasAcknowledged());
+	
+					}catch(MongoException e) {
+						System.err.println("ERROR: "+e);
+					}
+	
+				} catch(MongoException e) {
 					System.err.println("ERROR: "+e);
 				}
-
-			} catch(MongoException e) {
-				System.err.println("ERROR: "+e);
-			}
+				
+			}	
+			
+			System.out.println("This user is banned and can't comment");
+			
 		}
 		else {
 			System.out.println("This user does not exist");
@@ -118,7 +127,7 @@ public class Review {
 
 	}
 	
-//	Delete Review
+//	Delete Review -----------------------------------------------------------------------------
 
 	public static boolean DeleteReview(String username, Game game) {
 		//Find User
@@ -226,7 +235,7 @@ public class Review {
 	
 
 	
-	//Update the Game Review
+//  Update the Game Review --------------------------------------------------------------------
 	private static Bson UpdateNumReview(Game game) {
 
 		int prevreviews = game.getNumOfReviews();
