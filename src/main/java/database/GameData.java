@@ -66,7 +66,21 @@ public class GameData implements Database, StubDatabase {
     	Bson filter = and(eq("_id", id), exists("num_of_reviews"));
     	FindIterable<Document> result = games.find(filter);
     	
-    	//Checking if details is unavailable for the game
+    	//Checking if reviews is unavailable for the game
+    	if(result.first() == null)
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
+	
+	public static boolean noGameStats(int id) {
+    	//Filtering
+    	Bson filter = and(eq("_id", id), exists("player_count"));
+    	FindIterable<Document> result = games.find(filter);
+    	
+    	//Checking if game stats is unavailable for the game
     	if(result.first() == null)
     	{
     		return true;
@@ -108,7 +122,8 @@ public class GameData implements Database, StubDatabase {
     		updateSysRequire(jsonResponse),
     		updateMetacritic(jsonResponse),
     		updateReview(),
-    		updateComment()
+    		updateComment(),
+    		updateGameStats()
     				);
     		
     		//Updating
@@ -190,7 +205,8 @@ public class GameData implements Database, StubDatabase {
     		updateSysRequire(jsonResponse),
     		updateMetacritic(jsonResponse),
     		updateReview(),
-    		updateComment()
+    		updateComment(),
+    		updateGameStats()
     		);
     		
     		//Updating
@@ -238,6 +254,24 @@ public class GameData implements Database, StubDatabase {
 		   System.err.println("ERROR: "+e);
 	   }  
    }
+   
+   public static void setGameStats(int id) {
+	   Bson update = updateGameStats();
+	   
+	   //Grabbing specified game
+	   Bson filter = eq("_id", id);
+	   FindIterable<Document> result = games.find(filter);
+	   Document game = result.first();
+	   
+	   //Updating
+	   try {
+		   UpdateResult updateResult = games.updateOne(game, update);
+		   System.out.println("Added Only Game Stats: "+updateResult.wasAcknowledged());
+
+	   } catch(MongoException e) {
+		   System.err.println("ERROR: "+e);
+	   }  
+   }
     
     public static String getName(int id) {
     	//Grabbing specified game
@@ -276,7 +310,7 @@ public class GameData implements Database, StubDatabase {
 		Bson update5 = Updates.set("meta_score", "N/A");
 		Bson update6 = Updates.set("meta_link", "N/A");
 		
-		Bson update = Updates.combine(update1, update2, update3, update4, update5, update6, updateReview(), updateComment());
+		Bson update = Updates.combine(update1, update2, update3, update4, update5, update6, updateReview(), updateComment(), updateGameStats());
 		
 		//Updating
 		try {
@@ -377,7 +411,6 @@ public class GameData implements Database, StubDatabase {
 
 		return total;
 		
-		
 	}
 	
 	private static Bson updateComment() {
@@ -389,6 +422,17 @@ public class GameData implements Database, StubDatabase {
 
 		return update;
 		
+	}
+	
+	private static Bson updateGameStats() {
+		int players = 0;
+		int peak = 0;
+		
+		Bson update = Updates.set("player_count", players);
+		Bson update2 = Updates.set("twenty_four_hr_peak", peak);
+		Bson total = Updates.combine(update, update2);
+		
+		return total;
 		
 	}
 }
