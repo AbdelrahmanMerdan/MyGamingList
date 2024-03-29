@@ -145,7 +145,8 @@ public class GameData implements Database, StubDatabase {
     	}
     	
     }
-	
+    
+    
     public static void addApp(int id) {
     	//Declaring and initializing 
     	String appID = String.valueOf(id);
@@ -219,7 +220,11 @@ public class GameData implements Database, StubDatabase {
 			}
 		} 	 
     }
-       
+    
+   public static void setReviewsComments() {
+	   
+   }
+    
     public static String getName(int id) {
     	//Grabbing specified game
     	Bson filter = eq("_id", id);
