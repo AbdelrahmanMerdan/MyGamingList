@@ -63,7 +63,7 @@ public class GUIMyFriends extends JFrame {
 		    if (nonEmptyCount == 0) {
 		        JLabel lbl = new JLabel("Click below to Add a Friend");
 		        lbl.setForeground(Color.WHITE);
-		        lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		        lbl.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		        friendsBox.add(lbl);
 		    } else {
 		    	for (int i = 0; i < friends.size(); i++) {
@@ -71,7 +71,7 @@ public class GUIMyFriends extends JFrame {
 		    	    String friendName = friends.get(i);
 		    	    JLabel nameLabel = new JLabel(friendName);
 		    	    nameLabel.setForeground(Color.WHITE);
-		    	    nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		    	    nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		    	    nameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
 		    	    nameLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY)); 
 		    	    nameLabel.setOpaque(true); 
@@ -109,7 +109,7 @@ public class GUIMyFriends extends JFrame {
 		addFriendButton.setBackground(new Color(23, 26, 33));
 		addFriendButton.setOpaque(true);
 		addFriendButton.setForeground(Color.WHITE);
-		addFriendButton.setFont(new Font("Verdana", Font.PLAIN, 32));
+		addFriendButton.setFont(new Font("Tahoma", Font.PLAIN, 32));
 
 		// Create "Remove Friend" button
 		JButton removeFriendButton = new JButton("Remove Friend");
