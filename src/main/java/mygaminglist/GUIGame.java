@@ -207,6 +207,7 @@ public class GUIGame {
 			gameImageLabel.setIcon(new ImageIcon(ImageIO.read(url)));
 		} catch (MalformedURLException ex) {
 			System.out.println("Malformed URL");
+			gameImageLabel.setIcon(null);
 		} catch (IOException iox) {
 			System.out.println("Can not load file");
 		}
