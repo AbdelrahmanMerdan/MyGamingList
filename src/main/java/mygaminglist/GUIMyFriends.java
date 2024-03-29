@@ -1,4 +1,4 @@
-package src;
+package mygaminglist;
 
 import java.awt.CardLayout;
 
