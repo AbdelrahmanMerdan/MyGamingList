@@ -169,6 +169,7 @@ public class GUIGame {
 		
 		game = GameData.getGame(id);
 		
+		
 		setGameCover();
 		setGameInfo();
 		setMetacriticReviews();

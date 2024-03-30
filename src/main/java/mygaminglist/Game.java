@@ -25,10 +25,11 @@ public class Game {
 		this.metaURL = metaURL;
 		this.sum_of_all_reviews = sum_of_all_reviews;
 		this.num_of_reviews = num_of_reviews;
-		this.average_of_reviews = average_of_reviews;
+		this.average_of_reviews =  average_of_reviews;
 		this.comments = comments;
 		this.players = players;
 		this.peak = peak;
+	
 	}
 
 	public int getID() {
@@ -136,13 +137,16 @@ public class Game {
 	}
 	
 	public int getAverage_of_reviews() {
-		return average_of_reviews;
+		return this.average_of_reviews;
 	}
 
 	public void setAverage_of_reviews() {
 		
 		if(num_of_reviews > 0) {
+			System.out.println(sum_of_all_reviews/num_of_reviews);
 			this.average_of_reviews = sum_of_all_reviews/num_of_reviews;
+			System.out.println(this.average_of_reviews);
+			
 		}
 		else {
 			this.average_of_reviews = 0;
