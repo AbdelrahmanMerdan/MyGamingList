@@ -33,11 +33,13 @@ public class User {
 	private List<Object> games;
 	private List<String> friends;
 	private boolean moderator;
+	private boolean isPrivate;
 
 	@JsonCreator
 	public User(@JsonProperty("_id") Object id, @JsonProperty("username") String username, 
 			@JsonProperty("password") String password, @JsonProperty("Games") List<Object> games, 
-			@JsonProperty("Friends") List<String> friends, @JsonProperty("Moderartor") boolean moderator )
+			@JsonProperty("Friends") List<String> friends, @JsonProperty("Moderartor") boolean moderator,
+				@JsonProperty("isPrivate") boolean isPrivate)
 			 {
 		this.id = id;
 		this.username = username;
@@ -45,6 +47,7 @@ public class User {
 		this.games = games;
 		this.friends = friends;
 		this.setModerator(moderator);
+		this.isPrivate = isPrivate;
 	}
 
 	public User(String username, String password)
@@ -55,7 +58,19 @@ public class User {
 		this.games = new ArrayList<>();
 	    this.friends = new ArrayList<>();
 	    this.setModerator(false);
+		this.isPrivate = false;
 		}
+
+	public User(String username, String password, boolean isPrivate)
+	{
+		this.id = 0;
+		this.username = username;
+		this.password = password;
+		this.games = new ArrayList<>();
+		this.friends = new ArrayList<>();
+		this.setModerator(false);
+		this.isPrivate = isPrivate;
+	}
 	
 
 
@@ -75,6 +90,7 @@ public class User {
 		return username;
 	}
 
+	public boolean isPrivate() {return isPrivate;}
 
 
 	public void setName(String name) {
@@ -102,6 +118,7 @@ public class User {
 		public boolean isModerator() {
 		return moderator;
 	}
+
 
 	public void setModerator(boolean moderator) {
 		this.moderator = moderator;
