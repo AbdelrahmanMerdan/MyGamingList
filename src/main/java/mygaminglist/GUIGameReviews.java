@@ -161,6 +161,8 @@ public class GUIGameReviews extends JPanel {
 		recommendSort = 0;
 		backLocation = "game";
 		
+		drawReviews();
+		
 		newReviewButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				boolean hasReviewed = Review.AlreadyReviewed(game, GUIMain.usernameLoggedIn);
@@ -184,8 +186,6 @@ public class GUIGameReviews extends JPanel {
 				}
 			}
 		});
-		
-		drawReviews();
 	}
 	
 	// resets the class for new user reviews and calls drawReviews
