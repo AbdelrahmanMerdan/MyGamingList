@@ -45,12 +45,15 @@ import javax.swing.DefaultComboBoxModel;
 public class GUIGameReviews extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	
 	private static Box reviewBox;
-	private static JLabel reviewTitleLabel;
+	private static JLabel titleLabel;
 	private static JButton newReviewButton;
-	private static String backLocation;
 	private static JPanel buttonPanel;
 	private static JScrollPane reviewScrollPane;
+
+	private static JPanel card;
+	private static String backLocation;
 	private static Game loadedGame;
 	private static String loadedUser;
 	private static boolean chronOrder = true;
@@ -61,6 +64,8 @@ public class GUIGameReviews extends JPanel {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public GUIGameReviews(JPanel cardPane) {
+		card = cardPane;
+		
 		JPanel mainPane = new JPanel();
 		mainPane.setLayout(new BorderLayout(0, 0));
 		mainPane.setBorder(new MatteBorder(50, 50, 50, 50, (Color) new Color(27, 40, 56)));
@@ -88,11 +93,11 @@ public class GUIGameReviews extends JPanel {
 		mainPane.add(ReviewHeaderPane, BorderLayout.NORTH);
 		ReviewHeaderPane.setLayout(new BorderLayout(0, 0));
 		
-		reviewTitleLabel = new JLabel("GAME/USER");
-		reviewTitleLabel.setForeground(Color.WHITE);
-		reviewTitleLabel.setFont(new Font("MS Song", Font.BOLD, 40));
-		reviewTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		ReviewHeaderPane.add(reviewTitleLabel, BorderLayout.WEST);
+		titleLabel = new JLabel("GAME/USER");
+		titleLabel.setForeground(Color.WHITE);
+		titleLabel.setFont(new Font("MS Song", Font.BOLD, 40));
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		ReviewHeaderPane.add(titleLabel, BorderLayout.WEST);
 		
 		buttonPanel = new JPanel();
 		ReviewHeaderPane.add(buttonPanel, BorderLayout.EAST);
@@ -157,11 +162,279 @@ public class GUIGameReviews extends JPanel {
 		    }
 		});
 	}
-//	public static void loadGameReviews(JPanel cardPane, Game game) {
-//		loadedGame = game;
-//		loadedUser = null;
-//		loadGameReviews(cardPane, game, true, 0);
-//	}
+	
+	public static void updateGame(Game game) {
+		loadedGame = game;
+		loadedUser = null;
+		backLocation = "game";
+		
+		newReviewButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				boolean hasReviewed = Review.AlreadyReviewed(game, GUIMain.usernameLoggedIn);
+				if (GUIMain.usernameLoggedIn != null && !hasReviewed) {
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								GUINewUserReview reviewFrame = new GUINewUserReview(card, game);
+								reviewFrame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+				else if(hasReviewed) {
+					JOptionPane.showMessageDialog(null, "Error: User has already reviewed.");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Error: User is not logged in.");
+				}
+			}
+		});
+		
+		updateReviews();
+	}
+	
+	public static void updateUser(String user) {
+		loadedUser = user;
+		loadedGame = null;
+		backLocation = "mainMenu";
+		updateReviews();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void updateReviews() {
+		
+		if (loadedUser == null) { // for game
+			titleLabel.setText(loadedGame.getName());
+			List<Object> reviews = loadedGame.getComment();
+			reviews = sort(reviews);
+			for (int i = 0; i < reviews.size(); i++) {
+				List<Object> review = (List<Object>) reviews.get(i);
+				drawReview(review);
+			}
+		} 
+		else if (loadedGame == null){
+			titleLabel.setText(loadedUser+" Reviews");
+			User user = UsersImpl.getUser(loadedUser);
+			List<Object> reviews = user.getGames();
+			reviews = sort(reviews);
+			for (int i = 0; i < reviews.size(); i++) {
+				List<Object> review = (List<Object>) reviews.get(i);
+				drawReview(review);
+			}
+		}
+		
+		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				reviewScrollPane.getVerticalScrollBar().setValue(0);
+			}
+		});
+	}
+	
+	public static List<Object> sort(List<Object> unsortedList){
+		return unsortedList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void drawReview(List<Object> reviews) {
+		
+		List<Object> review = reviews;
+		
+		JPanel reviewPane = new JPanel();
+		reviewPane.setBackground(Color.BLACK);
+		reviewPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel reviewHeaderPane = new JPanel();
+		reviewHeaderPane.setBorder(new MatteBorder(10, 0, 10, 0, (Color) new Color(23, 26, 33)));
+		reviewHeaderPane.setBackground(new Color(23, 26, 33));
+		reviewPane.add(reviewHeaderPane, BorderLayout.NORTH);
+		reviewHeaderPane.setLayout(new BorderLayout(0, 0));
+		
+		String name;
+		if (loadedUser == null) { // game
+			name = (String) review.get(0);
+		} else {
+			name = (String) review.get(1);
+		}
+		JLabel nameLabel = new JLabel(name);
+		nameLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
+		nameLabel.setForeground(Color.WHITE);
+		reviewHeaderPane.add(nameLabel, BorderLayout.WEST);
+		
+		String recommended;
+		if (loadedUser == null) { // game
+			recommended = (String) review.get(2);
+		} else {
+			recommended = (String) review.get(1);
+		}
+		JLabel recommendLabel = new JLabel("RECCOMENDED: " + recommended);
+		recommendLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
+		recommendLabel.setForeground(Color.WHITE);
+		recommendLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		reviewHeaderPane.add(recommendLabel, BorderLayout.CENTER);
+		
+		String score;
+		if (loadedUser == null) { // game
+			score = String.valueOf(review.get(1));
+		} else {
+			score = String.valueOf(review.get(2));
+		}
+		JLabel scoreLabel = new JLabel("SCORE: " + score);
+		scoreLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
+		scoreLabel.setForeground(Color.WHITE);
+		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		reviewHeaderPane.add(scoreLabel, BorderLayout.EAST);
+		
+		JPanel commentPane = new JPanel();
+		reviewPane.add(commentPane, BorderLayout.SOUTH);
+		commentPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel forumPane = new JPanel();
+		commentPane.add(forumPane);
+		forumPane.setLayout(new BorderLayout(0, 0));
+
+		forumPane.setVisible(false);
+		
+		Box commentBox = new Box(1);
+		
+		List<Object> commentArray;
+		if (loadedUser == null) { // game
+			commentArray = (List<Object>) review.get(4);
+		} else {
+			int gameID = (int) review.get(0);
+			Game game = GameData.getGame(gameID);
+			User user = UsersImpl.getUser(loadedUser);
+			commentArray = Review.getAllCommentsForReview(user , game);
+		}
+		for(int i = 0; i < commentArray.size(); i +=2)
+		{
+			comment(commentBox, commentArray, i);
+		}
+		
+		JScrollPane commentScrollPane = new JScrollPane(commentBox);
+		commentScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		forumPane.add(commentScrollPane);
+		
+		JPanel comentHeaderPane = new JPanel();
+		comentHeaderPane.setBackground(new Color(23, 26, 33));
+		commentPane.add(comentHeaderPane, BorderLayout.NORTH);
+		comentHeaderPane.setLayout(new BorderLayout(0, 0));
+		
+		JLabel commentLabel = new JLabel("SHOW / HIDE COMMENTS");
+		commentLabel.setFont(new Font("MS Song", Font.PLAIN, 16));
+		commentLabel.setForeground(Color.WHITE);
+		comentHeaderPane.add(commentLabel, BorderLayout.WEST);
+		
+		JLabel newComentLabel = new JLabel("ADD A COMMENT");
+		newComentLabel.setFont(new Font("MS Song", Font.PLAIN, 16));
+		newComentLabel.setForeground(Color.WHITE);
+		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
+		
+		JTextArea reviewContentPane = new JTextArea();
+		reviewContentPane.setLineWrap(true);
+		reviewContentPane.setWrapStyleWord(true);
+		reviewContentPane.setEditable(false);
+		
+		String ReviewText;
+		if (loadedUser == null) { // game
+			ReviewText = String.valueOf(review.get(3));
+		} else {
+			ReviewText = String.valueOf(review.get(4));
+		}
+		reviewContentPane.setBackground(new Color(27, 40, 56));
+		reviewContentPane.setForeground(Color.WHITE);
+		reviewContentPane.setFont(new Font("MS Song", Font.PLAIN, 20));
+		reviewContentPane.setText(ReviewText);
+		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
+		
+		// when started
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				commentScrollPane.getVerticalScrollBar().setValue(0);
+				commentScrollPane.getHorizontalScrollBar().setValue(0);
+			}
+		});
+
+		// when resized
+		class ResizeListener extends ComponentAdapter {
+			public void componentResized(ComponentEvent e) {
+				reviewPane.setPreferredSize(null);
+				reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
+			}
+		}
+		reviewPane.addComponentListener(new ResizeListener());
+
+		// when comments shown
+		commentLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (forumPane.isVisible()) {
+					forumPane.setVisible(false);
+
+					reviewPane.setPreferredSize(null);
+					reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
+				} else {
+					commentScrollPane.setPreferredSize(null);
+					int offset = 70;
+					int maxHeight = Math.max(500, (int) (reviewPane.getSize().getHeight()
+							- reviewContentPane.getPreferredSize().getHeight() - offset));
+					if (commentScrollPane.getPreferredSize().getHeight() > maxHeight) {
+						commentScrollPane.setPreferredSize(new Dimension(0, maxHeight));
+					}
+					forumPane.setVisible(true);
+
+					reviewPane.setPreferredSize(null);
+					reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
+				}
+			}
+		});
+		
+		if (loadedUser == null) {
+			newComentLabel.addMouseListener(new MouseAdapter() {					// needs to be implemented, comment needs to be saved to db alongside username
+				public void mouseClicked(MouseEvent e) {
+					if (GUIMain.usernameLoggedIn != null) {
+						String comment;
+
+						//Prompt user for comment
+						comment = JOptionPane.showInputDialog(reviewContentPane,
+								"Enter your Comment:",
+								"Add Comment",
+								JOptionPane.PLAIN_MESSAGE);
+
+						//Keep prompting till user puts a thing
+						while(comment != null && comment.equals(""))
+						{
+							JOptionPane.showMessageDialog(reviewContentPane,
+									"Please enter a comment",
+									"Error",
+									JOptionPane.PLAIN_MESSAGE);
+
+							comment = JOptionPane.showInputDialog(reviewContentPane,
+									"Enter your Comment:",
+									"Add Comment",
+									JOptionPane.PLAIN_MESSAGE);
+						}
+
+						if(comment != null)
+						{
+							Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(name), GUIGame.game);
+							//redraw
+						}
+					} else {
+						JOptionPane.showMessageDialog(reviewContentPane,
+								"Please Login to Comment",
+								"Error",
+								JOptionPane.PLAIN_MESSAGE);
+					}
+				}
+			});
+		}
+
+		reviewBox.removeAll();
+		reviewBox.add(reviewPane);
+		//repaint / redraw
+	}
 	
 	public static void loadGameReviews(JPanel cardPane, Game game) {
 		// reset everything
@@ -180,8 +453,7 @@ public class GUIGameReviews extends JPanel {
 			} else {
 				review = reviews.get(reviews.size() - 1 - i);
 			}
-			
-			@SuppressWarnings("unchecked")
+
 			List<Object> reviewElements = (List<Object>) review;
 			String isRecommended = (String) reviewElements.get(2);
 			if (recommendSort == 1 && !isRecommended.equals("Yes")) {
@@ -194,7 +466,7 @@ public class GUIGameReviews extends JPanel {
 		}
 		
 		// setup misc.
-		reviewTitleLabel.setText(game.getName());
+		titleLabel.setText(game.getName());
 		backLocation = "game";
 		
 		// listener for new review button
@@ -228,12 +500,6 @@ public class GUIGameReviews extends JPanel {
 			}
 		});
 	}
-	
-//	public static void loadUserReviews(JPanel cardPane, String user) {
-//		loadedUser = user;
-//		loadedGame = null;
-//		loadUserReviews(cardPane, user, true, 0);
-//	}
 	
 	@SuppressWarnings("unchecked")
 	public static void loadUserReviews(JPanel cardPane, String user) { // recommend: 0 = normal, 1 = recommended, 2 = not recommended
@@ -272,7 +538,7 @@ public class GUIGameReviews extends JPanel {
 		}
 		
 		//setup misc.
-		reviewTitleLabel.setText(user+" Reviews");
+		titleLabel.setText(user+" Reviews");
 		backLocation = "mainMenu";
 		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
