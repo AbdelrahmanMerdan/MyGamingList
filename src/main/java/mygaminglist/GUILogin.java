@@ -1,7 +1,8 @@
 package mygaminglist;
 
 import database.*;
-import javax.swing.JPanel;
+
+import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -14,12 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
 import java.awt.Font;
@@ -38,6 +33,7 @@ public class GUILogin extends JFrame {
 	private String usernamePrompt = "Username";
 	private String passwordPrompt = "Password";
 	private String confirmPasswordPrompt = "Confirm Password";
+	private boolean isPrivate = true;
 
 	public GUILogin() {
 		UsersImpl users = new UsersImpl();
@@ -100,7 +96,8 @@ public class GUILogin extends JFrame {
 				
 				@SuppressWarnings("deprecation")
 				String password = passwordField.getText();
-				User user = new User(username, password);
+
+				User user = new User(username, password,isPrivate);
 
 				try {
 					users.login(user);
@@ -199,28 +196,45 @@ public class GUILogin extends JFrame {
 		newUserPane.setBackground(new Color(23, 26, 33));
 		borderPane.add(newUserPane, "signup");
 		newUserPane.setLayout(new BorderLayout(0, 0));
-		
-		JPanel newUserHeaderPane = new JPanel();
+
+		JPanel newUserHeaderPane = new JPanel(new GridLayout(2, 1));
 		newUserHeaderPane.setBackground(new Color(23, 26, 33));
 		newUserPane.add(newUserHeaderPane, BorderLayout.NORTH);
-		
+
+		JPanel signUpLabelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		signUpLabelPanel.setBackground(new Color(23, 26, 33));
+		newUserHeaderPane.add(signUpLabelPanel, BorderLayout.NORTH);
+
 		JLabel signUpPromptLabel = new JLabel("SIGN UP");
 		signUpPromptLabel.setForeground(Color.WHITE);
 		signUpPromptLabel.setFont(new Font("Verdana", Font.PLAIN, 50));
-		newUserHeaderPane.add(signUpPromptLabel);
-		
+		signUpLabelPanel.add(signUpPromptLabel);
+
+		JPanel checkBoxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		checkBoxPanel.setBackground(new Color(23, 26, 33));
+		newUserHeaderPane.add(checkBoxPanel, BorderLayout.CENTER);
+		JCheckBox isPrivateCheckBox = new JCheckBox("Would You like your account to be private? ");
+
+		isPrivateCheckBox.setBackground(new Color(23, 26, 33));
+		isPrivateCheckBox.setForeground(Color.WHITE);
+		isPrivateCheckBox.setFont(new Font("MS Song", Font.PLAIN, 20));
+		checkBoxPanel.add(isPrivateCheckBox,BorderLayout.CENTER);
+
+
 		JPanel newUserButtonPane = new JPanel();
 		newUserButtonPane.setBackground(new Color(23, 26, 33));
 		newUserPane.add(newUserButtonPane, BorderLayout.SOUTH);
 		newUserButtonPane.setLayout(new GridLayout(0, 2, 100, 0));
-		
+
+
+
 		JButton createAccountButton = new JButton("Create Account");
 		createAccountButton.setBackground(new Color(23, 26, 33));
 		createAccountButton.setOpaque(true);
 		createAccountButton.setForeground(Color.WHITE);
 		createAccountButton.setFont(new Font("Verdana", Font.PLAIN, 32));
 		createAccountButton.setFocusable(false);
-		newUserButtonPane.add(createAccountButton);
+		newUserButtonPane.add(createAccountButton, BorderLayout.CENTER);
 		
 		//create account
 		createAccountButton.addActionListener(new ActionListener(){
@@ -234,7 +248,10 @@ public class GUILogin extends JFrame {
 				} else if (newPassword.length() < 4 || newPassword.length() > 16) {
 					newUsernameField.setText("Password length must be between 4-16");
 				} else {
-					User newUser = new User(newUsername, newPassword);
+					if (!isPrivateCheckBox.isSelected()){
+						isPrivate = false;
+					}
+					User newUser = new User(newUsername, newPassword, isPrivate);
 
 					try {
 						users.createAccount(newUser);
@@ -268,7 +285,9 @@ public class GUILogin extends JFrame {
 		newUserMainPane.setBorder(new EmptyBorder(30, 50, 40, 50));
 		newUserPane.add(newUserMainPane, BorderLayout.CENTER);
 		newUserMainPane.setLayout(new BorderLayout(50, 25));
-		
+
+
+
 		newUsernameField = new JTextField();
 		newUsernameField.setBackground(new Color(27, 40, 56));
 		newUsernameField.setForeground(Color.WHITE);
