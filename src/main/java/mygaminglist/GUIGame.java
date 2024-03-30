@@ -126,7 +126,7 @@ public class GUIGame {
 		
 		reviewGameButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				GUIGameReviews.loadGameReviews(cardPane, game);
+				GUIGameReviews.updateGame(game);
 				((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 			}
 		});

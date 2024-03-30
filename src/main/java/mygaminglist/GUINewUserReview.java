@@ -121,7 +121,7 @@ public class GUINewUserReview extends JDialog{
 				
 				try {
 					Review.review_game(GUIMain.usernameLoggedIn, game, Score, comment, recommended);
-					GUIGameReviews.loadGameReviews(cardPane, game);
+					GUIGameReviews.updateGame(game);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 				} catch (IOException e1) {
 					e1.printStackTrace();
