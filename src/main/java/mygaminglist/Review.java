@@ -281,6 +281,7 @@ public class Review {
 	private static Bson UpdateAverageOfReviews(Game game) {
 		
 		game.setAverage_of_reviews();
+//		System.out.println(game.getAverage_of_reviews());
 		int avg = game.getAverage_of_reviews();
 		
 
@@ -492,18 +493,22 @@ public class Review {
 		////			Get the Game from the database using it's ID
 					
 					Game game = GameData.getGame(271590);
-					Game game2 = GameData.getGame(1086940);
-					Game game3 = GameData.getGame(47780);
-					Game game4 = GameData.getGame(1113000);
+//					Game game2 = GameData.getGame(1086940);
+//					Game game3 = GameData.getGame(47780);
+//					Game game4 = GameData.getGame(1113000);
 				
-					User user = UsersImpl.getUser("BodoTest");
+//					User user = UsersImpl.getUser("BodoTest");
 					
 //					review_game("BodoTest", game, 9, "", "yes");
 //					review_game("BodoTest", game2, 9, "", "yes");
 //					review_game("BodoTest", game3, 9, "", "yes");
 //					review_game("BodoTest", game4, 9, "", "yes");
 				
-					DeleteAllUserReviews(user.getUsername());
+//					DeleteAllUserReviews(user.getUsername());
+					System.out.println(game.getNumOfReviews());
+					System.out.println(game.getSumOfAllReviews());
+					game.setAverage_of_reviews();
+					System.out.println(game.getAverage_of_reviews());
 //		
 
 
