@@ -99,7 +99,7 @@ public class GUIMain extends JFrame{
 				else
 				{
 					//((CardLayout) cardPane.getLayout()).show(cardPane, "myReviewedGames");
-					GUIGameReviews.loadUserReviews(cardPane, usernameLoggedIn);
+					GUIGameReviews.loadUserReviews(usernameLoggedIn);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 				}
 			}
@@ -223,6 +223,7 @@ public class GUIMain extends JFrame{
 		GUIMainMenu mainMenu = new GUIMainMenu(cardPane, mostPlayed, popReleases);
 		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
+		GUIGameReviews review = new GUIGameReviews(cardPane);
 		
 	}
 }

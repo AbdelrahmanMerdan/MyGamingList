@@ -81,7 +81,7 @@ public class GUIMyFriends extends JFrame {
 		    	        @Override
 		    	        public void mouseClicked(MouseEvent e) {
 		    	            // Open the friend's reviews page when the name is clicked
-		    	            GUIGameReviews.loadUserReviews(cardPane, friendName);
+		    	            GUIGameReviews.loadUserReviews(friendName);
 		    	            ((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 		    	        }
 		    	    });
