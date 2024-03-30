@@ -95,6 +95,7 @@ public class Review {
 	
 				Bson update = Updates.combine(UpdateNumReview(game),
 						UpdateSumOfReviews(game,review),
+						UpdateAverageOfReviews(game),
 						UpdateCommentReview(game, username,review,comment,reccomendation)
 						);
 	
@@ -116,9 +117,12 @@ public class Review {
 					System.err.println("ERROR: "+e);
 				}
 				
-			}	
+			}
+			else {
+				System.out.println("This user is banned and can't comment");
+			}
 			
-			System.out.println("This user is banned and can't comment");
+			
 			
 		}
 		else {
@@ -268,6 +272,19 @@ public class Review {
 
 		Bson Update = Updates.set("sum_of_all_reviews", prevreviews);
 		game.setSumOfAllReviews(prevreviews);
+
+		return Update;
+
+
+	}
+	
+	private static Bson UpdateAverageOfReviews(Game game) {
+		
+		game.setAverage_of_reviews();
+		int avg = game.getAverage_of_reviews();
+		
+
+		Bson Update = Updates.set("average_of_reviews", avg);
 
 		return Update;
 

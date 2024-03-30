@@ -76,6 +76,20 @@ public class GameData implements Database, StubDatabase {
     	return false;
     }
 	
+	public static boolean noAppScoreReviews(int id) {
+    	//Filtering
+    	Bson filter = and(eq("_id", id), exists("average_of_reviews"));
+    	FindIterable<Document> result = games.find(filter);
+    	
+    	//Checking if reviews is unavailable for the game
+    	if(result.first() == null)
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
+	
 	public static boolean noGameStats(int id) {
     	//Filtering
     	Bson filter = and(eq("_id", id), exists("player_count"));
@@ -122,6 +136,7 @@ public class GameData implements Database, StubDatabase {
     		updateCover(jsonResponse),
     		updateSysRequire(jsonResponse),
     		updateMetacritic(jsonResponse),
+    		updateAverage(),
     		updateReview(),
     		updateComment(),
     		updateGameStats()
@@ -206,6 +221,7 @@ public class GameData implements Database, StubDatabase {
     		updateSysRequire(jsonResponse),
     		updateMetacritic(jsonResponse),
     		updateReview(),
+    		updateAverage(),
     		updateComment(),
     		updateGameStats()
     		);
@@ -250,6 +266,24 @@ public class GameData implements Database, StubDatabase {
 	   try {
 		   UpdateResult updateResult = games.updateOne(game, update);
 		   System.out.println("Added Only Reviews: "+updateResult.wasAcknowledged());
+
+	   } catch(MongoException e) {
+		   System.err.println("ERROR: "+e);
+	   }  
+   }
+   
+   public static void setAverage(int id) {
+	   Bson update = Updates.combine(updateAverage());
+	   
+	   //Grabbing specified game
+	   Bson filter = eq("_id", id);
+	   FindIterable<Document> result = games.find(filter);
+	   Document game = result.first();
+	   
+	   //Updating
+	   try {
+		   UpdateResult updateResult = games.updateOne(game, update);
+		   System.out.println("Added Only Review Average: "+updateResult.wasAcknowledged());
 
 	   } catch(MongoException e) {
 		   System.err.println("ERROR: "+e);
@@ -496,6 +530,19 @@ public class GameData implements Database, StubDatabase {
 		Bson update = Updates.set("num_of_reviews", UserReview);
 		Bson update2 = Updates.set("sum_of_all_reviews", NumberofReview);
 		Bson total = Updates.combine(update, update2);
+
+		return total;
+		
+	}
+	
+	private static Bson updateAverage() {
+		
+		int Average = 0;
+		
+		
+		Bson update = Updates.set("average_of_reviews", Average);
+		
+		Bson total = Updates.combine(update);
 
 		return total;
 		
