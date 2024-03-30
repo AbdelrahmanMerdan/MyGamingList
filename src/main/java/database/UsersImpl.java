@@ -9,8 +9,12 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+
+import mygaminglist.Game;
+import mygaminglist.Review;
 import mygaminglist.User;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -27,6 +31,8 @@ public class UsersImpl implements Database {
     private static final String PWD_KEY = "password";
     private static final String GAMES_KEY = "Games";
     private static final String FRIENDS_KEY = "Friends";
+    private static final String MODERATOR_KEY = "Moderator";
+    private static final String IS_PRIVATE = "isPrivate";
 
 //    public UsersImpl() {
 //        users = database.getCollection(TABLE_NAME);
@@ -74,13 +80,19 @@ public class UsersImpl implements Database {
     public void updateFriend(String username, String friendName, String operation) {
         Bson filter = eq(USER_KEY, username);
         Document document = users.find(filter).first();
+        User returnedUser = this.get(friendName);
 
+        System.out.println(returnedUser.isPrivate());
         Bson update;
         if (operation.equals("add")) {
+            if (returnedUser.isPrivate()){
+                throw new IllegalArgumentException("This user can not be added");
+            }
             update = Updates.addToSet(FRIENDS_KEY, friendName);
         } else {
             update = Updates.pull(FRIENDS_KEY, friendName);
         }
+
 
         try {
             UpdateResult result = users.updateOne(document, update);
@@ -100,11 +112,9 @@ public class UsersImpl implements Database {
     public User get(String username) {
         Bson filter = eq(USER_KEY, username);
         Document result = users.find(filter).first();
-
         if (result == null) {
             return null;
         }
-
         return documentToUser(result);
     }
 
@@ -141,7 +151,10 @@ public class UsersImpl implements Database {
                 .append(USER_KEY, user.getUsername())
                 .append(PWD_KEY, user.getPassword())
                 .append(GAMES_KEY, user.getGames())
-                .append(FRIENDS_KEY, user.getFriends());
+                .append(FRIENDS_KEY, user.getFriends())
+                .append(MODERATOR_KEY, user.isModerator())
+                .append(IS_PRIVATE,user.isPrivate());
+        
     }
     
     
@@ -151,17 +164,24 @@ public class UsersImpl implements Database {
     	Bson filter = eq("username", string);
     	FindIterable<Document> result = users.find(filter);
     	Document user = result.first();
-    	String jsonResponse = user.toJson();
     	
-    	try {
-    		//Returning game object from jsonResponse
-			return GameData.map.readValue(jsonResponse, User.class);
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
+    	if(user != null) {
     	
+	    	String jsonResponse = user.toJson();
+	    	
+	    	try {
+	    		//Returning game object from jsonResponse
+				return GameData.map.readValue(jsonResponse, User.class);
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+	    	
+    	}
     	return null;
     }
+    
+
+    
 }

@@ -190,6 +190,10 @@ public class GUIGame {
 			GameData.setReviewsComments(id);
 		}
 		
+		if(GameData.noAppScoreReviews(id)) {
+			GameData.setAverage(id);
+		}
+		
 		if(GameData.noGameStats(id) || TimeData.isNextDay())
 		{
 			GameData.setGameStats(id);
