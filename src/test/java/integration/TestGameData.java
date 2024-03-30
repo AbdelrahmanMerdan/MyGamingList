@@ -1,4 +1,4 @@
-package unit;
+package integration;
 
 import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,13 +38,14 @@ class TestGameData {
 			Bson update = Updates.unset("description");
 			Bson update2 = Updates.unset("sum_of_all_reviews");
 			Bson update3 = Updates.unset("num_of_reviews");
-			Bson total = Updates.combine(update, update2, update3);
+			Bson update4 = Updates.unset("player_count");
+			Bson update5 = Updates.unset("twenty_four_hr_peak");
+			Bson total = Updates.combine(update, update2, update3, update4, update5);
 
-			//Deleting description
+			//Deleting details
 			try {
 				UpdateResult updateResult = StubGameData.games.updateOne(game, total);
 				System.out.println("Acknowledged: "+updateResult.wasAcknowledged());
-
 			} catch(MongoException e) {
 				System.err.println("ERROR: "+e);
 			}
@@ -61,13 +62,20 @@ class TestGameData {
 		void noAppReviews() {
 			assertEquals(true, StubGameData.noAppReviews(TEST_GAME_ID));
 		}
-
+		
 		@Test
 		@Order(3)
+		void noGameStats() {
+			assertEquals(true, StubGameData.noGameStats(TEST_GAME_ID));
+		}
+
+		@Test
+		@Order(4)
 		void updateGame() {
 			StubGameData.updateAppDetails(TEST_GAME_ID);
 			assertEquals(false, StubGameData.noAppDetails(TEST_GAME_ID));
 			assertEquals(false, StubGameData.noAppReviews(TEST_GAME_ID));
+			assertEquals(false, StubGameData.noGameStats(TEST_GAME_ID));
 		}
 	}
 	
@@ -83,11 +91,14 @@ class TestGameData {
 		assertFalse(StubGameData.noAppExists(TEST_GAME_ID));
 		assertFalse(StubGameData.noAppDetails(TEST_GAME_ID));
 		assertFalse(StubGameData.noAppReviews(TEST_GAME_ID));
+		assertFalse(StubGameData.noGameStats(TEST_GAME_ID));
 	}
 	
 	@Test
 	@Order(2)
 	void getGame() {
+			StubGameData.updateGameStats(TEST_GAME_ID);
+			
 			Game game = StubGameData.getGame(TEST_GAME_ID);
 			assertNotNull(game);
 
@@ -100,6 +111,8 @@ class TestGameData {
 			String shortDesc = game.getShortDesc();
 			Integer numOfReviews = game.getNumOfReviews();
 			Integer userReviews = game.getSumOfAllReviews();
+			int players = game.getPlayers();
+			int peak = game.getPeak();
 			assertNotNull(name);
 			assertNotNull(sysReq);
 			assertNotNull(metaScore);
@@ -109,7 +122,8 @@ class TestGameData {
 			assertNotNull(numOfReviews);
 			assertNotNull(userReviews);
 			assertNotNull(desc);
-
+			assertTrue(players != 0 && peak != 0);
+			assertTrue(peak >= players);
 			assertEquals("Dead Space (2008)", name);
 		}
 }

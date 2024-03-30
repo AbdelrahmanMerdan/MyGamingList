@@ -1,6 +1,8 @@
 package database;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.exists;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -41,7 +43,12 @@ public class StubGameData extends GameData {
     	GameData.updateAppDetails(id);
 
     }
-
+    
+    public static boolean noGameStats(int id) {
+    	changeConnection();
+    	
+    	return GameData.noGameStats(id);
+    }
 
     public static void removeApp(int id) {
     	changeConnection();
@@ -66,6 +73,12 @@ public class StubGameData extends GameData {
        changeConnection();
        
        return GameData.getGame(id);
+    }
+    
+    public static void updateGameStats(int id) {
+ 	   changeConnection();
+ 	   
+ 	   GameData.updateGameStats(id);
     }
 	
 }
