@@ -211,6 +211,7 @@ public boolean banUser(String username) {
     	return null;
     }
     
+
     public  boolean isBanned(String username) {
     	
     	if(getBannedUser(username) != null) {
