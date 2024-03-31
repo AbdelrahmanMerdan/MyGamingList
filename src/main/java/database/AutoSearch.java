@@ -40,6 +40,9 @@ public class AutoSearch {
 		
 		Document autoAgg = new Document("$search", 
 				new Document("index", "searchGames")
+				.append("text", new Document("query", query).append("path", "name")));
+		Document agg2 = new Document("$search", 
+				new Document("index", "searchGames")
 				.append("autocomplete", new Document("query", query).append("path", "name")));
 		
 
