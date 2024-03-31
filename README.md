@@ -23,6 +23,15 @@ English, Chinese, Japanese, Vietnamese, Swedish, and any other languages that us
 <b>API:</b> Steam WEB API<br>
 <b>Database Platform:</b> MongoDB
 
+<strong>Documentation:</strong>
+
+<strong>API:</strong><br>
+i) https://steamapi.xpaw.me/<br>
+ii) https://github.com/Revadike/InternalSteamWebAPI
+
+<strong>MongoDB:</strong><br>
+i) https://www.mongodb.com/docs/
+
 <strong>Note:</strong>
 Overall, it takes around 12 seconds to launch the program.
 
