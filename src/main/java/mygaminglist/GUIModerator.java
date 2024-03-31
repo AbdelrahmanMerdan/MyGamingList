@@ -38,11 +38,12 @@ import database.UsersImpl;
 public class GUIModerator extends JFrame {
 	
     private UsersImpl users = new UsersImpl();
-    
+    BannedUserList banlist;
 	
 	public GUIModerator(JPanel cardPane, String usernameLoggedIn) {
 		
 		User moderator = users.getUser(usernameLoggedIn);
+		updateban();
 		
 		//Set up base pane
 		JPanel ModeratorPane = new JPanel();
@@ -58,22 +59,20 @@ public class GUIModerator extends JFrame {
 		bannedusersPane.setLayout(new BoxLayout(bannedusersPane, BoxLayout.Y_AXIS));
 		
 		//Populate friends pane
-		Box friendsBox = new Box(1);
+		Box banBox = new Box(1);
 		
 		if (usernameLoggedIn != null) {
-		    List<String> friends = users.listFriend(usernameLoggedIn);
-		    int nonEmptyCount = (int) friends.stream().filter(friend -> !friend.isEmpty()).count();
 
-		    if (nonEmptyCount == 0) {
+		    if (banlist.getSize() == 0) {
 		        JLabel lbl = new JLabel("Click below to ban or unban user");
 		        lbl.setForeground(Color.WHITE);
 		        lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
-		        friendsBox.add(lbl);
+		        banBox.add(lbl);
 		    } else {
-		    	for (int i = 0; i < friends.size(); i++) {
-		    	    friendsBox.add(Box.createRigidArea(new Dimension(0, 5))); // creates space between the components
-		    	    String friendName = friends.get(i);
-		    	    JLabel nameLabel = new JLabel(friendName);
+		    	for (int i = 0; i < banlist.getSize() ; i++) {
+		    		banBox.add(Box.createRigidArea(new Dimension(0, 5))); // creates space between the components
+		    	    String bannedName = banlist.getuser(i);
+		    	    JLabel nameLabel = new JLabel(bannedName);
 		    	    nameLabel.setForeground(Color.WHITE);
 		    	    nameLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
 		    	    nameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
@@ -83,20 +82,36 @@ public class GUIModerator extends JFrame {
 		    	    nameLabel.addMouseListener(new MouseAdapter() {
 		    	        @Override
 		    	        public void mouseClicked(MouseEvent e) {
-		    	            // Open the friend's reviews page when the name is clicked
-		    	        	nameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-		    	            GUIGameReviews.loadUserReviews(friendName);
-		    	            ((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
-		    	            nameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		    	        }
+
+		    	            	// Open the Remove Friend dialog when the button is clicked
+		    	                String unbannedUsername = JOptionPane.showInputDialog(GUIModerator.this,
+		    	                        "Enter 'yes' to unban this user:",
+		    	                        "Unban User",
+		    	                        JOptionPane.PLAIN_MESSAGE);
+
+		    	                if (unbannedUsername != null && !unbannedUsername.isEmpty()) {
+		    	                    // Check if the user is a friend
+		    	                	if(unbannedUsername.equals("yes") ||unbannedUsername.equals("YES")  ) {
+		    	                		 moderator.unbanUser(bannedName);
+		    	                		 JOptionPane.showMessageDialog(null, bannedName + " has been unbanned!");
+		    	                		 updateban();
+		    	                		 GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
+		    	         				((CardLayout) cardPane.getLayout()).show(cardPane, "moderatorTools");
+		    	                	}
+		    	                	else {
+		    	                		JOptionPane.showMessageDialog(null, "User has not been unbanned!");
+		    	                	}
+		    	                    
+		    	                }
+		    	        }    
 		    	    });
-		    	    friendsBox.add(nameLabel);
+		    	    banBox.add(nameLabel);
 		    	}
 		    }
 		}
 
 		//Set up scroll feature
-		JScrollPane friendsScrollPane = new JScrollPane(friendsBox);
+		JScrollPane friendsScrollPane = new JScrollPane(banBox);
 		friendsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		friendsScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		JScrollBar highRatedVertical = friendsScrollPane.getVerticalScrollBar();
@@ -165,6 +180,11 @@ public class GUIModerator extends JFrame {
 	                    	Boolean ban = moderator.banUser(BannedUsername);
 	                    	if(ban) {
 	                    		JOptionPane.showMessageDialog(null, "Banned User " + BannedUsername);
+	                    		
+	                    		updateban();
+	   	                		GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
+	   	         				((CardLayout) cardPane.getLayout()).show(cardPane, "moderatorTools");
+		                    		
 	                    	}
 	                    	else {
 	                    		JOptionPane.showMessageDialog(null, BannedUsername + " is already banned");
@@ -195,6 +215,10 @@ public class GUIModerator extends JFrame {
                 	Boolean unban = moderator.unbanUser(unbannedUsername);
                 	if(unban) {
                 		JOptionPane.showMessageDialog(null, "User has been unbanned!");
+                		
+                		updateban();
+               		 	GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
+        				((CardLayout) cardPane.getLayout()).show(cardPane, "moderatorTools");
                 	}
                 	else {
                 		JOptionPane.showMessageDialog(null, "User has not been unbanned!");
@@ -204,6 +228,12 @@ public class GUIModerator extends JFrame {
             }
         });
         
+	}
+	
+	private void updateban() {
+		banlist.usernames =new ArrayList<>();
+		banlist = new BannedUserList();
+		
 	}
 }
 

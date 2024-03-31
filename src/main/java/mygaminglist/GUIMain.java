@@ -203,7 +203,7 @@ public class GUIMain extends JFrame{
 				}
 			}
 		});
-		
+		ModeratorToolsButton.setFocusable(false);
 		ModeratorToolsButton.setVisible(false);
 		
 
@@ -297,7 +297,7 @@ public class GUIMain extends JFrame{
 		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
 		GUIGameReviews review = new GUIGameReviews(cardPane);
-		GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
+//		GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
 		AutoSearch autocomplete = new AutoSearch(cardPane);
 	}
 	
