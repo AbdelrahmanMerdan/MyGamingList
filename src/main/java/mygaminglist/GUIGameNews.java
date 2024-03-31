@@ -226,7 +226,7 @@ public class GUIGameNews extends JPanel {
 		newsPane.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				newsPane.setPreferredSize(null);
-				newsPane.setPreferredSize(new Dimension(0, (int) newsPane.getPreferredSize().getHeight() + 20));
+				newsPane.setPreferredSize(new Dimension(0, (int) newsPane.getPreferredSize().getHeight() + 40));
 			}
 		});
 
