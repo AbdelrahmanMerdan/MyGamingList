@@ -92,9 +92,10 @@ public class GUIMain extends JFrame{
 				}
 				else
 				{
-					//((CardLayout) cardPane.getLayout()).show(cardPane, "myReviewedGames");
+					myReviewsButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					GUIGameReviews.loadUserReviews(usernameLoggedIn);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
+					myReviewsButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				}
 			}
 		});
@@ -115,8 +116,10 @@ public class GUIMain extends JFrame{
 				}
 				else
 				{
+					friendsButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
+					friendsButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				}
 			}
 		});
@@ -132,28 +135,28 @@ public class GUIMain extends JFrame{
 		
 		TopGamesButton.setOpaque(true);
 		TopGamesButton.setForeground(Color.WHITE);
-		TopGamesButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+		TopGamesButton.setFont(new Font("Verdana", Font.PLAIN, 24));
 		TopGamesButton.setFocusable(false);
 		TopGamesButton.setBackground(new Color(23, 26, 33));
 		
 		TopGamesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				{
-//					GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
-//					((CardLayout) cardPane.getLayout()).show(cardPane, "topGames");
+
 					updatetop();
+
+					TopGamesButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+
 					GUITopGames topGames = new GUITopGames(cardPane, topGame);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "topGames");
+					TopGamesButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				}
 			}
 		});
 		
 		
 		headerOptionsPane.add(TopGamesButton);
-		//End of Top Games
-		
-		
 		
 		JPanel headerSearchPane = new JPanel();
 		headerPane.add(headerSearchPane, BorderLayout.EAST);
@@ -190,8 +193,7 @@ public class GUIMain extends JFrame{
 		headerSearchPane.add(headerSearchBox);
 		
 		JTextField searchQuery = (JTextField) headerSearchBox.getEditor().getEditorComponent();
-		ArrayList<String> result = new ArrayList<String>();
-		
+	
 		// focus management
 		headerSearchBox.getEditor().getEditorComponent().addFocusListener(new FocusListener() {
 			@Override
@@ -247,10 +249,9 @@ public class GUIMain extends JFrame{
 		//order matters
 		PopReleases popReleases = new PopReleases();
 		MostPlayed mostPlayed = new MostPlayed();
+
 		updatetop();
-	
-		
-		
+
 		//instantiate card pane
 		cardPane = new JPanel();
 		mainPane.add(cardPane, BorderLayout.CENTER);
@@ -263,8 +264,6 @@ public class GUIMain extends JFrame{
 		GUIGame game = new GUIGame(cardPane);
 		GUIGameReviews review = new GUIGameReviews(cardPane);
 		AutoSearch autocomplete = new AutoSearch(cardPane);
-		GUITopGames topGames = new GUITopGames(cardPane, topGame);
-		
 	}
 	
 	TopGames topGame;
