@@ -16,6 +16,7 @@ import org.bson.conversions.Bson;
 import mygaminglist.Game;
 import java.util.*;
 import java.io.IOException;
+import mygaminglist.News;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
