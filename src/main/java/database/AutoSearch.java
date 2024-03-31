@@ -34,13 +34,26 @@ public class AutoSearch {
 		if (query.equals("")) {
 			return result;
 		}
-		Document agg = new Document("$search", 
+		Document textAgg = new Document("$search", 
+				new Document("index", "searchGames")
+				.append("text", new Document("query", query).append("path", "name")));
+		
+		Document autoAgg = new Document("$search", 
 				new Document("index", "searchGames")
 				.append("autocomplete", new Document("query", query).append("path", "name")));
+		
 
-		GameData.games.aggregate(Arrays.asList(agg, limit(10), project(fields(include("name"))))).forEach(doc -> {
+		GameData.games.aggregate(Arrays.asList(textAgg, limit(1), project(fields(include("name"))))).forEach(doc -> {
 			try {
 				result.add(GameData.map.readTree(doc.toJson()).get("name").asText());
+			} catch (JsonProcessingException e) {}
+		});
+		GameData.games.aggregate(Arrays.asList(autoAgg, limit(9), project(fields(include("name"))))).forEach(doc -> {
+			try {
+				String name = GameData.map.readTree(doc.toJson()).get("name").asText();
+				if (!name.equals(result.get(0))) {
+					result.add(name);
+				}
 			} catch (JsonProcessingException e) {}
 		});
 		return result;
