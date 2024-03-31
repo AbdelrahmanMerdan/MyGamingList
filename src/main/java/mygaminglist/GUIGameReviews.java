@@ -344,7 +344,7 @@ public class GUIGameReviews extends JPanel {
 		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		reviewHeaderPane.add(scoreLabel);
 		
-		if(loadedUser != null)
+		if(loadedUser != null && (GUIMain.usernameLoggedIn.equals(loadedUser)))
 		{
 			reviewHeaderPane.remove(recommendLabel);
 			reviewHeaderPane.remove(scoreLabel);
