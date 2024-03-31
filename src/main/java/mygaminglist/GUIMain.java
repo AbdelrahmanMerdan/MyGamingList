@@ -151,7 +151,7 @@ public class GUIMain extends JFrame{
 		headerSearchPane.add(loginButton);
 		
 		JComboBox headerSearchBox = new JComboBox();
-		headerSearchBox.setFont(new Font("MS Song", Font.PLAIN, 20));
+		headerSearchBox.setFont(new Font("MS Song", Font.PLAIN, 24));
 		headerSearchBox.setEditable(true);
 		headerSearchBox.setPreferredSize(new Dimension(350,30));
 		String searchPrompt = "Search";
