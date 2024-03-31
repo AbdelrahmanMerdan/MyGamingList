@@ -6,11 +6,13 @@ An application that allows users to view PC games, basic game statistics, rate/r
 Simply download the exe file and run.</br>
 
 <b>How to Build and Compile:</b><br>
-Download and import source code as a Gradle project. Make sure that your IDE has any type of Gradle integration installed. 
+Make sure you have at least Java ver.17 and above installed, and that your IDE has any type of Gradle integration installed. 
+
+Download and import source code as a Gradle project.
 
 Refresh project by right-clicking on MyGamingList, then going to Gradle -> Refresh Gradle Project.
 
-Wait for a several minutes for the necessary libararies to be installed.
+Wait for several seconds for the necessary libararies to be installed.
 
 To configure Gradle project and its tasks, please look at build.gradle and settings.gradle file.
 
