@@ -342,7 +342,38 @@ public class GUIGameReviews extends JPanel {
 		scoreLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
 		scoreLabel.setForeground(Color.WHITE);
 		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		reviewHeaderPane.add(scoreLabel, BorderLayout.EAST);
+		reviewHeaderPane.add(scoreLabel);
+		
+		if(loadedUser != null)
+		{
+			reviewHeaderPane.remove(recommendLabel);
+			reviewHeaderPane.remove(scoreLabel);
+			scoreLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 100));
+			JPanel labelPanel = new JPanel();
+			labelPanel.setLayout(new BorderLayout(0,0));
+			labelPanel.setBackground(new Color(23, 26, 33));
+			JLabel deleteLabel = new JLabel("DELETE REVIEW");
+			deleteLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			deleteLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
+			deleteLabel.setForeground(Color.WHITE);
+			deleteLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+			
+			deleteLabel.addMouseListener(new MouseAdapter() {
+    			public void mouseClicked(MouseEvent e) {
+    				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this review?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    				switch(confirm) {
+    				case 0:
+    					Review.DeleteReview(GUIMain.usernameLoggedIn, game);
+						drawReviews();
+    				}
+    			}
+    		});
+			
+			labelPanel.add(recommendLabel, BorderLayout.CENTER);
+			labelPanel.add(scoreLabel, BorderLayout.EAST);
+			reviewHeaderPane.add(labelPanel, BorderLayout.CENTER);
+			reviewHeaderPane.add(deleteLabel, BorderLayout.EAST);
+		}
 		
 		JPanel commentPane = new JPanel();
 		reviewPane.add(commentPane, BorderLayout.SOUTH);
@@ -469,17 +500,14 @@ public class GUIGameReviews extends JPanel {
 					{
 						if(loadedUser == null)
 						{
-							newCommentLabel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 							Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(name), game);
 							drawReviews();
-							newCommentLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 						}
 						else
 						{
 							newCommentLabel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 							Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(GUIMain.usernameLoggedIn), game);
 							drawReviews();
-							newCommentLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 						}
 					}
 				} else {
