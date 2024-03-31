@@ -190,9 +190,7 @@ public class GUIMain extends JFrame{
 		
 		ModeratorToolsButton.setVisible(false);
 		
-//		if(usernameLoggedIn != null) {
-//			ModeratorToolsButton.setVisible(true);
-//		}
+
 		
 		headerSearchPane.add(ModeratorToolsButton);
 		
