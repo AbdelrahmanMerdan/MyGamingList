@@ -198,7 +198,7 @@ public class GUIMain extends JFrame{
 		headerSearchBox.setForeground(Color.WHITE);
 		headerSearchBox.setFont(new Font("MS Song", Font.PLAIN, 24));
 		headerSearchBox.setEditable(true);
-		headerSearchBox.setPreferredSize(new Dimension(350,50));
+		headerSearchBox.setPreferredSize(new Dimension(350,40));
 		String searchPrompt = "Search";
 		headerSearchBox.addItem(searchPrompt);
 		headerSearchPane.add(headerSearchBox);
