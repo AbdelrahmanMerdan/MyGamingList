@@ -403,6 +403,12 @@ public class GameData implements Database, StubDatabase {
     	
     	return game.getString("name");
     }
+    
+    public static String getAverageofusers(int id) {
+    	//Grabbing specified game
+    	Game g = getGame(id);
+    	return String.valueOf(g.getAverage_of_reviews()) ;
+    }
 
 	
     public static Game getGame(int id) {

@@ -132,6 +132,29 @@ public class GUIMain extends JFrame{
 		friendsButton.setFocusable(false);
 		headerOptionsPane.add(friendsButton);
 		
+		//Set up Top Games
+		JButton TopGamesButton = new JButton("Top Games");
+		TopGamesButton.setOpaque(true);
+		TopGamesButton.setForeground(Color.WHITE);
+		TopGamesButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+		TopGamesButton.setFocusable(false);
+		TopGamesButton.setBackground(new Color(23, 26, 33));
+		
+		TopGamesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				{
+//					GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
+//					((CardLayout) cardPane.getLayout()).show(cardPane, "topGames");
+					((CardLayout) cardPane.getLayout()).show(cardPane, "topGames");
+				}
+			}
+		});
+		
+		
+		headerOptionsPane.add(TopGamesButton);
+		//End of Top Games
+		
 		JPanel headerSearchPane = new JPanel();
 		headerPane.add(headerSearchPane, BorderLayout.EAST);
 		headerSearchPane.setOpaque(false);
@@ -213,6 +236,7 @@ public class GUIMain extends JFrame{
 		//order matters
 		PopReleases popReleases = new PopReleases();
 		MostPlayed mostPlayed = new MostPlayed();
+		TopGames topGame = new TopGames();
 		
 		//instantiate card pane
 		cardPane = new JPanel();
@@ -225,6 +249,7 @@ public class GUIMain extends JFrame{
 		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
 		GUIGameReviews review = new GUIGameReviews(cardPane);
+		GUITopGames topGames = new GUITopGames(cardPane, topGame);
 		
 	}
 }
