@@ -19,7 +19,8 @@ By default, running the assemble task will build and launch the program. While r
 <strong>Supported Languages for User Reviews and Comments:</strong><br> 
 English, Chinese, Japanese, Vietnamese, Swedish, and any other languages that uses the English, Latin, Arabic, Cyrillic, or Greek alphabet.
 
-<strong>Ressources:</strong><br>
+<strong>Ressources:</strong>
+
 <b>API:</b> Steam WEB API<br>
 <b>Database Platform:</b> MongoDB
 
