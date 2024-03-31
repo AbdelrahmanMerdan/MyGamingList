@@ -118,7 +118,7 @@ public class GUIGameReviews extends JPanel {
 		JButton backButton = new JButton("  BACK  ");
 		backButton.setForeground(Color.WHITE);
 		backButton.setBackground(new Color(23, 26, 33));
-		backButton.setFont(new Font("Verdana", Font.PLAIN, 16));
+		backButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		backButton.setOpaque(true);
 		buttonPanel.add(backButton);
 		backButton.setFocusable(false);
@@ -134,7 +134,7 @@ public class GUIGameReviews extends JPanel {
 		newReviewButton.setForeground(Color.WHITE);
 		newReviewButton.setBackground(new Color(23, 26, 33));
 		newReviewButton.setOpaque(true);
-		newReviewButton.setFont(new Font("Verdana", Font.PLAIN, 16));
+		newReviewButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		buttonPanel.add(newReviewButton);
 		newReviewButton.setFocusable(false);
 		
@@ -188,13 +188,15 @@ public class GUIGameReviews extends JPanel {
 					});
 				}
 				else if(hasReviewed) {
-					int reWrite = JOptionPane.showConfirmDialog(null, "You have already reviewed this game.\nWould you like to delete your current review and make a new one?", "New Review", 
+					int reWrite = JOptionPane.showConfirmDialog(null, "You cannot review games you've already reviewed.\n\nWould you like to delete your current review in order to make a new one?", "New Review", 
 							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					switch(reWrite) {
 					case 0:
 						Review.DeleteReview(GUIMain.usernameLoggedIn, game);
+						drawReviews();
 						try {
 							GUINewUserReview reviewFrame = new GUINewUserReview(card, game);
+							drawReviews();
 							reviewFrame.setVisible(true);
 						} catch (Exception e2) {
 							e2.printStackTrace();
@@ -202,7 +204,7 @@ public class GUIGameReviews extends JPanel {
 					}
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "Error: User is not logged in.");
+					JOptionPane.showMessageDialog(null, "Please login to review.", "Message", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -342,6 +344,37 @@ public class GUIGameReviews extends JPanel {
 		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		reviewHeaderPane.add(scoreLabel, BorderLayout.EAST);
 		
+		if(loadedUser != null && (GUIMain.usernameLoggedIn.equals(loadedUser)))
+		{
+			reviewHeaderPane.remove(recommendLabel);
+			reviewHeaderPane.remove(scoreLabel);
+			scoreLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 100));
+			JPanel labelPanel = new JPanel();
+			labelPanel.setLayout(new BorderLayout(0,0));
+			labelPanel.setBackground(new Color(23, 26, 33));
+			JLabel deleteLabel = new JLabel("DELETE REVIEW");
+			deleteLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			deleteLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
+			deleteLabel.setForeground(Color.WHITE);
+			deleteLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+			
+			deleteLabel.addMouseListener(new MouseAdapter() {
+    			public void mouseClicked(MouseEvent e) {
+    				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this review?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    				switch(confirm) {
+    				case 0:
+    					Review.DeleteReview(GUIMain.usernameLoggedIn, game);
+						drawReviews();
+    				}
+    			}
+    		});
+			
+			labelPanel.add(recommendLabel, BorderLayout.CENTER);
+			labelPanel.add(scoreLabel, BorderLayout.EAST);
+			reviewHeaderPane.add(labelPanel, BorderLayout.CENTER);
+			reviewHeaderPane.add(deleteLabel, BorderLayout.EAST);
+		}
+		
 		JPanel commentPane = new JPanel();
 		reviewPane.add(commentPane, BorderLayout.SOUTH);
 		commentPane.setLayout(new BorderLayout(0, 0));
@@ -381,6 +414,7 @@ public class GUIGameReviews extends JPanel {
 		comentHeaderPane.add(newCommentLabel, BorderLayout.EAST);
 		
 		JTextArea reviewContentPane = new JTextArea();
+		reviewContentPane.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		reviewContentPane.setLineWrap(true);
 		reviewContentPane.setWrapStyleWord(true);
 		reviewContentPane.setEditable(false);
@@ -443,7 +477,7 @@ public class GUIGameReviews extends JPanel {
 					String comment;
 
 					//Prompt user for comment
-					comment = JOptionPane.showInputDialog(reviewContentPane,
+					comment = JOptionPane.showInputDialog(null,
 							"Enter your Comment:",
 							"Add Comment",
 							JOptionPane.PLAIN_MESSAGE);
@@ -451,12 +485,12 @@ public class GUIGameReviews extends JPanel {
 					//Keep prompting till user puts a thing
 					while(comment != null && comment.equals(""))
 					{
-						JOptionPane.showMessageDialog(reviewContentPane,
-								"Please enter a comment",
-								"Error",
-								JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.showMessageDialog(null,
+								"Please enter a comment.",
+								"ERROR",
+								JOptionPane.WARNING_MESSAGE);
 
-						comment = JOptionPane.showInputDialog(reviewContentPane,
+						comment = JOptionPane.showInputDialog(null,
 								"Enter your Comment:",
 								"Add Comment",
 								JOptionPane.PLAIN_MESSAGE);
@@ -471,15 +505,16 @@ public class GUIGameReviews extends JPanel {
 						}
 						else
 						{
+							newCommentLabel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 							Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(GUIMain.usernameLoggedIn), game);
 							drawReviews();
 						}
 					}
 				} else {
-					JOptionPane.showMessageDialog(reviewContentPane,
-							"Please Login to Comment",
-							"Error",
-							JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Please login to comment.",
+							"Message",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -507,7 +542,10 @@ public class GUIGameReviews extends JPanel {
 		commentHeaderPane.add(usernameLabel);
 		
 		String message = (String) comments.get(i+1);
-		JTextPane commentContentPane = new JTextPane();
+		JTextArea commentContentPane = new JTextArea();
+		commentContentPane.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		commentContentPane.setLineWrap(true);
+		commentContentPane.setWrapStyleWord(true);
 		commentContentPane.setEditable(false);
 		commentContentPane.setBackground(new Color(27, 40, 56));
 		commentContentPane.setForeground(Color.WHITE);

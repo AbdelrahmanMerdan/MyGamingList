@@ -108,8 +108,9 @@ public class GUILogin extends JFrame {
 					login(borderPane);
 					loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				} catch (IllegalArgumentException exp) {
+					loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 					System.out.println("login failed");
-					usernameField.setText(exp.getMessage());
+					JOptionPane.showMessageDialog(null, exp.getMessage()+".", "ERROR", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -150,6 +151,7 @@ public class GUILogin extends JFrame {
 		
 		usernameField = new JTextField();
 		usernameField.setBackground(new Color(27, 40, 56));
+		usernameField.setCaretColor(Color.WHITE);
 		usernameField.setForeground(Color.WHITE);
 		usernameField.setFont(new Font("MS Song", Font.PLAIN, 32));
 		loginMainPane.add(usernameField, BorderLayout.NORTH);
@@ -172,6 +174,7 @@ public class GUILogin extends JFrame {
 		
 		passwordField = new JPasswordField();
 		passwordField.setBackground(new Color(27, 40, 56));
+		passwordField.setCaretColor(Color.WHITE);
 		passwordField.setForeground(Color.WHITE);
 		passwordField.setFont(new Font("MS Song", Font.PLAIN, 32));
 		loginMainPane.add(passwordField, BorderLayout.SOUTH);
@@ -187,7 +190,7 @@ public class GUILogin extends JFrame {
 				}
 			}
 			public void focusLost(FocusEvent e) {
-				if (passwordField.getPassword().length == 0){							//yuck
+				if (passwordField.getPassword().length == 0){							
 					passwordField.setText(passwordPrompt);
 					passwordField.setEchoChar((char)0);
 				}
@@ -216,11 +219,11 @@ public class GUILogin extends JFrame {
 		JPanel checkBoxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		checkBoxPanel.setBackground(new Color(23, 26, 33));
 		newUserHeaderPane.add(checkBoxPanel, BorderLayout.CENTER);
-		JCheckBox isPrivateCheckBox = new JCheckBox("Would You like your account to be private? ");
+		JCheckBox isPrivateCheckBox = new JCheckBox("Would you like your account to be private? ");
 
 		isPrivateCheckBox.setBackground(new Color(23, 26, 33));
 		isPrivateCheckBox.setForeground(Color.WHITE);
-		isPrivateCheckBox.setFont(new Font("MS Song", Font.PLAIN, 20));
+		isPrivateCheckBox.setFont(new Font("Verdana", Font.PLAIN, 20));
 		checkBoxPanel.add(isPrivateCheckBox,BorderLayout.CENTER);
 
 
@@ -245,11 +248,11 @@ public class GUILogin extends JFrame {
 				String newUsername = newUsernameField.getText();
 				String newPassword = newPasswordField.getText();
 				if (newUsername.equals("")) {
-					newUsernameField.setText("Username cannot be empty");
+					JOptionPane.showMessageDialog(null, "Username cannot be empty.", "ERROR", JOptionPane.WARNING_MESSAGE);;
 				} else if (!newPassword.equals(confirmPasswordField.getText())) {
-					newUsernameField.setText("Password doesn't match");
+					JOptionPane.showMessageDialog(null, "Password doesn't match.", "ERROR", JOptionPane.WARNING_MESSAGE);
 				} else if (newPassword.length() < 4 || newPassword.length() > 16) {
-					newUsernameField.setText("Password length must be between 4-16");
+					JOptionPane.showMessageDialog(null, "Password length must be between 4-16", "ERROR", JOptionPane.WARNING_MESSAGE);
 				} else {
 					if (!isPrivateCheckBox.isSelected()){
 						isPrivate = false;
@@ -264,7 +267,8 @@ public class GUILogin extends JFrame {
 						login(borderPane);
 						createAccountButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 					} catch (IllegalArgumentException exp) {
-						newUsernameField.setText(exp.getMessage().split(",")[0]);
+						createAccountButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+						JOptionPane.showMessageDialog(null, exp.getMessage().split(",")[0]+".", "ERROR", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
@@ -295,6 +299,7 @@ public class GUILogin extends JFrame {
 
 		newUsernameField = new JTextField();
 		newUsernameField.setBackground(new Color(27, 40, 56));
+		newUsernameField.setCaretColor(Color.WHITE);
 		newUsernameField.setForeground(Color.WHITE);
 		newUsernameField.setFont(new Font("MS Song", Font.PLAIN, 32));
 		newUserMainPane.add(newUsernameField, BorderLayout.NORTH);
@@ -317,6 +322,7 @@ public class GUILogin extends JFrame {
 		
 		newPasswordField = new JTextField();
 		newPasswordField.setBackground(new Color(27, 40, 56));
+		newPasswordField.setCaretColor(Color.WHITE);
 		newPasswordField.setForeground(Color.WHITE);
 		newPasswordField.setFont(new Font("MS Song", Font.PLAIN, 32));
 		newPasswordField.setColumns(10);
@@ -339,6 +345,7 @@ public class GUILogin extends JFrame {
 		
 		confirmPasswordField = new JTextField();
 		confirmPasswordField.setBackground(new Color(27, 40, 56));
+		confirmPasswordField.setCaretColor(Color.WHITE);
 		confirmPasswordField.setForeground(Color.WHITE);
 		confirmPasswordField.setFont(new Font("MS Song", Font.PLAIN, 32));
 		confirmPasswordField.setColumns(10);
