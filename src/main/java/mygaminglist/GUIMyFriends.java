@@ -145,29 +145,25 @@ public class GUIMyFriends extends JFrame {
 		if (users.get(usernameLoggedIn) != null) {
 			if (users.get(usernameLoggedIn).isPrivate()){
 				buttonsPanel.add(changeAccountToPublic);
-				users.updateAccountPrivacy(usernameLoggedIn,"Make Account Public");
 			} else{
 				buttonsPanel.add(changeAccountToPrivate);
-				users.updateAccountPrivacy(usernameLoggedIn,"Make Account Private");
 			}
-			System.out.println(users.get(usernameLoggedIn).isPrivate());
 		}
-
-
 		
-		// This will change later, maybe to look better. Good enough for now
+		// This might change later, maybe to look better. Good enough for now
 		JLabel myFriendsLabel = new JLabel(usernameLoggedIn + " - My Friends");
 		myFriendsLabel.setForeground(Color.WHITE);
 		myFriendsLabel.setFont(new Font("MS Song", Font.BOLD, 40));
 		myFriendsPane.add(myFriendsLabel, BorderLayout.NORTH);
 
-
-
 		//Add action listener for "Make account private" button
 		changeAccountToPrivate.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				buttonsPanel.remove(changeAccountToPublic);
+				users.updateAccountPrivacy(usernameLoggedIn,"Make Account Private");
 				JOptionPane.showMessageDialog(null, "You have successfully changed your account to private!");
+				System.out.println(users.get(usernameLoggedIn).isPrivate());
 				GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 				((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
 			}
@@ -177,7 +173,10 @@ public class GUIMyFriends extends JFrame {
 		changeAccountToPublic.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				buttonsPanel.remove(changeAccountToPrivate);
+				users.updateAccountPrivacy(usernameLoggedIn,"Make Account Public");
 				JOptionPane.showMessageDialog(null, "You have successfully changed your account to public!");
+				System.out.println(users.get(usernameLoggedIn).isPrivate());
 				GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 				((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
 			}
