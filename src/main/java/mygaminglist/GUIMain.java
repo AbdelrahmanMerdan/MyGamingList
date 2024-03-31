@@ -2,24 +2,16 @@ package mygaminglist;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import database.GameData;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
-import static com.mongodb.client.model.Filters.*;
-import com.mongodb.client.*;
+import database.AutoSearch;
 
 public class GUIMain extends JFrame{
 	
@@ -29,6 +21,7 @@ public class GUIMain extends JFrame{
 	public static JButton loginButton;
 	public static String usernameLoggedIn = null;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public GUIMain() {
 		
 		setTitle("MyGamingList");
@@ -135,10 +128,6 @@ public class GUIMain extends JFrame{
 		headerPane.add(headerSearchPane, BorderLayout.EAST);
 		headerSearchPane.setOpaque(false);
 		
-		JTextField headerSearchBox = new JTextField();
-		headerSearchBox.setFont(new Font("MS Song", Font.PLAIN, 20));
-		String searchPrompt = "Search";
-		
 		loginButton = new JButton("Log in");
 		loginButton.setForeground(Color.WHITE);
 		loginButton.setBackground(new Color(23, 26, 33));
@@ -160,46 +149,61 @@ public class GUIMain extends JFrame{
 		});
 		
 		headerSearchPane.add(loginButton);
-		headerSearchBox.setText(searchPrompt);
-		headerSearchPane.add(headerSearchBox);
-		headerSearchBox.setColumns(15);
 		
-		headerSearchBox.addActionListener(new ActionListener(){
+		JComboBox headerSearchBox = new JComboBox();
+		headerSearchBox.setFont(new Font("MS Song", Font.PLAIN, 20));
+		headerSearchBox.setEditable(true);
+		headerSearchBox.setPreferredSize(new Dimension(350,30));
+		String searchPrompt = "Search";
+		headerSearchBox.addItem(searchPrompt);
+		headerSearchPane.add(headerSearchBox);
+		
+		JTextField searchQuery = (JTextField) headerSearchBox.getEditor().getEditorComponent();
+		ArrayList<String> result = new ArrayList<String>();
+		
+		// focus management
+		headerSearchBox.getEditor().getEditorComponent().addFocusListener(new FocusListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Search function (case in-sensitive)
-				System.out.println(headerSearchBox.getText());
-				
-				//Filtering
-				Pattern namePattern = Pattern.compile("^" + headerSearchBox.getText() + "$",
-						Pattern.CASE_INSENSITIVE);
-				Bson filter = regex("name", namePattern);
-				FindIterable<Document> result = GameData.games.find(filter);
-				
-				if (result.first() != null) {
-					int id = result.first().getInteger("_id");
-					GUIGame.loadGame(id);
-					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
-				} else {
-					headerSearchBox.setText("Invalid Name");
-					
-				}
-				headerSearchBox.getRootPane().requestFocus();
+			public void focusGained(FocusEvent e) {
+				headerSearchBox.removeAllItems();
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				headerSearchBox.removeAllItems();
+				headerSearchBox.addItem(searchPrompt);
 			}
 		});
-
-		//focus management
-		headerSearchBox.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-				headerSearchBox.setText("");
-			}
-			public void focusLost(FocusEvent e) {
-				try {
-					Thread.sleep(330);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+		
+		// auto-complete
+		headerSearchBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+            	String search = searchQuery.getText();
+            	ArrayList<String> result = (ArrayList<String>) AutoSearch.getAutofill(search);
+            	
+            	headerSearchBox.removeAllItems();
+            	headerSearchBox.addItem(search);
+            	for (int i = 0; i < result.size(); i++) {
+            		if (!result.get(i).equals("")) {
+            			headerSearchBox.addItem(result.get(i));            		
+            		}
+            	}
+            	headerSearchBox.hidePopup();
+            	if (search.length() >= 2) {
+            		headerSearchBox.showPopup();
+            	}
+            }
+		});
+		
+		// search listener
+		searchQuery.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("searchQuery");
+				if (headerSearchBox.getSelectedItem() != null && !searchQuery.equals("")) {
+					String search = headerSearchBox.getSelectedItem().toString();
+					AutoSearch.search(search);
 				}
-				headerSearchBox.setText(searchPrompt);
 			}
 		});
 
@@ -224,6 +228,7 @@ public class GUIMain extends JFrame{
 		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
 		GUIGameReviews review = new GUIGameReviews(cardPane);
+		AutoSearch autocomplete = new AutoSearch(cardPane);
 		
 	}
 }
