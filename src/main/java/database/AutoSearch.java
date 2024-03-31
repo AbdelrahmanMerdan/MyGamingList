@@ -31,9 +31,11 @@ public class AutoSearch {
 	
 	public static List<String> getAutofill(String query) {
 		List<String> result = new ArrayList<String>();
+		
 		if (query.equals("")) {
 			return result;
 		}
+		
 		Document textAgg = new Document("$search", 
 				new Document("index", "searchGames")
 				.append("text", new Document("query", query).append("path", "name")));
@@ -46,9 +48,13 @@ public class AutoSearch {
 				result.add(GameData.map.readTree(doc.toJson()).get("name").asText());
 			} catch (JsonProcessingException e) {}
 		});
+		
 		GameData.games.aggregate(Arrays.asList(autoAgg, limit(9), project(fields(include("name"))))).forEach(doc -> {
 			try {
-				result.add(GameData.map.readTree(doc.toJson()).get("name").asText());
+				String name = GameData.map.readTree(doc.toJson()).get("name").asText();
+				if (!name.equals(result.get(0))) {
+					result.add(name);
+				}
 			} catch (JsonProcessingException e) {}
 		});
 		return result;
