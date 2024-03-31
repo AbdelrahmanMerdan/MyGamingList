@@ -17,7 +17,7 @@ import org.bson.conversions.Bson;
 import java.awt.CardLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JPanel;
 
@@ -29,35 +29,26 @@ public class AutoSearch {
 		card = panel;
 	}
 	
-	public static List<String> getAutofill(String query) {
-		List<String> result = new ArrayList<String>();
+	public static ArrayList<String> getAutofill(String query) {
+		TreeSet<String> result = new TreeSet<>();
 		
 		if (query.equals("")) {
-			return result;
+			return new ArrayList<String>(result);
 		}
 		
-		Document textAgg = new Document("$search", 
-				new Document("index", "searchGames")
-				.append("text", new Document("query", query).append("path", "name")));
 		Document autoAgg = new Document("$search", 
 				new Document("index", "searchGames")
 				.append("autocomplete", new Document("query", query).append("path", "name")));
 
-		GameData.games.aggregate(Arrays.asList(textAgg, limit(1), project(fields(include("name"))))).forEach(doc -> {
-			try {
-				result.add(GameData.map.readTree(doc.toJson()).get("name").asText());
-			} catch (JsonProcessingException e) {}
-		});
-		
-		GameData.games.aggregate(Arrays.asList(autoAgg, limit(9), project(fields(include("name"))))).forEach(doc -> {
+		GameData.games.aggregate(Arrays.asList(autoAgg, limit(10), project(fields(include("name"))))).forEach(doc -> {
 			try {
 				String name = GameData.map.readTree(doc.toJson()).get("name").asText();
-				if (!name.equals(result.get(0))) {
-					result.add(name);
-				}
+				
+				result.add(name);
+				
 			} catch (JsonProcessingException e) {}
 		});
-		return result;
+		return new ArrayList<String>(result);
 	}
 
 	public static void search(String name) {
