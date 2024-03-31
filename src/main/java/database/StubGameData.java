@@ -10,6 +10,7 @@ import org.bson.conversions.Bson;
 import com.mongodb.client.FindIterable;
 
 import mygaminglist.Game;
+import mygaminglist.News;
 
 public class StubGameData extends GameData {
 	
@@ -80,5 +81,11 @@ public class StubGameData extends GameData {
  	   
  	   GameData.updateGameStats(id);
     }
+
+   public static void updateGameNews(int id) {
+  	   changeConnection();
+  	   
+  	   News.updateNewsBlog(id);
+     }
 	
 }
