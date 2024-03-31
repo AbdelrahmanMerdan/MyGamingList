@@ -3,6 +3,8 @@ package integration;
 import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import database.StubGameData;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.bson.Document;
@@ -18,6 +20,7 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 
 import mygaminglist.Game;
+import mygaminglist.NewsBlog;
 
 @TestMethodOrder(OrderAnnotation.class)
 class TestGameData {
@@ -41,6 +44,8 @@ class TestGameData {
 			Bson update4 = Updates.unset("player_count");
 			Bson update5 = Updates.unset("twenty_four_hr_peak");
 			Bson total = Updates.combine(update, update2, update3, update4, update5);
+			Bson update6 = Updates.unset("newsBlogs");
+			Bson total = Updates.combine(update, update2, update3, update4, update5, update6);
 
 			//Deleting details
 			try {
@@ -98,6 +103,7 @@ class TestGameData {
 	@Order(2)
 	void getGame() {
 			StubGameData.updateGameStats(TEST_GAME_ID);
+			StubGameData.updateGameNews(TEST_GAME_ID);
 			
 			Game game = StubGameData.getGame(TEST_GAME_ID);
 			assertNotNull(game);
@@ -111,6 +117,7 @@ class TestGameData {
 			String shortDesc = game.getShortDesc();
 			Integer numOfReviews = game.getNumOfReviews();
 			Integer userReviews = game.getSumOfAllReviews();
+			ArrayList<NewsBlog> gameBlogs = game.getNewsBlogs();
 			int players = game.getPlayers();
 			int peak = game.getPeak();
 			assertNotNull(name);
@@ -122,6 +129,7 @@ class TestGameData {
 			assertNotNull(numOfReviews);
 			assertNotNull(userReviews);
 			assertNotNull(desc);
+			assertNotNull(gameBlogs);
 			assertTrue(players != 0 && peak != 0);
 			assertTrue(peak >= players);
 			assertEquals("Dead Space (2008)", name);
