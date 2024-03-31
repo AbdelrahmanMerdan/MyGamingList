@@ -43,7 +43,6 @@ class TestGameData {
 			Bson update3 = Updates.unset("num_of_reviews");
 			Bson update4 = Updates.unset("player_count");
 			Bson update5 = Updates.unset("twenty_four_hr_peak");
-			Bson total = Updates.combine(update, update2, update3, update4, update5);
 			Bson update6 = Updates.unset("newsBlogs");
 			Bson total = Updates.combine(update, update2, update3, update4, update5, update6);
 
