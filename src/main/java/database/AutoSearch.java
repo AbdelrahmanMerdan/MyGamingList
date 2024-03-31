@@ -37,14 +37,9 @@ public class AutoSearch {
 		Document textAgg = new Document("$search", 
 				new Document("index", "searchGames")
 				.append("text", new Document("query", query).append("path", "name")));
-		
 		Document autoAgg = new Document("$search", 
 				new Document("index", "searchGames")
-				.append("text", new Document("query", query).append("path", "name")));
-		Document agg2 = new Document("$search", 
-				new Document("index", "searchGames")
 				.append("autocomplete", new Document("query", query).append("path", "name")));
-		
 
 		GameData.games.aggregate(Arrays.asList(textAgg, limit(1), project(fields(include("name"))))).forEach(doc -> {
 			try {
@@ -53,10 +48,7 @@ public class AutoSearch {
 		});
 		GameData.games.aggregate(Arrays.asList(autoAgg, limit(9), project(fields(include("name"))))).forEach(doc -> {
 			try {
-				String name = GameData.map.readTree(doc.toJson()).get("name").asText();
-				if (!name.equals(result.get(0))) {
-					result.add(name);
-				}
+				result.add(GameData.map.readTree(doc.toJson()).get("name").asText());
 			} catch (JsonProcessingException e) {}
 		});
 		return result;
