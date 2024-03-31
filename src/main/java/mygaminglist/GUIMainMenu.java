@@ -2,6 +2,7 @@ package mygaminglist;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -50,6 +51,7 @@ public class GUIMainMenu extends JFrame {
 			int game = i;
             mostPlayedBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(GameData.getName(mostPlayed.getID(game)));
+            lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
             lbl.addMouseListener(new MouseAdapter() {
@@ -89,6 +91,7 @@ public class GUIMainMenu extends JFrame {
 			int game = i;
             popularReleaseBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
             JLabel lbl = new JLabel(GameData.getName(popReleases.getID(game)));
+            lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
             lbl.addMouseListener(new MouseAdapter() {

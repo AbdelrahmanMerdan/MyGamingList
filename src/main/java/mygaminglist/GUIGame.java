@@ -31,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.Component;
+import java.awt.Cursor;
 
 public class GUIGame {
 	
@@ -245,6 +246,7 @@ public class GUIGame {
 
 		//Create new label with its own unique properties
 		criticReviewLabel = new JLabel();
+		criticReviewLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
 		criticReviewLabel.setForeground(Color.WHITE);
 		criticReviewLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
 
