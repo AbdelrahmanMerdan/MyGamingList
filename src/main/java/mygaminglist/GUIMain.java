@@ -186,6 +186,23 @@ public class GUIMain extends JFrame{
 		ModeratorToolsButton.setForeground(Color.WHITE);
 		ModeratorToolsButton.setFont(new Font("Verdana", Font.PLAIN, 24));
 		ModeratorToolsButton.setBackground(new Color(23, 26, 33));
+		
+		ModeratorToolsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(loginButton == null || loginButton.getText().equals("Log in"))
+				{
+					((CardLayout) basePane.getLayout()).show(basePane, "login");
+				}
+				else
+				{
+					ModeratorToolsButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+					GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
+					((CardLayout) cardPane.getLayout()).show(cardPane, "moderatorTools");
+					ModeratorToolsButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				}
+			}
+		});
+		
 		ModeratorToolsButton.setVisible(false);
 		
 		headerSearchPane.add(ModeratorToolsButton);
@@ -281,6 +298,7 @@ public class GUIMain extends JFrame{
 		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
 		GUIGameReviews review = new GUIGameReviews(cardPane);
+		GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
 	}
 	
 	TopGames topGame;
