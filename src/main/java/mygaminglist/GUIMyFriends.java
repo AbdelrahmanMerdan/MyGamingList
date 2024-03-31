@@ -74,7 +74,7 @@ public class GUIMyFriends extends JFrame {
 		    	    nameLabel.setForeground(Color.WHITE);
 		    	    nameLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
 		    	    nameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
-		    	    nameLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY)); 
+		    	    nameLabel.setBorder(BorderFactory.createEmptyBorder()); 
 		    	    nameLabel.setOpaque(true); 
 		    	    nameLabel.setBackground(new Color(27, 40, 56));
 		    	    nameLabel.addMouseListener(new MouseAdapter() {

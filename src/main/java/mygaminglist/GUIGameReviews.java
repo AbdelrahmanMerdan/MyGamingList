@@ -100,10 +100,14 @@ public class GUIGameReviews extends JPanel {
 		ReviewHeaderPane.add(reviewTitleLabel, BorderLayout.WEST);
 		
 		buttonPanel = new JPanel();
+		buttonPanel.setBackground(new Color(23, 26, 33));
 		ReviewHeaderPane.add(buttonPanel, BorderLayout.EAST);
 		buttonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JComboBox sortRecommendedComboBox = new JComboBox();
+		sortRecommendedComboBox.setForeground(Color.WHITE);
+		sortRecommendedComboBox.setBackground(new Color(23, 26, 33));
+		sortRecommendedComboBox.setFont(new Font("Verdana", Font.PLAIN, 20));
 		sortRecommendedComboBox.setModel(new DefaultComboBoxModel(new String[] {"All Reviews", "Recommended", "Not Recommended"}));
 		sortRecommendedComboBox.setMaximumRowCount(3);
 		sortRecommendedComboBox.setSelectedIndex(recommendSort);
@@ -118,6 +122,9 @@ public class GUIGameReviews extends JPanel {
 		backButton.setFocusable(false);
 		
 		JToggleButton sortOrderButton = new JToggleButton("Sort by New");
+		sortOrderButton.setForeground(Color.WHITE);
+		sortOrderButton.setBackground(new Color(23, 26, 33));
+		sortOrderButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 		sortOrderButton.setSelected(!chronOrder);
 		buttonPanel.add(sortOrderButton);
 		
@@ -227,7 +234,8 @@ public class GUIGameReviews extends JPanel {
 			}
 		} else if (loadedGame == null) { // user
 			reviewTitleLabel.setText(loadedUser+" Reviews");
-
+			newReviewButton.setVisible(false);
+			
 			User current = UsersImpl.getUser(loadedUser);
 			List<Object> reviews = sort(current.getGames());
 
