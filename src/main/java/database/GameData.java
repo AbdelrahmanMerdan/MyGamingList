@@ -14,6 +14,8 @@ import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import mygaminglist.Game;
+import mygaminglist.News;
+import mygaminglist.NewsBlog;
 import java.util.*;
 import java.io.IOException;
 import mygaminglist.News;
