@@ -179,7 +179,18 @@ public class GUIGameReviews extends JPanel {
 					});
 				}
 				else if(hasReviewed) {
-					JOptionPane.showMessageDialog(null, "Error: User has already reviewed.");
+					int reWrite = JOptionPane.showConfirmDialog(null, "You have already reviewed this game.\nWould you like to delete your current review and make a new one?", "New Review", 
+							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					switch(reWrite) {
+					case 1:
+						Review.DeleteReview(GUIMain.usernameLoggedIn, game);
+						try {
+							GUINewUserReview reviewFrame = new GUINewUserReview(card, game);
+							reviewFrame.setVisible(true);
+						} catch (Exception e2) {
+							e2.printStackTrace();
+						}
+					}
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Error: User is not logged in.");
