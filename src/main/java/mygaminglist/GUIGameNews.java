@@ -154,6 +154,7 @@ public class GUIGameNews extends JPanel {
 		newsHeaderPane.setBackground(new Color(23, 26, 33));
 		newsPane.add(newsHeaderPane, BorderLayout.NORTH);
 		newsHeaderPane.setLayout(new BorderLayout(0, 0));
+		newsHeaderPane.setPreferredSize(new Dimension(0,64));
 		
 		String author = game.getNewsBlogs().get(i).getAuthor() ;
 		
@@ -168,7 +169,7 @@ public class GUIGameNews extends JPanel {
 		titleLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
 		titleLabel.setForeground(Color.WHITE);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		newsHeaderPane.add(titleLabel, BorderLayout.CENTER);
+		newsHeaderPane.add(titleLabel, BorderLayout.NORTH);
 		
 		String date = game.getNewsBlogs().get(i).getDate();
 
@@ -213,15 +214,13 @@ public class GUIGameNews extends JPanel {
 		
 		newsPane.add(newsHeaderPane); // Then add header pane
 		newsPane.add(newsContentPane); // Add content pane first
-
-//		// i was trying to fix it with this but did not work
-//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				newsPane.setPreferredSize(null);
-//				newsPane.setPreferredSize(new Dimension(0, (int) newsContentPane.getPreferredSize().getHeight() + 100));
-//			}
-//		});
-//		
+		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				newsPane.setSize(new Dimension(0, (int) newsPane.getPreferredSize().getHeight() + 40));
+			}
+		});
+		
 		// when resized
 		newsPane.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
@@ -229,8 +228,6 @@ public class GUIGameNews extends JPanel {
 				newsPane.setPreferredSize(new Dimension(0, (int) newsPane.getPreferredSize().getHeight() + 40));
 			}
 		});
-
-		//newsPane.add(newsHeaderPane);
 
 		newsBox.add(newsPane);
 		
