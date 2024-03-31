@@ -576,4 +576,140 @@ public class GameData implements Database, StubDatabase {
 		return total;
 		
 	}
+	public static void updateNewsBlog(Game game) {
+
+			Bson filter_game = eq("_id", game.getID());
+			FindIterable<Document> result_game = GameData.games.find(filter_game);
+			Document found_game = result_game.first();
+			
+		    ArrayList<Document> newsBlogs = new ArrayList<>();
+		    ArrayList<NewsBlog> newsBlogsClean = new ArrayList<>();
+		    boolean validGame = false;
+		    
+		    //if the game object has no blogs
+		    if(game.getNewsBlogs() == null || game.getNewsBlogs().size() == 0) {
+		    	
+		    	game.setNewsBlogs(newsBlogsClean);
+		    }
+		    
+		    //if the game already has newsblogs 
+		    if(!(found_game.containsKey("newsBlogs"))) {
+		    
+		    try {
+		
+			//Calling API
+			HttpRequest request = HttpRequest.newBuilder()
+					.uri(URI.create("https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=" + game.getID() + "&count=5"))
+					.method("GET", HttpRequest.BodyPublishers.noBody())	
+					.build();
+			
+			//Grabbing JSON response
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			String responseBody = response.body();
+			
+			// Parsing JSON
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        JsonNode jsonNode = objectMapper.readTree(responseBody);
+	        
+	        // Extracting data
+	        JsonNode appnews = jsonNode.get("appnews");
+	        
+	        //if a game does have news
+	        if(jsonNode.get("appnews") != null ) {
+	        	
+	        validGame = true;
+	        	
+	        JsonNode newsItems = appnews.get("newsitems");
+	       
+	        for (JsonNode newsItem : newsItems) {
+	        	
+	            String title = newsItem.get("title").asText();
+	            String url = newsItem.get("url").asText();
+	            String contents = newsItem.get("contents").asText();
+	            String author = newsItem.get("author").asText();
+	            String website = newsItem.get("feedname").asText();
+	            String date =  News.getDate(newsItem.get("date").asLong());
+	            
+	            // Check for empty strings and replace them with "N/A"
+	            
+	            if (title.isEmpty()) {
+	                title = "N/A";
+	            }
+	            if (url.isEmpty()) {
+	                url = "N/A";
+	            }
+	            if (contents.isEmpty()) {
+	                contents = "N/A";
+	            }
+	            if (author.isEmpty()) {
+	                author = "N/A";
+	            }
+	            if (website.isEmpty()) {
+	                website = "N/A";
+	            }
+	            if (date.isEmpty()) {
+	                date = "N/A";
+	            }
+	            
+	            //making a new object 
+	            NewsBlog theBlog = new NewsBlog(title, author, url, contents, website, date);
+	            
+	            //adding it to the game
+	            game.addNewsBlogs(theBlog);
+	            
+	            //adding it to the database
+	            Document theNewsBlog = new Document()
+	            		.append("title", title)
+	                    .append("author", author)
+	                    .append("url", url)
+	                    .append("content", contents)
+	                    .append("website" ,website )
+	                    .append("date", date);
+	           
+	            //adding it to the database
+	            newsBlogs.add(theNewsBlog);
+	        }	
+	        
+	       }
+			
+		} 
+		    
+		  catch(InterruptedException e) {
+				
+			e.printStackTrace();
+		} catch(IOException e) {
+				
+			e.printStackTrace();
+		}
+		    
+		Bson update =  Updates.unset("newsBlogs");
+		    
+		if(validGame) {
+		    	
+		   update = Updates.set("newsBlogs", newsBlogs);
+		} 
+		
+		if(found_game.get("description").equals("Game is not available in Canada")) {
+			
+			 ArrayList<String> na = new ArrayList<>();
+			 na.add("N/A");
+			 update = Updates .set("newsBlogs", na);
+		}
+		
+		try {
+			
+			UpdateResult updateResult = GameData.games.updateOne(found_game, update);
+			
+			System.out.println("Updated newsBlog: "+updateResult.wasAcknowledged());
+	
+			
+		}  catch(MongoException e) {
+			
+			System.err.println("ERROR: "+e);
+		}
+
+		}
+		
+		
+	}
 }
