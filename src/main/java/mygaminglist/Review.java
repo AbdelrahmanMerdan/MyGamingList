@@ -183,25 +183,24 @@ public class Review {
 	private static void DeleteReviewFromGame(String username, Game game) {
 		
 		for(int i = 0; i < game.getComment().size(); i++) {
-			
+
 			@SuppressWarnings("unchecked")
 			List<Object> review = (List<Object>) game.getComment().get(i);
-			
+
 			if(review.get(0).equals(username)) {
-				
+
 				game.getComment().remove(i);
 
 				Bson UpdateComment = Updates.set("comments", game.getComment());
-				
+
 				int reviewscore = (int) review.get(1);
 				reviewscore *= -1;
-				
+
 				Bson update = Updates.combine(UpdateDeletedNumReview(game),
 						UpdateSumOfReviews(game,reviewscore),
-						UpdateComment
-						);
+						UpdateComment);
 
-			
+
 				//Find User
 				Document game_found = find_game(game);
 
@@ -214,9 +213,21 @@ public class Review {
 				}
 
 			}
-			
-			
 		}
+		
+		Document game_found = find_game(game);
+		
+		//Then update avg reviews
+		Bson update2 = UpdateAverageOfReviews(game);
+
+		try {
+			UpdateResult updateResultUser = GameData.games.updateOne(game_found, update2);
+			System.out.println("Comment in Game Deleted: "+updateResultUser.wasAcknowledged());
+
+		} catch(MongoException e) {
+			System.err.println("ERROR: "+e);
+		}
+
 	}
 	
 	public static void DeleteAllUserReviews(String username) {

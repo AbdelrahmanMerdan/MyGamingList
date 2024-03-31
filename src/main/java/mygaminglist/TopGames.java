@@ -36,7 +36,7 @@ public class TopGames{
 
 	public TopGames() {
 		
-		Bson filter = and(gt("average_of_reviews", 0), lte("average_of_reviews", 10));
+		Bson filter = and(gt("average_of_reviews", 9), lte("average_of_reviews", 10));
 		
 		 GameData.games.find(filter).sort(descending("average_of_reviews")).forEach(game -> {
 		        // Assuming `map` is an ObjectMapper instance
