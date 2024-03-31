@@ -4,7 +4,6 @@ package mygaminglist;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -20,6 +19,9 @@ public class GUIMain extends JFrame{
 	private static JPanel mainPane;
 	private static JPanel cardPane;
 	public static JButton loginButton;
+	
+	public static JButton ModeratorToolsButton;
+	
 	public static String usernameLoggedIn = null;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -129,9 +131,7 @@ public class GUIMain extends JFrame{
 		headerOptionsPane.add(friendsButton);
 		
 		//Set up Top Games
-		JButton TopGamesButton = new JButton("Top Games");
-		
-
+		JButton TopGamesButton = new JButton("Top Rated Games");
 		
 		TopGamesButton.setOpaque(true);
 		TopGamesButton.setForeground(Color.WHITE);
@@ -142,16 +142,14 @@ public class GUIMain extends JFrame{
 		TopGamesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				{
-
-					updatetop();
 					TopGamesButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+					updatetop();
 					GUITopGames topGames = new GUITopGames(cardPane, topGame);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "topGames");
 					TopGamesButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				}
 			}
 		});
-		
 		
 		headerOptionsPane.add(TopGamesButton);
 		
@@ -171,6 +169,7 @@ public class GUIMain extends JFrame{
 					((CardLayout) cardPane.getLayout()).show(cardPane, "mainMenu");
 					loginButton.setText("Log in");
 					usernameLoggedIn = null;
+					GUIMain.ModeratorToolsButton.setVisible(false);
 				}
 				else
 				{
@@ -181,15 +180,31 @@ public class GUIMain extends JFrame{
 		
 		headerSearchPane.add(loginButton);
 		
+		//  Set up Moderator Tools
+		ModeratorToolsButton = new JButton("Moderator Tools");
+		ModeratorToolsButton.setOpaque(true);
+		ModeratorToolsButton.setForeground(Color.WHITE);
+		ModeratorToolsButton.setFont(new Font("Verdana", Font.PLAIN, 24));
+		ModeratorToolsButton.setBackground(new Color(23, 26, 33));
+		ModeratorToolsButton.setVisible(false);
+		
+		headerSearchPane.add(ModeratorToolsButton);
+		
+		// set up search box
 		JComboBox headerSearchBox = new JComboBox();
+		headerSearchBox.getEditor().getEditorComponent().setBackground(new Color(42, 71, 94));
+		headerSearchBox.getEditor().getEditorComponent().setForeground(Color.WHITE);
+		headerSearchBox.setBackground(new Color(42, 71, 94));
+		headerSearchBox.setForeground(Color.WHITE);
 		headerSearchBox.setFont(new Font("MS Song", Font.PLAIN, 24));
 		headerSearchBox.setEditable(true);
-		headerSearchBox.setPreferredSize(new Dimension(350,30));
+		headerSearchBox.setPreferredSize(new Dimension(350,50));
 		String searchPrompt = "Search";
 		headerSearchBox.addItem(searchPrompt);
 		headerSearchPane.add(headerSearchBox);
 		
 		JTextField searchQuery = (JTextField) headerSearchBox.getEditor().getEditorComponent();
+		searchQuery.setCaretColor(Color.WHITE);
 	
 		// focus management
 		headerSearchBox.getEditor().getEditorComponent().addFocusListener(new FocusListener() {
@@ -230,6 +245,7 @@ public class GUIMain extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (headerSearchBox.getSelectedItem() != null && !searchQuery.equals("")) {
+					searchQuery.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					String search = headerSearchBox.getSelectedItem().toString();
 					int id = AutoSearch.search(search);
 					if (id != -1) {
@@ -237,6 +253,7 @@ public class GUIMain extends JFrame{
 						((CardLayout) cardPane.getLayout()).show(cardPane, "game");
 					}
 					mainPane.requestFocus();
+					searchQuery.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				}
 			}
 		});
@@ -268,7 +285,7 @@ public class GUIMain extends JFrame{
 	
 	TopGames topGame;
 	private void updatetop() {
-		topGame.ids =new ArrayList<>();
+		topGame.ids = new ArrayList<>();
 		topGame = new TopGames();
 		System.out.println(topGame.ids);
 	}
