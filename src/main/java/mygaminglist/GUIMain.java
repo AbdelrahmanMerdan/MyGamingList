@@ -298,6 +298,7 @@ public class GUIMain extends JFrame{
 		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
 		GUIGameReviews review = new GUIGameReviews(cardPane);
+		GUIGameNews news = new GUIGameNews(cardPane);
 		GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
 	}
 	
