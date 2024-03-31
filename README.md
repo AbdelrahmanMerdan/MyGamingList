@@ -1,13 +1,28 @@
 # MyGamingList
 
-An application that allows users to view popular games, rate/review, and communicate with the community.
+An application that allows users to view PC games, basic game statistics, rate/review, and engage with the community.
 
-User reviews/comments can be written in these supported languages: English, Chinese, Japanese, Vietnamese, Swedish, any any other languages that uses the English/Latin/Arabic/Cyrillic/Greek alphabet.
+<strong>How to Use:</strong><br>
+Simply download the exe file and run.</br>
 
-Uses Steam Web API to gather game information.
+<b>How to Build and Compile:</b><br>
+Download and import source code as a Gradle project. Make sure that your IDE has any type of Gradle integration installed. 
 
-Uses MongoDB as our platform for database.
+Refresh project by right-clicking on MyGamingList, then going to Gradle -> Refresh Gradle Project.
 
-Takes around 12 seconds to boot up.
+Wait for a several minutes for the necessary libararies to be installed.
 
-Buttons will be white if on mac for now.
+To configure Gradle project and its tasks, please look at build.gradle and settings.gradle file.
+
+By default, running the assemble task will build and launch the program. While running the build task will run all tests first, before building and launching the program.
+
+<strong>Supported Languages for User Reviews and Comments:</strong><br> 
+English, Chinese, Japanese, Vietnamese, Swedish, and any other languages that uses the English, Latin, Arabic, Cyrillic, or Greek alphabet.
+
+<strong>Ressources:</strong><br>
+<b>API:</b> Steam WEB API<br>
+<b>Database Platform:</b> MongoDB
+
+<strong>Note:</strong>
+Overall, it takes around 12 seconds to launch the program.
+
