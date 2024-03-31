@@ -36,8 +36,8 @@ class TestReview {
 
 	    @AfterEach
 	    public void clean() {
+	    	Review.DeleteReview(TEST_USER, game);
 	        users.delete(TEST_USER);
-	        GameData.updateAppDetails(17470);
 	    }
 	    
 	    @Test
