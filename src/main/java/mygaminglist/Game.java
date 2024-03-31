@@ -29,6 +29,7 @@ public class Game {
 		this.comments = comments;
 		this.players = players;
 		this.peak = peak;
+		this.newsBlogs = newsBlogs;
 	
 	}
 
