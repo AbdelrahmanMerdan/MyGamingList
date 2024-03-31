@@ -98,9 +98,10 @@ public class GUIMain extends JFrame{
 				}
 				else
 				{
-					//((CardLayout) cardPane.getLayout()).show(cardPane, "myReviewedGames");
+					myReviewsButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					GUIGameReviews.loadUserReviews(usernameLoggedIn);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
+					myReviewsButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				}
 			}
 		});
