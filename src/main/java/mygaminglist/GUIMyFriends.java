@@ -81,8 +81,10 @@ public class GUIMyFriends extends JFrame {
 		    	        @Override
 		    	        public void mouseClicked(MouseEvent e) {
 		    	            // Open the friend's reviews page when the name is clicked
+		    	        	nameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		    	            GUIGameReviews.loadUserReviews(friendName);
 		    	            ((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
+		    	            nameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		    	        }
 		    	    });
 		    	    friendsBox.add(nameLabel);
