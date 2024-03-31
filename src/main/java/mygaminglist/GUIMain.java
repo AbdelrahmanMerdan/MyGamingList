@@ -127,6 +127,9 @@ public class GUIMain extends JFrame{
 		
 		//Set up Top Games
 		JButton TopGamesButton = new JButton("Top Games");
+		
+
+		
 		TopGamesButton.setOpaque(true);
 		TopGamesButton.setForeground(Color.WHITE);
 		TopGamesButton.setFont(new Font("Verdana", Font.PLAIN, 20));
@@ -139,6 +142,8 @@ public class GUIMain extends JFrame{
 				{
 //					GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 //					((CardLayout) cardPane.getLayout()).show(cardPane, "topGames");
+					updatetop();
+					GUITopGames topGames = new GUITopGames(cardPane, topGame);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "topGames");
 				}
 			}
@@ -242,7 +247,9 @@ public class GUIMain extends JFrame{
 		//order matters
 		PopReleases popReleases = new PopReleases();
 		MostPlayed mostPlayed = new MostPlayed();
-		TopGames topGame = new TopGames();
+		updatetop();
+	
+		
 		
 		//instantiate card pane
 		cardPane = new JPanel();
@@ -258,6 +265,13 @@ public class GUIMain extends JFrame{
 		AutoSearch autocomplete = new AutoSearch(cardPane);
 		GUITopGames topGames = new GUITopGames(cardPane, topGame);
 		
+	}
+	
+	TopGames topGame;
+	private void updatetop() {
+		topGame.ids =new ArrayList<>();
+		topGame = new TopGames();
+		System.out.println(topGame.ids);
 	}
 }
 
