@@ -1,35 +1,26 @@
 package mygaminglist;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import database.*;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -40,7 +31,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
 import javax.swing.DefaultComboBoxModel;
@@ -554,5 +544,18 @@ public class GUIGameReviews extends JPanel {
 		commentPane.add(commentContentPane, BorderLayout.CENTER);
 		
 		commentBox.add(commentPane);
+	}
+	
+	public static List<Object> testSort(boolean order, int filter, boolean game, ArrayList<Object> arr){
+		chronOrder = order;
+		recommendSort = filter;
+		if (game) {
+			loadedUser = null;
+		} else {
+			String testUser = "";
+			loadedUser = testUser;
+		}
+		List<Object> sortedArr = sort(arr);
+		return sortedArr;
 	}
 }
