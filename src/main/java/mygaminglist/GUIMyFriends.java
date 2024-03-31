@@ -120,12 +120,40 @@ public class GUIMyFriends extends JFrame {
 		removeFriendButton.setOpaque(true);
 		removeFriendButton.setForeground(Color.WHITE);
 		removeFriendButton.setFont(new Font("Verdana", Font.PLAIN, 32));
-		
+
+		//create "Make Account Public"button
+		JButton changeAccountToPublic = new JButton("Make Account Public");
+		changeAccountToPublic.setBackground(new Color(23, 26, 33));
+		changeAccountToPublic.setOpaque(true);
+		changeAccountToPublic.setForeground(Color.WHITE);
+		changeAccountToPublic.setFont(new Font("Verdana", Font.PLAIN, 32));
+
+		//create "Make Account Private"button
+		JButton changeAccountToPrivate = new JButton("Make Account Private");
+		changeAccountToPrivate.setBackground(new Color(23, 26, 33));
+		changeAccountToPrivate.setOpaque(true);
+		changeAccountToPrivate.setForeground(Color.WHITE);
+		changeAccountToPrivate.setFont(new Font("Verdana", Font.PLAIN, 32));
+
 		// Add buttons to the panel
 		buttonsPanel.add(addFriendButton);
 		buttonsPanel.add(removeFriendButton);
 		myFriendsPane.add(buttonsPanel, BorderLayout.SOUTH);
 		friendsScrollPane.getViewport().setBackground(new Color(27, 40, 56));
+
+		//add buttons to the panel depends on status of Account (private/public)
+		if (users.get(usernameLoggedIn) != null) {
+			if (users.get(usernameLoggedIn).isPrivate()){
+				buttonsPanel.add(changeAccountToPublic);
+				users.updateAccountPrivacy(usernameLoggedIn,"Make Account Public");
+			} else{
+				buttonsPanel.add(changeAccountToPrivate);
+				users.updateAccountPrivacy(usernameLoggedIn,"Make Account Private");
+			}
+			System.out.println(users.get(usernameLoggedIn).isPrivate());
+		}
+
+
 		
 		// This will change later, maybe to look better. Good enough for now
 		JLabel myFriendsLabel = new JLabel(usernameLoggedIn + " - My Friends");
@@ -133,7 +161,30 @@ public class GUIMyFriends extends JFrame {
 		myFriendsLabel.setFont(new Font("MS Song", Font.BOLD, 40));
 		myFriendsPane.add(myFriendsLabel, BorderLayout.NORTH);
 
-        // Add action listener for the "Add Friend" button
+
+
+		//Add action listener for "Make account private" button
+		changeAccountToPrivate.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "You have successfully changed your account to private!");
+				GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
+				((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
+			}
+		});
+
+		//Add action listener for "Make account public" button
+		changeAccountToPublic.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "You have successfully changed your account to public!");
+				GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
+				((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
+			}
+		});
+
+
+		// Add action listener for the "Add Friend" button
         addFriendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

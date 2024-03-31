@@ -34,6 +34,7 @@ public class UsersImpl implements Database {
     private static final String MODERATOR_KEY = "Moderator";
     private static final String IS_PRIVATE = "isPrivate";
 
+
 //    public UsersImpl() {
 //        users = database.getCollection(TABLE_NAME);
 //        
@@ -77,12 +78,26 @@ public class UsersImpl implements Database {
         return user.getUsername();
     }
 
+    public void updateAccountPrivacy(String username, String operation){
+        Bson filter = eq(USER_KEY, username);
+        Document document = users.find(filter).first();
+        Bson updateToPrivate = Updates.set("isPrivate", "true");
+        Bson updateToPublic = Updates.set("isPrivate", "false");
+        UpdateResult result;
+        if (operation.equals("Make Account Private")) {
+            result = users.updateOne(document, updateToPrivate);
+        } else {
+            result = users.updateOne(document, updateToPublic);
+        }
+        System.out.println("Account privacy has been changed" + result.wasAcknowledged());
+    }
+
     public void updateFriend(String username, String friendName, String operation) {
         Bson filter = eq(USER_KEY, username);
         Document document = users.find(filter).first();
         User returnedUser = this.get(friendName);
 
-        System.out.println(returnedUser.isPrivate());
+        //System.out.println(returnedUser.isPrivate());
         Bson update;
         if (operation.equals("add")) {
             if (returnedUser.isPrivate()){
