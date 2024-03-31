@@ -182,7 +182,7 @@ public class GUIGameReviews extends JPanel {
 					int reWrite = JOptionPane.showConfirmDialog(null, "You have already reviewed this game.\nWould you like to delete your current review and make a new one?", "New Review", 
 							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					switch(reWrite) {
-					case 1:
+					case 0:
 						Review.DeleteReview(GUIMain.usernameLoggedIn, game);
 						try {
 							GUINewUserReview reviewFrame = new GUINewUserReview(card, game);
