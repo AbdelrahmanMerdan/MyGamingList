@@ -373,6 +373,9 @@ public class GUILogin extends JFrame {
 	
 	private void login(JPanel borderPane) {
 		GUIMain.loginButton.setText("Log out");
+		
+		CheckIfMod();
+		
 		((CardLayout) borderPane.getLayout()).show(borderPane, "login");
 		((CardLayout) mainPane.getParent().getLayout()).show(mainPane.getParent(), "main");
 		reset();
@@ -385,6 +388,28 @@ public class GUILogin extends JFrame {
 		newUsernameField.setText(usernamePrompt);
 		newPasswordField.setText(passwordPrompt);
 		confirmPasswordField.setText(confirmPasswordPrompt);
+		
+	}
+	
+	private void CheckIfMod() {
+		
+		if (GUIMain.usernameLoggedIn != null) {
+			
+			User u =  UsersImpl.getUser(GUIMain.usernameLoggedIn);
+
+			System.out.println("test Check: " + u.isModerator());
+			if(u.isModerator()) {
+				GUIMain.ModeratorToolsButton.setVisible(true);
+			
+			}
+			else {
+				GUIMain.ModeratorToolsButton.setVisible(false);
+			}
+			
+		}
+		else {
+			GUIMain.ModeratorToolsButton.setVisible(false);
+		}
 		
 	}
 
