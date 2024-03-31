@@ -38,7 +38,7 @@ public class AutoSearch {
 				new Document("index", "searchGames")
 				.append("autocomplete", new Document("query", query).append("path", "name")));
 
-		GameData.games.aggregate(Arrays.asList(agg, limit(5), project(fields(include("name"))))).forEach(doc -> {
+		GameData.games.aggregate(Arrays.asList(agg, limit(10), project(fields(include("name"))))).forEach(doc -> {
 			try {
 				result.add(GameData.map.readTree(doc.toJson()).get("name").asText());
 			} catch (JsonProcessingException e) {}
