@@ -579,7 +579,10 @@ public class GameData implements Database, StubDatabase {
 		return total;
 		
 	}
+
 	public static void updateNewsBlog(Game game) {
+		
+			if(game != null) {
 
 			Bson filter_game = eq("_id", game.getID());
 			FindIterable<Document> result_game = GameData.games.find(filter_game);
@@ -695,8 +698,7 @@ public class GameData implements Database, StubDatabase {
 		if(found_game.get("description").equals("Game is not available in Canada")) {
 			
 			 ArrayList<String> na = new ArrayList<>();
-			 na.add("N/A");
-			 update = Updates .set("newsBlogs", na);
+			 update = Updates.set("newsBlogs", na);
 		}
 		
 		try {
@@ -713,6 +715,7 @@ public class GameData implements Database, StubDatabase {
 
 		}
 		
-		
+		}
 	}
+	
 }
