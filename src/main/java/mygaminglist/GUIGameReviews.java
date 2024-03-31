@@ -342,9 +342,9 @@ public class GUIGameReviews extends JPanel {
 		scoreLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
 		scoreLabel.setForeground(Color.WHITE);
 		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		reviewHeaderPane.add(scoreLabel);
+		reviewHeaderPane.add(scoreLabel, BorderLayout.EAST);
 		
-		if(loadedUser != null)
+		if(loadedUser != null && (GUIMain.usernameLoggedIn.equals(loadedUser)))
 		{
 			reviewHeaderPane.remove(recommendLabel);
 			reviewHeaderPane.remove(scoreLabel);

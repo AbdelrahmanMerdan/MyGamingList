@@ -27,17 +27,18 @@ import java.text.SimpleDateFormat;
 
 import static com.mongodb.client.model.Filters.*;
 
+import static com.mongodb.client.model.Sorts.descending;
 
 
-public class HighestReviewed{
+public class TopGames{
 	
 	static ArrayList<Integer> ids = new ArrayList<>();
 
-	public static void HighestReview() {
+	public TopGames() {
 		
 		Bson filter = and(gt("average_of_reviews", 0), lte("average_of_reviews", 10));
 		
-		 GameData.games.find(filter).forEach(game -> {
+		 GameData.games.find(filter).sort(descending("average_of_reviews")).forEach(game -> {
 		        // Assuming `map` is an ObjectMapper instance
 		        try {
 		            Game g = GameData.map.readValue(game.toJson(), Game.class);
@@ -52,9 +53,22 @@ public class HighestReviewed{
 //		FindIterable<Document> result = GameData.games.find(filter);
 	}
 	
-	public static void main(String[] args) {
-		HighestReview();
-		System.out.println(ids);
+	public ArrayList<Integer> getIDs() {
+		return ids;
 	}
+	
+	public int getID(int i) {
+		return ids.get(i);
+	}
+	
+	public int getSize() {
+		return ids.size();
+	}
+	
+	public static void main(String[] args) {
+		TopGames g = new TopGames();
+		System.out.println(g.getIDs());
+	}
+	
 	
 }
