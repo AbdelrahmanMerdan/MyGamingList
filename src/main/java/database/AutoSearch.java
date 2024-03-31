@@ -33,7 +33,7 @@ public class AutoSearch {
 		TreeSet<String> result = new TreeSet<>();
 		
 		if (query.equals("")) {
-			return new ArrayList<String>(result);
+			return new ArrayList<>(result);
 		}
 		
 		Document autoAgg = new Document("$search", 
@@ -48,7 +48,7 @@ public class AutoSearch {
 				
 			} catch (JsonProcessingException e) {}
 		});
-		return new ArrayList<String>(result);
+		return new ArrayList<>(result);
 	}
 
 	public static void search(String name) {
