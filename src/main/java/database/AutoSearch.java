@@ -33,7 +33,7 @@ public class AutoSearch {
 		TreeSet<String> result = new TreeSet<>();
 		
 		if (query.equals("")) {
-			return new ArrayList<>(result);
+			return new ArrayList<>();
 		}
 		
 		Document autoAgg = new Document("$search", 
