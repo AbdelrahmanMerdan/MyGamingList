@@ -20,6 +20,9 @@ public class GUIMain extends JFrame{
 	private static JPanel mainPane;
 	private static JPanel cardPane;
 	public static JButton loginButton;
+	
+	public static JButton ModeratorToolsButton;
+	
 	public static String usernameLoggedIn = null;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -171,6 +174,7 @@ public class GUIMain extends JFrame{
 					((CardLayout) cardPane.getLayout()).show(cardPane, "mainMenu");
 					loginButton.setText("Log in");
 					usernameLoggedIn = null;
+					GUIMain.ModeratorToolsButton.setVisible(false);
 				}
 				else
 				{
@@ -178,6 +182,22 @@ public class GUIMain extends JFrame{
 				}
 			}
 		});
+		
+		//  Set up Moderator Tools
+		ModeratorToolsButton = new JButton("Moderator Tools");
+		ModeratorToolsButton.setOpaque(true);
+		ModeratorToolsButton.setForeground(Color.WHITE);
+		ModeratorToolsButton.setFont(new Font("Verdana", Font.PLAIN, 24));
+		ModeratorToolsButton.setBackground(new Color(23, 26, 33));
+		
+		ModeratorToolsButton.setVisible(false);
+		
+//		if(usernameLoggedIn != null) {
+//			ModeratorToolsButton.setVisible(true);
+//		}
+		
+		headerSearchPane.add(ModeratorToolsButton);
+		
 		
 		headerSearchPane.add(loginButton);
 		
