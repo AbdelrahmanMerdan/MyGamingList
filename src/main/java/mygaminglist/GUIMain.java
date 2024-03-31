@@ -64,7 +64,7 @@ public class GUIMain extends JFrame{
 		homeButton.setForeground(Color.WHITE);
 		homeButton.setBackground(new Color(23, 26, 33));
 		homeButton.setOpaque(true);
-		homeButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+		homeButton.setFont(new Font("Verdana", Font.PLAIN, 24));
 		homeButton.setFocusable(false);
 		headerOptionsPane.add(homeButton);
 		
@@ -81,7 +81,7 @@ public class GUIMain extends JFrame{
 		myReviewsButton.setForeground(Color.WHITE);
 		myReviewsButton.setBackground(new Color(23, 26, 33));
 		myReviewsButton.setOpaque(true);
-		myReviewsButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+		myReviewsButton.setFont(new Font("Verdana", Font.PLAIN, 24));
 		myReviewsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,7 +120,7 @@ public class GUIMain extends JFrame{
 			}
 		});
 		
-		friendsButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+		friendsButton.setFont(new Font("Verdana", Font.PLAIN, 24));
 		friendsButton.setFocusable(false);
 		headerOptionsPane.add(friendsButton);
 		
@@ -132,7 +132,7 @@ public class GUIMain extends JFrame{
 		loginButton.setForeground(Color.WHITE);
 		loginButton.setBackground(new Color(23, 26, 33));
 		loginButton.setOpaque(true);
-		loginButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+		loginButton.setFont(new Font("Verdana", Font.PLAIN, 24));
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(loginButton.getText() != null && loginButton.getText().equals("Log out"))
@@ -199,10 +199,10 @@ public class GUIMain extends JFrame{
 		searchQuery.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("searchQuery");
 				if (headerSearchBox.getSelectedItem() != null && !searchQuery.equals("")) {
 					String search = headerSearchBox.getSelectedItem().toString();
 					AutoSearch.search(search);
+					mainPane.requestFocus();
 				}
 			}
 		});

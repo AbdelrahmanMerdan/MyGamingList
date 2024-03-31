@@ -7,10 +7,12 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
@@ -104,30 +106,38 @@ public class GUINewUserReview extends JDialog{
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		mainPane.add(scrollPane);
 		
-		//finalize button listener									// needs database implementation, should prolly also refresh the page (don't worry much about that if you can't)
+		//finalize button listener									
 		finalizeReviewButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				
-				String recommended = "No";
-				
-				if(recommendCheckBox.isSelected()) {
-					recommended ="Yes";
-				}
-				
-				int Score = (Integer)ratingSpinner.getValue();
-				
 				String comment = reviewTextArea.getText();
 				
-				
-				try {
-					Review.review_game(GUIMain.usernameLoggedIn, game, Score, comment, recommended);
-					GUIGameReviews.loadGameReviews(game);
-					((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				if(comment.equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Please enter your review.", "Warning", JOptionPane.WARNING_MESSAGE);
 				}
-				
-				dispose();
+				else
+				{
+					finalizeReviewButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+					String recommended = "No";
+
+					if(recommendCheckBox.isSelected()) {
+						recommended ="Yes";
+					}
+
+					int Score = (Integer)ratingSpinner.getValue();
+
+					try {
+						Review.review_game(GUIMain.usernameLoggedIn, game, Score, comment, recommended);
+						GUIGameReviews.loadGameReviews(game);
+						finalizeReviewButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+
+					dispose();
+
+				}
 			}
 		});
 	}
