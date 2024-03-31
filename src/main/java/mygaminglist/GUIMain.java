@@ -119,7 +119,7 @@ public class GUIMain extends JFrame{
 					friendsButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
-					friendsButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+					friendsButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				}
 			}
 		});
@@ -144,10 +144,7 @@ public class GUIMain extends JFrame{
 				{
 
 					updatetop();
-
 					TopGamesButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-
 					GUITopGames topGames = new GUITopGames(cardPane, topGame);
 					((CardLayout) cardPane.getLayout()).show(cardPane, "topGames");
 					TopGamesButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
