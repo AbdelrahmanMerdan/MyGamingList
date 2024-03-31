@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
+import java.awt.Cursor;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -230,7 +232,7 @@ public class GUIGameReviews extends JPanel {
 				List<Object> review = (List<Object>) reviews.get(i);
 				List<Object> commentArray = (List<Object>) ((List<Object>) review).get(4);
 				
-				generateReviews(review, commentArray);
+				generateReviews(review, commentArray, GUIGame.game);
 			}
 		} else if (loadedGame == null) { // user
 			reviewTitleLabel.setText(loadedUser+" Reviews");
@@ -246,7 +248,7 @@ public class GUIGameReviews extends JPanel {
 				Game game = GameData.getGame(id);
 				List<Object> comments = Review.getAllCommentsForReview(current, game);
 
-				generateReviews(review, comments);
+				generateReviews(review, comments, game);
 			}
 		}
 		
@@ -291,7 +293,7 @@ public class GUIGameReviews extends JPanel {
 	}
 	
 	// draws each reviews
-	private static void generateReviews(List<Object> reviews, List<Object> commentArray) {
+	private static void generateReviews(List<Object> reviews, List<Object> commentArray, Game game) {
 		
 		List<Object> review = reviews;
 		
@@ -312,7 +314,7 @@ public class GUIGameReviews extends JPanel {
 			name = (String) review.get(1);
 		}
 		JLabel nameLabel = new JLabel(name);
-		nameLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
+		nameLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
 		nameLabel.setForeground(Color.WHITE);
 		reviewHeaderPane.add(nameLabel, BorderLayout.WEST);
 		
@@ -323,7 +325,7 @@ public class GUIGameReviews extends JPanel {
 			recommended = (String) review.get(3);
 		}
 		JLabel recommendLabel = new JLabel("RECCOMENDED: " + recommended);
-		recommendLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
+		recommendLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
 		recommendLabel.setForeground(Color.WHITE);
 		recommendLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		reviewHeaderPane.add(recommendLabel, BorderLayout.CENTER);
@@ -335,7 +337,7 @@ public class GUIGameReviews extends JPanel {
 			score = String.valueOf(review.get(2));
 		}
 		JLabel scoreLabel = new JLabel("SCORE: " + score);
-		scoreLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
+		scoreLabel.setFont(new Font("MS Song", Font.PLAIN, 32));
 		scoreLabel.setForeground(Color.WHITE);
 		scoreLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		reviewHeaderPane.add(scoreLabel, BorderLayout.EAST);
@@ -367,14 +369,16 @@ public class GUIGameReviews extends JPanel {
 		comentHeaderPane.setLayout(new BorderLayout(0, 0));
 		
 		JLabel commentLabel = new JLabel("SHOW / HIDE COMMENTS");
-		commentLabel.setFont(new Font("MS Song", Font.PLAIN, 16));
+		commentLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		commentLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
 		commentLabel.setForeground(Color.WHITE);
 		comentHeaderPane.add(commentLabel, BorderLayout.WEST);
 		
-		JLabel newComentLabel = new JLabel("ADD A COMMENT");
-		newComentLabel.setFont(new Font("MS Song", Font.PLAIN, 16));
-		newComentLabel.setForeground(Color.WHITE);
-		comentHeaderPane.add(newComentLabel, BorderLayout.EAST);
+		JLabel newCommentLabel = new JLabel("ADD A COMMENT");
+		newCommentLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		newCommentLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
+		newCommentLabel.setForeground(Color.WHITE);
+		comentHeaderPane.add(newCommentLabel, BorderLayout.EAST);
 		
 		JTextArea reviewContentPane = new JTextArea();
 		reviewContentPane.setLineWrap(true);
@@ -389,7 +393,7 @@ public class GUIGameReviews extends JPanel {
 		}
 		reviewContentPane.setBackground(new Color(27, 40, 56));
 		reviewContentPane.setForeground(Color.WHITE);
-		reviewContentPane.setFont(new Font("MS Song", Font.PLAIN, 20));
+		reviewContentPane.setFont(new Font("MS Song", Font.PLAIN, 32));
 		reviewContentPane.setText(ReviewText);
 		reviewPane.add(reviewContentPane, BorderLayout.CENTER);
 		
@@ -433,46 +437,53 @@ public class GUIGameReviews extends JPanel {
 			}
 		});
 		
-		if (loadedUser == null) { // game
-			newComentLabel.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					if (GUIMain.usernameLoggedIn != null) {
-						String comment;
+		newCommentLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (GUIMain.usernameLoggedIn != null) {
+					String comment;
 
-						//Prompt user for comment
+					//Prompt user for comment
+					comment = JOptionPane.showInputDialog(reviewContentPane,
+							"Enter your Comment:",
+							"Add Comment",
+							JOptionPane.PLAIN_MESSAGE);
+
+					//Keep prompting till user puts a thing
+					while(comment != null && comment.equals(""))
+					{
+						JOptionPane.showMessageDialog(reviewContentPane,
+								"Please enter a comment",
+								"Error",
+								JOptionPane.PLAIN_MESSAGE);
+
 						comment = JOptionPane.showInputDialog(reviewContentPane,
 								"Enter your Comment:",
 								"Add Comment",
 								JOptionPane.PLAIN_MESSAGE);
+					}
 
-						//Keep prompting till user puts a thing
-						while(comment != null && comment.equals(""))
+					if(comment != null)
+					{
+						if(loadedUser == null)
 						{
-							JOptionPane.showMessageDialog(reviewContentPane,
-									"Please enter a comment",
-									"Error",
-									JOptionPane.PLAIN_MESSAGE);
-
-							comment = JOptionPane.showInputDialog(reviewContentPane,
-									"Enter your Comment:",
-									"Add Comment",
-									JOptionPane.PLAIN_MESSAGE);
-						}
-
-						if(comment != null)
-						{
-							Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(name), GUIGame.game);
+							Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(name), game);
 							drawReviews();
 						}
-					} else {
-						JOptionPane.showMessageDialog(reviewContentPane,
-								"Please Login to Comment",
-								"Error",
-								JOptionPane.PLAIN_MESSAGE);
+						else
+						{
+							Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(GUIMain.usernameLoggedIn), game);
+							drawReviews();
+						}
 					}
+				} else {
+					JOptionPane.showMessageDialog(reviewContentPane,
+							"Please Login to Comment",
+							"Error",
+							JOptionPane.PLAIN_MESSAGE);
 				}
-			});
-		}
+			}
+		});
+		
 		reviewBox.add(reviewPane);
 	}
 	
@@ -491,7 +502,7 @@ public class GUIGameReviews extends JPanel {
 		
 		String userName = (String) comments.get(i);
 		JLabel usernameLabel = new JLabel(userName);
-		usernameLabel.setFont(new Font("MS Song", Font.PLAIN, 20));
+		usernameLabel.setFont(new Font("MS Song", Font.PLAIN, 24));
 		usernameLabel.setForeground(Color.WHITE);
 		commentHeaderPane.add(usernameLabel);
 		
@@ -500,7 +511,7 @@ public class GUIGameReviews extends JPanel {
 		commentContentPane.setEditable(false);
 		commentContentPane.setBackground(new Color(27, 40, 56));
 		commentContentPane.setForeground(Color.WHITE);
-		commentContentPane.setFont(new Font("MS Song", Font.PLAIN, 20));
+		commentContentPane.setFont(new Font("MS Song", Font.PLAIN, 24));
 		commentContentPane.setText(message);
 		commentPane.add(commentContentPane, BorderLayout.CENTER);
 		

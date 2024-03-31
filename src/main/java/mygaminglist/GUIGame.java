@@ -75,6 +75,7 @@ public class GUIGame {
 		gameFooterPane.setOpaque(false);
 		
 		sysRequireText = new JEditorPane();
+		sysRequireText.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		sysRequireText.setContentType("text/html");
 		sysRequireText.setBackground(new Color(27, 40, 56));
 		sysRequireText.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
@@ -149,6 +150,7 @@ public class GUIGame {
 		
 		descriptionText = new JEditorPane();
 		descriptionText.setBackground(new Color(27, 40, 56));
+		descriptionText.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		descriptionText.setContentType("text/html");
 		descriptionText.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 		descriptionText.setForeground(Color.WHITE);

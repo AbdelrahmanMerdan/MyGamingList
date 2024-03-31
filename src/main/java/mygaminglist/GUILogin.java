@@ -5,6 +5,7 @@ import database.*;
 import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -100,10 +101,12 @@ public class GUILogin extends JFrame {
 				User user = new User(username, password,isPrivate);
 
 				try {
+					loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					users.login(user);
 					GUIMain.usernameLoggedIn = username;
 					System.out.println("successful login: " + username);
 					login(borderPane);
+					loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				} catch (IllegalArgumentException exp) {
 					System.out.println("login failed");
 					usernameField.setText(exp.getMessage());
@@ -254,10 +257,12 @@ public class GUILogin extends JFrame {
 					User newUser = new User(newUsername, newPassword, isPrivate);
 
 					try {
+						createAccountButton.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 						users.createAccount(newUser);
 						System.out.println("Created new account for " + newUsername);
 						GUIMain.usernameLoggedIn = newUsername;
 						login(borderPane);
+						createAccountButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 					} catch (IllegalArgumentException exp) {
 						newUsernameField.setText(exp.getMessage().split(",")[0]);
 					}
