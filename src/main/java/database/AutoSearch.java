@@ -55,8 +55,7 @@ public class AutoSearch {
 	}
 
 	public static void search(String name) {
-		Pattern namePattern = Pattern.compile("^" + name + "$");
-		Bson filter = regex("name", namePattern);
+		Bson filter = Filters.eq("name", name);
 		FindIterable<Document> result = GameData.games.find(filter);
 		
 		if (result.first() != null) {
