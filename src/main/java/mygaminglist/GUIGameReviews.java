@@ -432,13 +432,12 @@ public class GUIGameReviews extends JPanel {
 		});
 
 		// when resized
-		class ResizeListener extends ComponentAdapter {
+		reviewPane.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				reviewPane.setPreferredSize(null);
 				reviewPane.setPreferredSize(new Dimension(0, (int) reviewPane.getPreferredSize().getHeight() + 20));
 			}
-		}
-		reviewPane.addComponentListener(new ResizeListener());
+		});
 
 		// when comments shown
 		commentLabel.addMouseListener(new MouseAdapter() {

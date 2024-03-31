@@ -133,8 +133,6 @@ public class GUIMain extends JFrame{
 		//Set up Top Games
 		JButton TopGamesButton = new JButton("Top Rated Games");
 		
-
-		
 		TopGamesButton.setOpaque(true);
 		TopGamesButton.setForeground(Color.WHITE);
 		TopGamesButton.setFont(new Font("Verdana", Font.PLAIN, 24));
@@ -152,7 +150,6 @@ public class GUIMain extends JFrame{
 				}
 			}
 		});
-		
 		
 		headerOptionsPane.add(TopGamesButton);
 		
@@ -181,6 +178,8 @@ public class GUIMain extends JFrame{
 			}
 		});
 		
+		headerSearchPane.add(loginButton);
+		
 		//  Set up Moderator Tools
 		ModeratorToolsButton = new JButton("Moderator Tools");
 		ModeratorToolsButton.setOpaque(true);
@@ -206,13 +205,9 @@ public class GUIMain extends JFrame{
 		ModeratorToolsButton.setFocusable(false);
 		ModeratorToolsButton.setVisible(false);
 		
-
-		
 		headerSearchPane.add(ModeratorToolsButton);
 		
-		
-		headerSearchPane.add(loginButton);
-		
+		// set up search box
 		JComboBox headerSearchBox = new JComboBox();
 		headerSearchBox.getEditor().getEditorComponent().setBackground(new Color(42, 71, 94));
 		headerSearchBox.getEditor().getEditorComponent().setForeground(Color.WHITE);
@@ -220,7 +215,7 @@ public class GUIMain extends JFrame{
 		headerSearchBox.setForeground(Color.WHITE);
 		headerSearchBox.setFont(new Font("MS Song", Font.PLAIN, 24));
 		headerSearchBox.setEditable(true);
-		headerSearchBox.setPreferredSize(new Dimension(350,30));
+		headerSearchBox.setPreferredSize(new Dimension(350,40));
 		String searchPrompt = "Search";
 		headerSearchBox.addItem(searchPrompt);
 		headerSearchPane.add(headerSearchBox);
@@ -269,9 +264,13 @@ public class GUIMain extends JFrame{
 				if (headerSearchBox.getSelectedItem() != null && !searchQuery.equals("")) {
 					String search = headerSearchBox.getSelectedItem().toString();
 					searchQuery.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-					AutoSearch.search(search);
-					searchQuery.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+					int id = AutoSearch.search(search);
+					if (id != -1) {
+						GUIGame.loadGame(id);
+						((CardLayout) cardPane.getLayout()).show(cardPane, "game");
+					}
 					mainPane.requestFocus();
+					searchQuery.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				}
 			}
 		});
@@ -286,6 +285,8 @@ public class GUIMain extends JFrame{
 		PopReleases popReleases = new PopReleases();
 		MostPlayed mostPlayed = new MostPlayed();
 
+		updatetop();
+
 		//instantiate card pane
 		cardPane = new JPanel();
 		mainPane.add(cardPane, BorderLayout.CENTER);
@@ -297,13 +298,12 @@ public class GUIMain extends JFrame{
 		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
 		GUIGameReviews review = new GUIGameReviews(cardPane);
-//		GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
-		AutoSearch autocomplete = new AutoSearch(cardPane);
+		GUIModerator moderatorTools = new GUIModerator(cardPane, usernameLoggedIn);
 	}
 	
 	TopGames topGame;
 	private void updatetop() {
-		topGame.ids =new ArrayList<>();
+		topGame.ids = new ArrayList<>();
 		topGame = new TopGames();
 	}
 }

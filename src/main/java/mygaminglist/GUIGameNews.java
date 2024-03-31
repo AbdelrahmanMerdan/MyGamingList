@@ -92,7 +92,7 @@ public class GUIGameNews extends JPanel {
 		buttonPanel = new JPanel();
 		buttonPanel.setBackground(new Color(23, 26, 33));
 		ReviewHeaderPane.add(buttonPanel, BorderLayout.EAST);
-		buttonPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		buttonPanel.setLayout(new BorderLayout(0, 0));
 		
 		JButton backButton = new JButton("  BACK  ");
 		backButton.setForeground(Color.WHITE);
@@ -101,6 +101,11 @@ public class GUIGameNews extends JPanel {
 		backButton.setOpaque(true);
 		buttonPanel.add(backButton);
 		backButton.setFocusable(false);
+		
+		reviewTitleLabel = new JLabel("GAME");
+		reviewTitleLabel.setForeground(Color.WHITE);
+		reviewTitleLabel.setFont(new Font("MS Song", Font.BOLD, 40));
+		ReviewHeaderPane.add(reviewTitleLabel, BorderLayout.WEST);
 		
 		
 		//listener for back button, changes between targets
@@ -120,12 +125,19 @@ public class GUIGameNews extends JPanel {
 		backLocation = "game";
 		
 		new GUIGameNews(card);
+		reviewTitleLabel.setText(game.getName());
 		
 		for(int i = 0; i < game.getNewsBlogs().size(); i++) {
 			
 			generateNewsPost(game, i);
 		}
 		
+		((CardLayout) card.getLayout()).show(card, "gamenews");
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                reviewScrollPane.getVerticalScrollBar().setValue(0);
+            }
+        });
 		
 		
 	}
@@ -194,14 +206,30 @@ public class GUIGameNews extends JPanel {
 				
 		newsContentPane.setBackground(new Color(27, 40, 56));
 		newsContentPane.setForeground(Color.WHITE);
-		newsContentPane.setFont(new Font("MS Song", Font.PLAIN, 32));
+		newsContentPane.setFont(new Font("MS Song", Font.PLAIN, 20));
 		newsContentPane.setText(contentText);
 		
 		newsPane.setLayout(new BoxLayout(newsPane, BoxLayout.Y_AXIS));
 		
 		newsPane.add(newsHeaderPane); // Then add header pane
 		newsPane.add(newsContentPane); // Add content pane first
-		
+
+//		// i was trying to fix it with this but did not work
+//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				newsPane.setPreferredSize(null);
+//				newsPane.setPreferredSize(new Dimension(0, (int) newsContentPane.getPreferredSize().getHeight() + 100));
+//			}
+//		});
+//		
+		// when resized
+		newsPane.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent e) {
+				newsPane.setPreferredSize(null);
+				newsPane.setPreferredSize(new Dimension(0, (int) newsPane.getPreferredSize().getHeight() + 20));
+			}
+		});
+
 		//newsPane.add(newsHeaderPane);
 
 		newsBox.add(newsPane);
