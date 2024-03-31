@@ -31,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.Component;
+import java.awt.Cursor;
 
 public class GUIGame {
 	
@@ -74,6 +75,7 @@ public class GUIGame {
 		gameFooterPane.setOpaque(false);
 		
 		sysRequireText = new JEditorPane();
+		sysRequireText.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		sysRequireText.setContentType("text/html");
 		sysRequireText.setBackground(new Color(27, 40, 56));
 		sysRequireText.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
@@ -148,6 +150,7 @@ public class GUIGame {
 		
 		descriptionText = new JEditorPane();
 		descriptionText.setBackground(new Color(27, 40, 56));
+		descriptionText.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		descriptionText.setContentType("text/html");
 		descriptionText.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 		descriptionText.setForeground(Color.WHITE);
@@ -245,6 +248,7 @@ public class GUIGame {
 
 		//Create new label with its own unique properties
 		criticReviewLabel = new JLabel();
+		criticReviewLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
 		criticReviewLabel.setForeground(Color.WHITE);
 		criticReviewLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
 
