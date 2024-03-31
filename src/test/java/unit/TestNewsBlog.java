@@ -1,4 +1,4 @@
-package integration;
+package unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
@@ -37,10 +37,7 @@ public class TestNewsBlog {
 		try {
 			
 			UpdateResult updateResult = GameData.games.updateOne(found_game, update);
-
-
 		}  catch(MongoException e) {
-			
 			System.err.println("ERROR: "+e);
 		}
     }
