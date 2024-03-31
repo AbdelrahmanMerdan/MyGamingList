@@ -41,7 +41,9 @@ public class GUIGame {
 	private static JEditorPane sysRequireText;
 	private static JEditorPane descriptionText;
 	private static JButton reviewGameButton;
+	private static JButton newsGameButton;
 	private static JPanel gameOptionsSouthPane;
+	private static JPanel gameOptionsBottomPane;
 	public static Game game;
 	
 	public static JLabel criticReviewLabel;
@@ -132,6 +134,26 @@ public class GUIGame {
 				((CardLayout) cardPane.getLayout()).show(cardPane, "reviews");
 			}
 		});
+
+		gameOptionsBottomPane = new JPanel();
+		gameOptionsBottomPane.setBackground(new Color(23, 26, 33));
+		gameOptionsPane.add(gameOptionsBottomPane);
+		gameOptionsBottomPane.setLayout(new BorderLayout(0, 0));
+		
+		newsGameButton = new JButton("News");
+		newsGameButton.setFocusable(false);
+		newsGameButton.setForeground(Color.WHITE); 
+		newsGameButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+		newsGameButton.setBackground(new Color(23, 26, 33));
+		gameOptionsBottomPane.add(newsGameButton, BorderLayout.CENTER);
+		
+		newsGameButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				GUIGameNews.loadGameNews(game);
+				((CardLayout) cardPane.getLayout()).show(cardPane, "gamenews");
+			}
+		});
+		
 		
 		gameOptionsSouthPane = new JPanel();
 		gameOptionsSouthPane.setBackground(new Color(23, 26, 33));

@@ -1,5 +1,7 @@
 package mygaminglist;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -10,31 +12,50 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import org.bson.Document;
+import org.bson.conversions.Bson;
+
 import com.fasterxml.jackson.databind.*;
+import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.UpdateResult;
+
+import database.GameData;
 
 public class News extends NewsBlog{
 	
-	private ArrayList<NewsBlog> newsBlogs = new ArrayList<>();
+	private static ArrayList<NewsBlog> newsBlogs = new ArrayList<>();
 	
-	public News(int appId) {
+	public static void updateNewsBlog(int appId) {
+		
+		Bson filter_game = eq("_id", appId);
+		FindIterable<Document> result_game = GameData.games.find(filter_game);
+		Document found_game = result_game.first();
+	    ArrayList<Document> newsBlogs = new ArrayList<>();
 		
 		try {
 			
 			//Calling API
+			
 			HttpRequest request = HttpRequest.newBuilder()
 					.uri(URI.create("https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=" + appId))
 					.method("GET", HttpRequest.BodyPublishers.noBody())	
 					.build();
+			
 			//Grabbing JSON response
+			
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 			String responseBody = response.body();
 			
-			System.out.println(responseBody);
-			
 			// Parsing JSON
+			
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        JsonNode jsonNode = objectMapper.readTree(responseBody);
+	        
 	        // Extracting data
+	        
 	        JsonNode appnews = jsonNode.get("appnews");
 	        JsonNode newsItems = appnews.get("newsitems");
 	       
@@ -48,7 +69,7 @@ public class News extends NewsBlog{
 	            String date =  getDate(newsItem.get("date").asLong());
 	            
 	            // Check for empty strings and replace them with "N/A"
-	            
+	      
 	            if (title.isEmpty()) {
 	                title = "N/A";
 	            }
@@ -68,9 +89,17 @@ public class News extends NewsBlog{
 	                date = "N/A";
 	            }
 	           
-	            NewsBlog theBlog = new NewsBlog(title, author, url, contents, website, date);
+	            //making a doc
+	            Document theNewsBlog = new Document()
+	            		.append("title", title)
+	                    .append("author", author)
+	                    .append("url", url)
+	                    .append("content", contents)
+	                    .append("website" ,website )
+	                    .append("date", date);
 	           
-	            newsBlogs.add(theBlog);
+	            //adding it to the database
+	            newsBlogs.add(theNewsBlog);
 	        }	
 			
 		} catch(InterruptedException e) {
@@ -80,6 +109,22 @@ public class News extends NewsBlog{
 			
 			e.printStackTrace();
 		}
+		
+		Bson update = Updates.set("newsBlogs", newsBlogs);
+		
+		try {
+			
+			UpdateResult updateResult = GameData.games.updateOne(found_game, update);
+			
+			System.out.println("Updated newsBlog: "+updateResult.wasAcknowledged());
+	
+			
+		}  catch(MongoException e) {
+			
+			System.err.println("ERROR: "+e);
+		}
+		
+		
 	}
 	
 	public ArrayList<NewsBlog> getNewPosts(){
@@ -89,18 +134,24 @@ public class News extends NewsBlog{
 	
 	public static String getDate(long time){
 		 
-        long timestamp = time; // Unix timestamp in seconds
+		// Unix timestamp in seconds
+		
+        long timestamp = time; 
 
         // Convert Unix timestamp to Instant
+        
         Instant instant = Instant.ofEpochSecond(timestamp);
 
         // Convert Instant to LocalDateTime in default system timezone
+        
         LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
 
         // Define a DateTimeFormatter for formatting the date and time
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         // Format the LocalDateTime using the formatter
+        
         String formattedDateTime = dateTime.format(formatter);
 
         return formattedDateTime;
