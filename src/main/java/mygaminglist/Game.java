@@ -10,11 +10,11 @@ public class Game {
 	//Instance variables
 	private int id, sum_of_all_reviews, num_of_reviews, average_of_reviews, players, peak;
 	private String name, shortDesc, desc, cover, sysRequire, metaScore, metaURL;
-	private List<Object> comments;
+	private List<Object> comments; private ArrayList<NewsBlog> newsBlogs = new ArrayList<>();  
 
 	public Game(@JsonProperty("_id") int id, @JsonProperty("name") String name, @JsonProperty("short_description") String shortDesc, @JsonProperty("description") String desc, @JsonProperty("cover_art") String cover, 
 			@JsonProperty("pc_requirements") String sysRequire, @JsonProperty("meta_score") String metaScore, @JsonProperty("meta_link") String metaURL, @JsonProperty("sum_of_all_reviews") int sum_of_all_reviews, 
-			@JsonProperty("num_of_reviews") int num_of_reviews, @JsonProperty("average_of_reviews") int average_of_reviews,@JsonProperty("comments")List<Object> comments, @JsonProperty("player_count") int players, @JsonProperty("twenty_four_hr_peak") int peak) {
+			@JsonProperty("num_of_reviews") int num_of_reviews, @JsonProperty("average_of_reviews") int average_of_reviews,@JsonProperty("comments")List<Object> comments, @JsonProperty("player_count") int players, @JsonProperty("twenty_four_hr_peak") int peak,  @JsonProperty("newsBlogs")ArrayList<NewsBlog> newsBlogs) {
 		this.id = id;
 		this.name = name;
 		this.shortDesc = shortDesc;
@@ -152,6 +152,19 @@ public class Game {
 			this.average_of_reviews = 0;
 		}
 		
+	}
+
+	public ArrayList<NewsBlog> getNewsBlogs() {
+		return newsBlogs;
+	}
+	
+	public void addNewsBlogs(NewsBlog newsBlogs) {
+		this.newsBlogs.add(newsBlogs);
+	}
+	
+	public void setNewsBlogs(ArrayList<NewsBlog> blogs) {
+		
+		this.newsBlogs = blogs;
 	}
 	
 	@Override
