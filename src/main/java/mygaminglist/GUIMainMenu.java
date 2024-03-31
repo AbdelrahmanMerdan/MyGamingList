@@ -56,8 +56,10 @@ public class GUIMainMenu extends JFrame {
             lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
             lbl.addMouseListener(new MouseAdapter() {
     			public void mouseClicked(MouseEvent e) {
+    				lbl.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
     				GUIGame.loadGame(mostPlayed.getID(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
+					lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     			}
     		});
             mostPlayedBox.add(lbl);
@@ -96,8 +98,10 @@ public class GUIMainMenu extends JFrame {
             lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
             lbl.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
+					lbl.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					GUIGame.loadGame(popReleases.getID(game));
 					((CardLayout) cardPane.getLayout()).show(cardPane, "game");
+					lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				}            	
             });
             popularReleaseBox.add(lbl);
