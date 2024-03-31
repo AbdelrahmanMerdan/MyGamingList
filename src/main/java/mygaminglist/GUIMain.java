@@ -231,7 +231,11 @@ public class GUIMain extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if (headerSearchBox.getSelectedItem() != null && !searchQuery.equals("")) {
 					String search = headerSearchBox.getSelectedItem().toString();
-					AutoSearch.search(search);
+					int id = AutoSearch.search(search);
+					if (id != -1) {
+						GUIGame.loadGame(id);
+						((CardLayout) cardPane.getLayout()).show(cardPane, "game");
+					}
 					mainPane.requestFocus();
 				}
 			}
@@ -260,7 +264,6 @@ public class GUIMain extends JFrame{
 		GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
 		GUIGame game = new GUIGame(cardPane);
 		GUIGameReviews review = new GUIGameReviews(cardPane);
-		AutoSearch autocomplete = new AutoSearch(cardPane);
 	}
 	
 	TopGames topGame;
