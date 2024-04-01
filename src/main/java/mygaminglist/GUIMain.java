@@ -285,8 +285,6 @@ public class GUIMain extends JFrame{
 		PopReleases popReleases = new PopReleases();
 		MostPlayed mostPlayed = new MostPlayed();
 
-		updatetop();
-
 		//instantiate card pane
 		cardPane = new JPanel();
 		mainPane.add(cardPane, BorderLayout.CENTER);
