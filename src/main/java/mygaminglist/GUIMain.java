@@ -130,7 +130,7 @@ public class GUIMain extends JFrame{
 		headerOptionsPane.add(friendsButton);
 		
 		//Set up Top Games
-		JButton TopGamesButton = new JButton("Top Rated Games");
+		JButton TopGamesButton = new JButton("Top Games");
 		
 		TopGamesButton.setOpaque(true);
 		TopGamesButton.setForeground(Color.WHITE);
