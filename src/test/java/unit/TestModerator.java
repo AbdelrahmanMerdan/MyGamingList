@@ -1,19 +1,19 @@
 package unit;
 import database.UsersImpl;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import mygaminglist.User;
 
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestModerator {
 
-    private User moderator;
-    private User user;
+    private static User moderator;
+    private static User user;
     private static final UsersImpl users = new UsersImpl();
 
     private static final String TEST_MODERATOR = "test.moderator";
@@ -26,8 +26,8 @@ public class TestModerator {
 
 
 
-    @BeforeEach
-    public void setup() {
+    @BeforeAll
+    public static void setup() {
         moderator = new User(TEST_MODERATOR, TEST_MODERATOR_PASSWORD);
         user = new User(TEST_USER, TEST_PASSWORD);
         
@@ -37,8 +37,8 @@ public class TestModerator {
 
     }
 
-    @AfterEach
-    public void clean() {
+    @AfterAll
+    public static void clean() {
         users.delete(TEST_MODERATOR);
     	users.delete(TEST_USER);
         
@@ -54,11 +54,31 @@ public class TestModerator {
     }
     
     @Test
-    @Order(1)
+    @Order(2)
     public void banUserTest() {
     	moderator.banUser(TEST_USER);
     	
     	assertEquals(true, user.isBanned(TEST_USER));
+    	
+    }
+    
+    @Test
+    @Order(3)
+    public void unbanUserTest() {
+    	moderator.unbanUser(TEST_USER);
+    	
+    	assertEquals(false, user.isBanned(TEST_USER));
+    	
+    }
+    
+    @Test
+    @Order(4)
+    public void userBanUserTest() {
+    	moderator.setModerator(false);
+    	moderator.unbanUser(TEST_USER);
+    	Boolean banned = user.isBanned(TEST_USER);
+    	
+    	assertEquals(false, banned);
     	
     }
     
