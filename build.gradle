@@ -60,6 +60,7 @@ tasks.named('test') {
 
 //Tasks
 test {
+ 	forkEvery = 1
 	testLogging {
 		events "passed", "skipped", "failed"
 	}
