@@ -19,25 +19,34 @@ import mygaminglist.*;
 
 class TestReview {
 	
-	  private User user;
+	  	private User user;
+	  	private User user2;
 	    private static final UsersImpl users = new UsersImpl();
 	    
 
 	    private static final String TEST_USER = "test.user";
 	    private static final String TEST_PASSWORD = "test.password";
+	    
+	    private static final String TEST_USER2 = "test.user2";
+	    private static final String TEST_PASSWORD2 = "test.password2";
+	    
 	    Game game = GameData.getGame(17470);
 
 	    @BeforeEach
 	    public void setup() {
 	        user = new User(TEST_USER, TEST_PASSWORD);
+	        user2 = new User(TEST_USER2, TEST_PASSWORD2);
 	        // insert a record
 	        users.createAccount(user);
+	        users.createAccount(user2);
 	    }
 
 	    @AfterEach
 	    public void clean() {
 	    	Review.DeleteReview(TEST_USER, game);
+	    	Review.DeleteReview(TEST_USER2, game);
 	        users.delete(TEST_USER);
+	        users.delete(TEST_USER2);
 	    }
 	    
 	    @Test
@@ -100,5 +109,29 @@ class TestReview {
 			
 			assertEquals(theComments, Review.getAllCommentsForReview(user, game));
 		}
+		
+		@Test
+		@Order(6)
+		void CheckReviewAverage() throws IOException{
+			Review.review_game(TEST_USER, game, 9, "Game is Good!", "Yes" );
+			Review.review_game(TEST_USER2, game, 1, "Game is Good!", "Yes" );
+			
+			System.out.println("This is the test:   " + game.getSumOfAllReviews());
+			assertEquals(5, game.getAverage_of_reviews());
+			
+		}
+		
+		@Test
+		@Order(7)
+		void CheckReviewAverageAfterDelete() throws IOException{
+			Review.review_game(TEST_USER, game, 9, "Game is Good!", "Yes" );
+			Review.review_game(TEST_USER2, game, 1, "Game is BAD!", "No" );
+			
+			Review.DeleteReview(TEST_USER2, game);
+			
+			assertEquals(9, game.getAverage_of_reviews());
+			
+		}
+		
 
 }
