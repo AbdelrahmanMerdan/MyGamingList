@@ -32,15 +32,4 @@ public class TestSearch {
 		int actualValue = AutoSearch.search(null);
 		assertEquals(expectedValue, actualValue);
 	}
-	
-	@Test
-	void autoSuggest() { // only compares first 4 and likely to be out of date
-		String[] expectedValue = {"Dead Space","Dead Space (2008)","Dead Space 2","Dead Space 2 Gameplay Trailer"};// manual results from database website https://www.mongodb.com as of 31/mar/24
-		String[] actualValue = new String[4];
-		ArrayList<String> values = AutoSearch.getAutofill("Dead Space");
-		for (int i = 0; i < 4; i++) {
-			actualValue[i] = values.get(i);
-		}
-		assertTrue(Arrays.equals(expectedValue, actualValue));
-	}
 }
