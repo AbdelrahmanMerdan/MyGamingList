@@ -38,10 +38,11 @@ public class GUITopGames extends JFrame {
 		TopGameMenuPane.setLayout(new GridLayout(1, 0, 100, 0));
 		
 		JPanel TopGamePane = new JPanel();
+		TopGamePane.setBackground(new Color(23, 26, 33));
 		TopGamePane.setLayout(new BorderLayout(0, 0));
 		TopGameMenuPane.add(TopGamePane);
 		
-		JLabel TopGamesLabel = new JLabel("Top Rated Games");
+		JLabel TopGamesLabel = new JLabel("Top Games");
 		TopGamesLabel.setForeground(Color.WHITE);
 		TopGamesLabel.setBackground(new Color(23, 26, 33));
 		TopGamesLabel.setFont(new Font("Verdana", Font.BOLD, 50));
@@ -59,7 +60,7 @@ public class GUITopGames extends JFrame {
             lblpanel.setBackground(new Color(23, 26, 33));
             lblpanel.setLayout(new BorderLayout(0,0));
             
-            JLabel lbl = new JLabel(GameData.getName(topGames.getID(game)));
+            JLabel lbl = new JLabel((i+1)+")"+GameData.getName(topGames.getID(game)));
             lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
