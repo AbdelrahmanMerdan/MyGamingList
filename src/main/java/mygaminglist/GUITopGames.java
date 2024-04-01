@@ -60,7 +60,7 @@ public class GUITopGames extends JFrame {
             lblpanel.setBackground(new Color(23, 26, 33));
             lblpanel.setLayout(new BorderLayout(0,0));
             
-            JLabel lbl = new JLabel((i+1)+")"+GameData.getName(topGames.getID(game)));
+            JLabel lbl = new JLabel((i+1)+") "+GameData.getName(topGames.getID(game)));
             lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
