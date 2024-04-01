@@ -165,7 +165,13 @@ public class GUIGameReviews extends JPanel {
 		newReviewButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				boolean hasReviewed = Review.AlreadyReviewed(game, GUIMain.usernameLoggedIn);
-				if (GUIMain.usernameLoggedIn != null && !hasReviewed) {
+				boolean isBanned = User.isBanned(GUIMain.usernameLoggedIn);
+				
+				if(isBanned) {
+					JOptionPane.showMessageDialog(null, "You are banned from commenting");
+				}
+				
+				else if (GUIMain.usernameLoggedIn != null && !hasReviewed) {
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
 							try {
@@ -177,6 +183,7 @@ public class GUIGameReviews extends JPanel {
 						}
 					});
 				}
+
 				else if(hasReviewed) {
 					int reWrite = JOptionPane.showConfirmDialog(null, "You cannot review games you've already reviewed.\n\nWould you like to delete your current review in order to make a new one?", "New Review", 
 							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
