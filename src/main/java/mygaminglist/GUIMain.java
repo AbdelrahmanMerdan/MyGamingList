@@ -42,7 +42,6 @@ public class GUIMain extends JFrame{
 		//load login page
 		GUILogin login = new GUILogin();
 		basePane.add(login.getMainPane(), "login");
-		//((CardLayout) basePane.getLayout()).show(basePane, "login");
 		
 		//instantiate main pane
 		mainPane = new JPanel();
