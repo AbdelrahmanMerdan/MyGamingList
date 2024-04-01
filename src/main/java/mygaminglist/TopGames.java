@@ -36,7 +36,7 @@ public class TopGames{
 
 	public TopGames() {
 		
-		Bson filter = and(gt("average_of_reviews", 9), lte("average_of_reviews", 10));
+		Bson filter = and(gt("average_of_reviews", 0), lte("average_of_reviews", 10));
 		
 		 GameData.games.find(filter).sort(descending("average_of_reviews")).forEach(game -> {
 		        // Assuming `map` is an ObjectMapper instance
@@ -49,8 +49,6 @@ public class TopGames{
 		            e.printStackTrace();
 		        }
 		    });
-		
-//		FindIterable<Document> result = GameData.games.find(filter);
 	}
 	
 	public ArrayList<Integer> getIDs() {
@@ -64,11 +62,5 @@ public class TopGames{
 	public int getSize() {
 		return ids.size();
 	}
-	
-	public static void main(String[] args) {
-		TopGames g = new TopGames();
-		System.out.println(g.getIDs());
-	}
-	
 	
 }
