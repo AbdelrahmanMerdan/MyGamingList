@@ -695,10 +695,12 @@ public class GameData implements Database, StubDatabase {
 		   update = Updates.set("newsBlogs", newsBlogs);
 		} 
 		
-		if(found_game.get("description").equals("Game is not available in Canada")) {
-			
-			 ArrayList<String> na = new ArrayList<>();
-			 update = Updates.set("newsBlogs", na);
+		if(found_game.get("description") != null) {
+			if(found_game.get("description").equals("Game is not available in Canada")) {
+				
+				 ArrayList<String> na = new ArrayList<>();
+				 update = Updates.set("newsBlogs", na);
+			}
 		}
 		
 		try {
