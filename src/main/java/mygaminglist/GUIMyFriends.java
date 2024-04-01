@@ -197,29 +197,31 @@ public class GUIMyFriends extends JFrame {
                 if (friendUsername != null && !friendUsername.isEmpty()) {
                     // Check if the user exists in the database
                     if (users.get(friendUsername) != null) {
-//                    	System.out.println(usernameLoggedIn + " : " + friendUsername);
+                    	// System.out.println(usernameLoggedIn + " : " + friendUsername);
 						if (users.get(friendUsername).isPrivate()){
 							JOptionPane.showMessageDialog(null, "This user can not be added!");
 						}
-	                    if (usernameLoggedIn.equals(friendUsername)) {
-	                    	JOptionPane.showMessageDialog(null, "You cannot friend yourself!");	
-	                    }
-	                    else {
-	                    	// Check if the user is already a friend
-	                        if (users.listFriend(usernameLoggedIn).contains(friendUsername)) {
-	                            JOptionPane.showMessageDialog(null, "You are already friends!");
-	                        } else {
-	                            // Add the friend and update the GUI
-	                        	// Update GUI works but needs a refresh by going to a different card and then back
-	                        	System.out.println("Adding friend: " + friendUsername);
-	                            users.updateFriend(usernameLoggedIn, friendUsername, "add");
+						else {
+	                    	if (usernameLoggedIn.equals(friendUsername)) {
+	                    		JOptionPane.showMessageDialog(null, "You cannot friend yourself!");	
+	                    	}
+	                    	else {
+	                    		// Check if the user is already a friend
+	                    		if (users.listFriend(usernameLoggedIn).contains(friendUsername)) {
+	                    			JOptionPane.showMessageDialog(null, "You are already friends!");
+	                    		} else {
+	                    			// Add the friend and update the GUI
+	                    			// Update GUI works but needs a refresh by going to a different card and then back
+	                    			System.out.println("Adding friend: " + friendUsername);
+	                    			users.updateFriend(usernameLoggedIn, friendUsername, "add");
 
 
-	                            JOptionPane.showMessageDialog(null, "Friend added successfully!");
-	                            GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
-	            				((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
+	                    			JOptionPane.showMessageDialog(null, "Friend added successfully!");
+	                    			GUIMyFriends myFriends = new GUIMyFriends(cardPane, usernameLoggedIn);
+	                    			((CardLayout) cardPane.getLayout()).show(cardPane, "myFriends");
 	                            
-	                        }
+	                    		}
+	                    	}
 	                    }
                     } else {
                         JOptionPane.showMessageDialog(null, "User does not exist!");
