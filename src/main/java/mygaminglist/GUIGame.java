@@ -50,7 +50,7 @@ public class GUIGame {
 	
 	public GUIGame(JPanel cardPane) {
 		
-		//So my eyes don't hurt whenever i see a link 
+		//Make all links white
 		HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet styleSheet = kit.getStyleSheet();
         styleSheet.addRule("a {color:white;}");

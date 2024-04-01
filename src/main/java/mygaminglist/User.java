@@ -243,8 +243,4 @@ public boolean banUser(String username) {
 		User other = (User) obj;
 		return Objects.equals(username, other.username);
 	}
-	
-	
-
-
 }

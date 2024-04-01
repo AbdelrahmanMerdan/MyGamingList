@@ -20,8 +20,6 @@ import java.util.List;
 import static com.mongodb.client.model.Filters.eq;
 
 public class UsersImpl implements Database {
-
-//    private final MongoCollection<Document> users;
     
     public final static MongoCollection<Document> users= database.getCollection("Users");
 
@@ -34,12 +32,6 @@ public class UsersImpl implements Database {
     private static final String MODERATOR_KEY = "Moderator";
     private static final String IS_PRIVATE = "isPrivate";
 
-
-//    public UsersImpl() {
-//        users = database.getCollection(TABLE_NAME);
-//        
-//    	
-//    }
 
     // username -> String
     // password -> String

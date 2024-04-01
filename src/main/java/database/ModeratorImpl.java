@@ -20,7 +20,6 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class ModeratorImpl extends UsersImpl implements Database {
 
-//    private final MongoCollection<Document> users;
     
     public final static MongoCollection<Document> moderators= database.getCollection("Moderators");
 
