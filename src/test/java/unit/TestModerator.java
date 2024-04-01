@@ -39,6 +39,7 @@ public class TestModerator {
 
     @AfterAll
     public static void clean() {
+    	moderator.unbanUser(TEST_USER);
         users.delete(TEST_MODERATOR);
     	users.delete(TEST_USER);
         
