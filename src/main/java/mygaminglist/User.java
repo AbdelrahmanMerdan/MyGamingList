@@ -212,7 +212,7 @@ public boolean banUser(String username) {
     }
     
 
-    public  boolean isBanned(String username) {
+    public static boolean isBanned(String username) {
     	
     	if(getBannedUser(username) != null) {
     		System.out.println("This user is banned");

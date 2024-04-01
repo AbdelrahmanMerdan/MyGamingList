@@ -168,7 +168,7 @@ public class GUIGameReviews extends JPanel {
 				boolean isBanned = User.isBanned(GUIMain.usernameLoggedIn);
 				
 				if(isBanned) {
-					JOptionPane.showMessageDialog(null, "You are banned from commenting");
+					JOptionPane.showMessageDialog(null, "You are banned from reviewing.");
 				}
 				
 				else if (GUIMain.usernameLoggedIn != null && !hasReviewed) {
@@ -470,49 +470,63 @@ public class GUIGameReviews extends JPanel {
 		newCommentLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (GUIMain.usernameLoggedIn != null) {
-					String comment;
-
-					//Prompt user for comment
-					comment = JOptionPane.showInputDialog(null,
-							"Enter your Comment:",
-							"Add Comment",
-							JOptionPane.PLAIN_MESSAGE);
-
-					//Keep prompting till user puts a thing
-					while(comment != null && comment.equals(""))
+					
+					if(User.isBanned(GUIMain.usernameLoggedIn))
 					{
 						JOptionPane.showMessageDialog(null,
-								"Please enter a comment.",
-								"ERROR",
-								JOptionPane.WARNING_MESSAGE);
-
+								"You cannot comment because you are banned.",
+								"Message",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+					else
+					{
+						String comment;
+						
+						//Prompt user for comment
 						comment = JOptionPane.showInputDialog(null,
 								"Enter your Comment:",
 								"Add Comment",
 								JOptionPane.PLAIN_MESSAGE);
-					}
 
-					if(comment != null)
-					{
-						if(loadedUser == null)
+						//Keep prompting till user puts a thing
+						while(comment != null && comment.equals(""))
 						{
-							Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(name), game);
-							drawReviews();
+							JOptionPane.showMessageDialog(null,
+									"Please enter a comment.",
+									"ERROR",
+									JOptionPane.WARNING_MESSAGE);
+
+							comment = JOptionPane.showInputDialog(null,
+									"Enter your Comment:",
+									"Add Comment",
+									JOptionPane.PLAIN_MESSAGE);
 						}
-						else
+						
+						if(comment != null)
 						{
-							newCommentLabel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-							Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(GUIMain.usernameLoggedIn), game);
-							drawReviews();
+							if(loadedUser == null)
+							{
+								Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(name), game);
+								drawReviews();
+							}
+							else
+							{
+								newCommentLabel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+								Review.addCommentToUserReview(UsersImpl.getUser(GUIMain.usernameLoggedIn), comment, UsersImpl.getUser(GUIMain.usernameLoggedIn), game);
+								drawReviews();
+							}
 						}
-					}
+
+					}		
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"Please login to comment.",
 							"Message",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
+				
 			}
+				
 		});
 		
 		reviewBox.add(reviewPane);
