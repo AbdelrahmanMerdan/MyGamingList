@@ -2,9 +2,6 @@
 
 An application that allows users to view PC games, basic game statistics, rate/review, and engage with the community.
 
-<strong>How to Use:</strong><br>
-Simply download the exe file and run.</br>
-
 <b>How to Build and Compile:</b><br>
 Make sure you have at least Java ver.17 and above installed, and that your IDE has any type of Gradle integration installed. 
 
