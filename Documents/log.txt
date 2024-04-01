@@ -1,124 +1,88 @@
-﻿Team 5 Log
+Team 5 Log
 Jan 27, 2024
 -Youwei - Interview with customer 1
-
 
 Jan 29, 2024 
 - Mustafa - Interview with customer 2
 
-
 February 2, 2024 (4:00 PM - 6:06 PM) - Meeting: ITR0 (Rocco, Abdelrahman, Alex, Mustafa, Richard) 
-
 
 - Went through and refined our big user stories.
 
-
 - Defined our 5 user stories for our 1st big story.
-
 
 - Defined 2 of our user stories for our 2nd big story.
 
-
 - Assigned each group member a user story to work on.
-
 
 - Took around an hour to complete itr0.
 
-
-- Discussed at a meeting on Feb 5, 2024 for GUI purposes.
-
+- Discussed at a meeting on Feb 5, 2024, for GUI purposes.
 
 February 5, 2024 (7:30 PM - 8:00 PM) Meeting: APIs (Rocco, Abdelrahman)
 
-
 - Discussed how to apply the API in our program.
-
 
 - Ended with us concluding that we'll need to test and experiment with it.
 
-
 February 9, 2024 (4:30 PM - 5:45 PM) Meeting: Structure & APIs (Rocco, Richard, Abdelrahman, Alex, Mustafa, Youwei)
 
-
-- Clarified and stated which feature will be implemented, and what feature each member is responsible with.
-
+- Clarified and stated which feature will be implemented and what feature each member is responsible for.
 
 - Talking about features will be grouped in one class file.
 
-
-- Discussed the results of using the API, and realistically talked about how it would be implemented.
-
+- Discussed the results of using the API and realistically talked about how it would be implemented.
 
 - Discussed that another API will be needed to grab the popular games.
 
-
 - Discussed that implementing a GUI for our program will take a very long time due to our lack of experience. Overhauling the program to fit a better API will take some time as well. As a result, we delayed the search feature for games.
-
 
 February 10, 2024 
 
+-Rocco - Switched the API to the official Steam’s Web API - Re-worked program by implementing Game. class - Created stub database for MostPlayed - Created stub database for PopReleases - Overall, implementing the above was to implement the user story “View Popular Games”, which took about 6 hours. Compared to the development time, it was predicted to be 1 day.
 
--Rocco - Switched the API to the official Steam’s Web API - Re-worked program by implementing Game.class - Created stub database for MostPlayed - Created stub database for PopReleases - Overall, implementing the above was to implement the user story “View Popular Games”, which took about 6 hours. Compared to the development time it was predicted to be 1 day.
-
-
--Alex - User Story - Critic review - The development time for the user story was a day but I spent around 2 hours implementing it 
-
+-Alex - User Story - Critic review - The development time for the user story was a day, but I spent around 2 hours implementing it 
 
 February 11, 2024
 
-
--Youwei - User Story - Description - It took me about 30 minutes to code the method out when the allotted time was 1 day.
-
+Youwei—User Story—Description—It took me about 30 minutes to code the method when the allotted time was 1 day.
 
 February 12, 2024 
--Mustafa - User Story - System requirements - The user story was around a day but it only took me about 45 minutes to get a working function.
-
+-Mustafa - User Story - System requirements - The user story lasted for around a day, but it only took me about 45 minutes to get a working function.
 
 February 13, 2024
 -Rocco - TestGame - Testing initialization of object (30 mins - part of “View Popular Games” user story, which was expected to be completed in a day).
--Abdelrahman - User reviews - Working on the user reviews story which will be a part of itr 2. 
-
+-Abdelrahman - User reviews - Working on the user reviews story, which will be a part of itr 2. 
 
 February 14, 2024
 
-
--Youwei - TestGame - Testing the setDescription method which was around 15 minutes.
--Mustafa - TestGame - Testing the setRequirements method which was around 10 minutes.
--Richard - GUI. I worked on getting the GUI up and running to display hard-coded text. Wasn’t a user story exactly but it took me around 2 hours to get it up and running.
-
+-Youwei - TestGame - Testing the setDescription method, which took around 15 minutes.
+-Mustafa - TestGame - Testing the setRequirements method, which took around 10 minutes.
+-Richard - GUI. I worked on getting the GUI up and running to display hard-coded text. It wasn’t a user story exactly, but it took me around 2 hours to get it up and running.
 
 February 15th, 2024
 
-
--Alex - TestGame - Testing the setCriticReviews method which was around 30 minutes.
+-Alex - TestGame - Testing the setCriticReviews method, which took around 30 minutes.
 -Abdelrahman - TestGame - Working on the tests for the user reviews.
--Rocco - Dealt with json library performing inconsistently
-
+-Rocco - Dealt with JSON library performing inconsistently
 
 February 16, 2024 (4:00 PM - 6:00 PM) - Meeting: ITR1 (Rocco, Abdelrahman, Alex, Mustafa, Richard, Youwei) 
 
-
--Youwei - GUI - Worked on displaying html content which was around 30 minutes.
+-Youwei - GUI - Worked on displaying HTML content which was around 30 minutes.
 -Reviewed and made sure itr1 components as a group are completed (4 hours).
--Richard - GUI - Worked on setting up the GUI for game page and getting all the pages working together (4 hours)
+-Richard - GUI - Worked on setting up the GUI for the game page and getting all the pages working together (4 hours)
 -Abdelrahman - UserReview - Worked on Review functions that used a stub database (4 hours)
--Mustafa - testing API and json library as a group (4 hours)
-
+-Mustafa - testing API and JSON library as a group (4 hours)
 
 February 20, 2024
 
-
 -Alex - UML Diagram- Worked on getting the basic classes done for the attributes and the operations (1 hour)
-
 
 February 21, 2024
 
-
 - Mustafa - follow up meeting with a customer on their request, adjustments made to some user stories priority and delivery time has been adjusted accordingly
 
-
 February 23, 2024
-
 
 -Rocco & Abdel - Database - Learned how to implement the database to our program for both users and games. (6 hours)
 -Richard - Worked on adding functionality to search database for specific games (1 hour)
@@ -126,17 +90,13 @@ February 23, 2024
        (2 hours)
 -  Database - Worked on implementing the database for the games component (2 hours)
 
-
 February 24, 2024
 
-
--Youwei - GUI - improve search function to be case in-sensitive (30 minutes)
+-Youwei - GUI - improve search function to be case insensitive (30 minutes)
 -Alex - UML Diagram- Finished up with the dependencies and generalizations for the classes (30 minutes)
 -Rocco - Database - Implemented the database for the games component (6 hours) 
 
-
 February 25, 2024 (3:15 PM - 9:00 PM) - Meeting: Wrapping up deliverable 1 (Rocco, Abdelrahman, Alex, Mustafa, Richard, Youwei)
-
 
 -Rocco - TestGame & TestMostPlayedPopReleases - Quickly re-did testing for new ver. 
 (20 mins)
@@ -146,53 +106,101 @@ February 25, 2024 (3:15 PM - 9:00 PM) - Meeting: Wrapping up deliverable 1 (Rocc
 -Abdelrahman - ReviewDatabase- Wrote a UserReview class to review games that works with the updated Game class and MongoDB database (5 hours)
 -Mustafa - Documentation - created documentation and worked on deliverable 1 elements (20 minutes)
 
-
 March 3, 2024
 - Alex - worked on the UML diagrams (45 minutes)
 - Mustafa - met with the clients to discuss goals and expectations moving from iteration 2 to 3. Some adjustments were made, such as moving the add/remove friend page to iteration 2 and focusing iteration 3 more on the statistics and viewing friend reviews.
 -Rocco - Refactoring (2 hours)
 
-
 March 7, 2024
 - Rocco - implemented the critic reviews link (30 minutes)
 - Mustafa - worked on my friend's GUI and implementation with other GUIs (1 hour)
-- Youwei - setting up User database, added java implementation for Signup, Login, Update/List Friends, and updated GUI to call those methods when the corresponding button clicked. (4 hours)
-- Abdelrahman - Worked on the Users Object class and changed Database implementation to get it ready for User Reviews (2 hour)
-
+- Youwei - setting up User database, added Java implementation for Signup, Login, Update/List Friends, and updated GUI to call those methods when the corresponding button is clicked. (4 hours)
+- Abdelrahman - Worked on the Users Object class and changed Database implementation to get it ready for User Reviews (2 hours)
 
 March 8, 2024
 -Alex - worked on my functions which deal with the comments. Dealt with the implementation of adding a comment to a user review, getting all comments/users for all reviews for a game and getting all comments/users for a review (3 hours)
 -Abdelrahman - Worked on finalizing the Review.java in regards to how a review affects the game (3 hours)
 -Rocco - Helped throughout implementing the user object, review and database (2 hours) (Contributes to my user story)
 
-
 March 10, 2024
 -Richard - setting up the Login infrastructure (useable and traversable page, basic methods ready for database implementation) (4 hours)
-- Mustafa - completed my friend GUI and implementation of add and remove friend. Interaction with DB to pull data and change based on action taken. Specific cases made for unwanted situations (4 hours)
--Alex - worked on testing my functions with basic data in another file separate for the test cases since at the time, I did not have database implementation. I also worked on database implementation for my files and some more of the UML (2 hour)
+- Mustafa - I completed my friend GUI and the implementation of adding and removing friends. Interaction with DB to pull data and change based on action taken. Specific cases made for unwanted situations (4 hours)
+-Alex - worked on testing my functions with basic data in another file separate from the test cases since, at the time, I did not have database implementation. I also worked on database implementation for my files and some more of the UML (2 hours)
 -Abdelrahman - Finalized the Review.java from the Users side (4 hours)
 -Rocco- Worked on the full implementation of viewing My Reviews when signed in (4 hours)
-                -GUI
-                -Methods for grabbing and displaying My Reviews
-
-
-
+		-GUI
+		-Methods for grabbing and displaying My Reviews
 
 
 
 March 11, 2024 (12:30 PM - 2:30 PM) - Meeting: Fixing Errors with merging User Stories (Rocco, Abdelrahman, Alex, Mustafa, Richard, Youwei)
 March 11, 2024
 -Richard - setting up review and comment infrastructure ( display reviews and comments, dialogue to add new reviews and comments, ready for further database implementation) (5 hours)
--Youwei - setting up test for User database and corresponding methods (1 hour)
+-Youwei - setting up a test for the User database and corresponding methods (1 hour)
 -Rocco - Helping people finish their implementation (5 hours)
--Mustafa - making test cases for GUI my friend and testing out pushed implementations (combination of stories completed to find formatting errors). Worked on Documentation (2 hours)
+-Mustafa - making test cases for GUI, my friend and testing out pushed implementations (combination of stories completed to find formatting errors). Worked on Documentation (2 hours)
 -Alex - worked on finalizing the integration of the game database with comments of the reviews, in addition to finalizing the UML, generating test cases, adding the comments and getting the info to the GUI (6 hours)
 -Abdelrahman - Created Tests for Review.Java and created functions to optimize the functionality of reviewing a game. (5 hours)
--Rocco - Completed implementing my user story. In total, it took me 18.5 hours to implement my user story. Compared to the estimated time which is 1 day, it took me a little more than before. I needed to make sure that the reviews and comments were working before implementing. So I helped my group members as I implemented the user story. 
+-Rocco - Completed implementing my user story. In total, it took me 18.5 hours to implement my user story. Compared to the estimated time, which is 1 day, it took me a little longer than before. I needed to make sure that the reviews and comments were working before implementing. So, I helped my group members as I implemented the user story. 
 
+March 11, 2024 (8:00 PM - 10:30 PM) - Meeting: Wrapping up Documentation for Iteration 2 (Rocco, Abdelrahman, Alex, Mustafa, Richard, Youwei)
 
-March 11, 2024 (8:00 PM - 10:30PM) - Meeting: Wrapping up Documentation for Iteration 2 (Rocco, Abdelrahman, Alex, Mustafa, Richard, Youwei)
+Did the documents, including wiki and log (3 hours)
 
+-March 15, 2024
+-Rocco - Started working on my user story. Started to implement Time Monitoring in our java program. (4 hours)
+-Alex - Looked for an API for the news user story and played around with it (30 minutes)
 
-* Did the documents including wiki and log (3 hours)
+-March 17, 2024
+-Rocco - Finished time implementation and started implementing game stats (2 hours)
+-Alex - Worked on setting up the NewsBlog class with various fields and attributes (1 hour) 
+-Youwei - Worked on the GUI of the Sign-up page (1 hour)
+
+-March 18, 2024
+-Rocco - Finished implementing stats and created GUI for it. (1 hour)
+-Mustafa - Finished implementation & testing for MyFriends (other than the final itr3 section of viewing other people's reviews) (2 hours)
+
+-March 24, 2024
+-Alex - Worked on setting up the News class, which deals with the API call and uploading to the database, as well as setting up the NewsBlog object in our application (2 hours)
+-Youwei - Worked on setting account privacy methods so users can choose whether their accounts are private or public. (2 hours)
+-Rocco - Fixed issues that were discovered in the previous iteration. Also, added new features to be able to delete reviews from My Reviews and re-write reviews. (2 hours)
+-Richard - started work on adding a sort feature for reviews before beginning refactoring GUIGameReviews (4 hours)
+-Mustafa - Fixed issues from the Code Smells done (2 hours)
+
+March 28, 2024 (10:00 AM - 11:00 AM) - Meeting: (Rocco, Abdelrahman, Alex, Mustafa, Richard, Youwei)
+
+- Discuss our progress for each user story.
+
+After meeting:
+-Alex -Fixed the bug where the user was not able to leave a comment on their user reviews on the My Review page - surprisingly took (15 minutes).
+-Rocco - Made my tests for my user story (2 hours).
+- Abdelrahman - Worked on an implementation of a moderator that added a field to each user that checks whether or not a user is a moderator. Worked on a moderator functionality that allows a moderator to ban a user. The banned user is then not allowed to comment, and all the user's comments are deleted (4 hours)
+- Abdelrahman - Updated the way we implement reviews to add a field that gets the review average from all users. Worked on a delete review function that deletes a review and updates all fields that were incremented by the review. Worked on a function that deletes all the reviews that a user wrote from all games. (3 hours)
+
+-March 29, 2024
+-Rocco - Tried to help everyone I can, also modified wiki and readme (1 hour)
+-Alex- Worked on getting test cases for the user story and integrating them in the TestGameData, in addition to creating the TestNewsBlog, which handles the unit tests, and updating the properties of the Game to include the list of newsBlogs. (2 hours)
+-Youwei -Worked on updating the account privacy methods. (1 hour)
+-Richard - finished refactoring GUIGameReviews and the sort feature (2 hours) + bug fixing (1 hour)
+- Abdelrahman - Worked on an implementation of a moderator that added a field to each user that checks whether or not a user is a moderator. Worked on a moderator functionality that allows a moderator to ban a user. The banned user is then not allowed to comment, and all the user's comments are deleted (4 hours)
+-Mustafa - Worked on some bug fixing(1 hour)
+
+-March 30, 2024
+-Alex- Worked a bit on getting the gui set up but just the basics for the news (30 minutes)
+-Youwei - Worked on GUI in GUIMyFriends to change account privacy, and I also worked on integration tests for setting account privacy methods and updating account privacy methods. (1.5 hours)
+-Rocco - Set up our database by creating search indexes to aid Richard with his auto-search story. (2 hours)
+-Richard - worked on search autofill functionality with the help of Rocco (5 hours) + bug fixing (2 hours)
+-Mustafa - worked on viewing friend reviews + bug fixing (3 hours)
+
+- Abdelrahman - Started work on the GUI for the Top Games and Moderator user stories. Created TopGames.java to return a list of all games that have been reviewed by the user in descending order. (4 hours)
+
+-March 31, 2024 (3:00 PM - 11:50 PM) Meeting - (Rocco, Abdelrahman, Alex, Mustafa, Richard, Youwei)
+-Rocco - Documented my issues, user stories, and refactors (4 hours).
+- Overall, it took me 9 hours to complete my user story. Compared to the estimated time which is 1 day, I was able to complete the user story in the allocated time.
+Alex—With some help from Ricard, finalized the news GUI and integrated it with the methods and class for news. I also touched up some of the fields with some string extraction since the content was a bit iffy in the API call. In addition, I wrapped up all the test cases and polished the news classes and all impacted classes (5 hours).
+- Abdelrahman - I completed the work on the GUI for the Top Games and Moderator user stories. Created BannedUserList to return a list of banned users to display to moderators.I Created test cases for each user story. (8 hours)
+-Richard - helped team with GUI finishing(2 hours)
+-Youwei- Worked on fixing the bug that the display is different on macOS system. (1 hour)
+	- Interview with the client
+
 —
