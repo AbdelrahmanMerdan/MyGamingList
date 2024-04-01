@@ -38,18 +38,19 @@ public class GUITopGames extends JFrame {
 		TopGameMenuPane.setLayout(new GridLayout(1, 0, 100, 0));
 		
 		JPanel TopGamePane = new JPanel();
+		TopGamePane.setLayout(new BorderLayout(0, 0));
 		TopGameMenuPane.add(TopGamePane);
-		TopGamePane.setLayout(new BoxLayout(TopGamePane, BoxLayout.Y_AXIS));
 		
+		JLabel TopGamesLabel = new JLabel("Top Rated Games");
+		TopGamesLabel.setForeground(Color.WHITE);
+		TopGamesLabel.setBackground(new Color(23, 26, 33));
+		TopGamesLabel.setFont(new Font("Verdana", Font.BOLD, 50));
+		TopGamePane.add(TopGamesLabel, BorderLayout.NORTH);
+
 		// populate pane
 		Box TopGameBox = new Box(1);
 		TopGameBox.setBackground(new Color(23, 26, 33));
-		JLabel TopGamesLabel = new JLabel("Top Games");
-		TopGamesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		TopGamesLabel.setForeground(Color.WHITE);
-		TopGamesLabel.setFont(new Font("Verdana", Font.BOLD, 50));
-		TopGameBox.add(TopGamesLabel);
-		
+
 		for (int i = 0; i < topGames.getSize(); i++) {
 			int game = i;
             TopGameBox.add(Box.createRigidArea(new Dimension(0, 2))); // creates space between the components
@@ -58,7 +59,7 @@ public class GUITopGames extends JFrame {
             lblpanel.setBackground(new Color(23, 26, 33));
             lblpanel.setLayout(new BorderLayout(0,0));
             
-            JLabel lbl = new JLabel((i+1)+") "+GameData.getName(topGames.getID(game)));
+            JLabel lbl = new JLabel(GameData.getName(topGames.getID(game)));
             lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); 
             lbl.setForeground(Color.WHITE);
             lbl.setFont(new Font("MS Song", Font.PLAIN, 32));
@@ -92,7 +93,7 @@ public class GUITopGames extends JFrame {
 		JScrollBar mostPlayedVertical = TopGameScrollPane.getVerticalScrollBar();
 		mostPlayedVertical.setPreferredSize( new Dimension(0,0) );
 		TopGameScrollPane.setPreferredSize(new Dimension(0,0));
-		TopGamePane.add(TopGameScrollPane);
+		TopGamePane.add(TopGameScrollPane, BorderLayout.CENTER);
 		TopGameScrollPane.getVerticalScrollBar().setUnitIncrement(20);
         TopGameScrollPane.setBorder(BorderFactory.createEmptyBorder());
         TopGameScrollPane.getViewport().setBackground(new Color(23, 26, 33));
