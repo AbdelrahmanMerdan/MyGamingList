@@ -17,7 +17,7 @@ By default, running the assemble task will build and launch the program. While r
 
 ### Note:
 * It takes around 12 seconds to launch the program.
-* May not work anymore due to timeout error: MongoDB times out the cluster if it has been inactive for 60 days. Since the cluster is not being actively connected to, the cluster may time out and the program won't be able to launch. While it can be re-activated, some features such as the autocomplete search will not work due to the reset.
+* May not work anymore due to timeout error: MongoDB times out the cluster if it has been inactive for 60 days. Since the cluster is not being actively connected to, the cluster may time out and the program won't be able to launch. While it can be re-activated, the autocomplete search will not work due to the reset.
 
 ### Cluster Status: 
 Re-activated on September 19, 2024
