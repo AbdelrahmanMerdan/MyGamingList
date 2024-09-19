@@ -15,7 +15,13 @@ To configure Gradle project and its tasks, please look at build.gradle and setti
 
 By default, running the assemble task will build and launch the program. While running the build task will run all tests first, before building and launching the program.
 
-<strong>Supported Languages for User Reviews and Comments:</strong><br> 
+<strong>Note:</strong>
+* Overall, it takes around 12 seconds to launch the program.
+* May not work anymore due to timeout error: After 60 days, MongoDB times out cluster when database has been inactive. Since the cluster is not being actively maintained, the cluster may time out and some features such as the autocomplete search won't work anymore. Or, the program won't be able to launch at all.
+
+<br><strong>Cluster Status: Re-activated on September 19, 2024 </strong>
+
+<br><strong>Supported Languages for User Reviews and Comments:</strong><br> 
 English, Chinese, Japanese, Vietnamese, Swedish, and any other languages that uses the English, Latin, Arabic, Cyrillic, or Greek alphabet.
 
 <strong>Ressources:</strong>
@@ -32,7 +38,5 @@ ii) https://github.com/Revadike/InternalSteamWebAPI
 <strong>MongoDB:</strong><br>
 i) https://www.mongodb.com/docs/
 
-<strong>Note:</strong>
-* Overall, it takes around 12 seconds to launch the program.
-* May not work anymore due to timeout error: MongoDB times out cluster when database has been inactive. Since the cluster is not being actively maintained, the cluster may time out and some features such as the autocomplete search won't work anymore. Or, the program won't be able to launch at all.
+
 
