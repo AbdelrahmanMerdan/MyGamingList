@@ -34,5 +34,5 @@ i) https://www.mongodb.com/docs/
 
 <strong>Note:</strong>
 * Overall, it takes around 12 seconds to launch the program.
-* If getting timeout error that means the MongoDB cluster timed out due to inactivity.
+* If getting timeout error that means the MongoDB cluster timed out due to inactivity. We'll have to re-activate the cluster again to fix this error.
 
