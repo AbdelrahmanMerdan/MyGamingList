@@ -34,5 +34,5 @@ i) https://www.mongodb.com/docs/
 
 <strong>Note:</strong>
 * Overall, it takes around 12 seconds to launch the program.
-* May not work anymore due to timeout error: MongoDB times out cluster when database has been inactive. Since the cluster is not being actively maintained, the cluster may time out and some features such as the autocomplete search won't work anymore; or the program won't be able to launch at all.
+* May not work anymore due to timeout error: MongoDB times out cluster when database has been inactive. Since the cluster is not being actively maintained, the cluster may time out and some features such as the autocomplete search won't work anymore. Or, the program won't be able to launch at all.
 
